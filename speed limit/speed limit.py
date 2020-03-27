@@ -2,5 +2,5 @@ url = 'https://www.chpb.gov.tw/uploaddowndoc?file=infopublic/201905291540240.csv
 
 import pandas as pd
 
-data = pd.read_csv(url, encoding = 'UTF-8', error = 'ignore')
+data = pd.read_csv(url, encoding = 'big5')
 print(data.head())
