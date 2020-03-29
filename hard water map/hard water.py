@@ -40,7 +40,6 @@ plot_data = city_map.join(city_data)
 plot_data.drop(plot_data.columns[:2], axis = 1, inplace = True)
 # set plot and show
 
-fig, ax = plt.subplots(1, 1)
-
-map_data.plot(ax = ax, legend = True)
+fig, ax = plt.subplots()
+plot_data.plot(column = plot_data[plot_data.columns[-1]], ax = ax, legend = True, cmap = 'RdYlGn_r', edgecolor = 'k', linewidth = 1)
 plt.show()
