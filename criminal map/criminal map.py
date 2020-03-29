@@ -1,9 +1,8 @@
 import geopandas as gp
 import pandas as pd
-import bs4
-import requests
+import bs4, requests
 import numpy as np
-import io
+import io ,os
 from bs4 import BeautifulSoup as bs
 from zipfile import ZipFile
 # get criminal data
@@ -15,7 +14,21 @@ links_criminal = soup_criminal.find_all('a', text = 'CSV')
 url_city = 'https://data.gov.tw/dataset/7441'
 soup_city = bs(io.StringIO(requests.get(url_city).content.decode('utf-8')), 'html.parser')
 link_city = soup_city.find('a', text = 'SHP').get('href')
-zipfile = ZipFile(io.StringIO(requests.get(link_city).content).read())
+with ZipFile(io.BytesIO(requests.get(link_city).content)) as file_city:
+    for i in range(len(file_city.infolist())):
+        print(file_city.infolist()[i])
+    file_city.extractall()
+# del unused files
+del_files = []
+shp_files = []
+for i, j in enumerate(os.listdir()):
+    if 'TOWN' not in j:
+        if 'py' not in j:
+            del_files.append(j)
+    elif 'TOWN' in j:
+        shp_files.append(j)
+for i, j in enumerate(del_files):
+    os.remove(del_files[i])
 # convert data to array
 table_array = np.array([])
 for i, j in zip(range(0,len(titles_criminal),2), range(len(links_criminal))):
