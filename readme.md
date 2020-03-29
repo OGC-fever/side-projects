@@ -2,7 +2,7 @@
 
 Personal side projects just for fun
 
-* criminal map
-- show relationship among criminals, types, places in taiwan
-* hard water map
-- show relationship between hardness of water and places in taiwan
+## criminal map
+- visualize relationship among criminals, types and places in taiwan
+## hard water map
+- visualize relationship between  hardness of water and places in taiwan
