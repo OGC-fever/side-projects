@@ -5,15 +5,21 @@ import requests
 import numpy as np
 import io
 from bs4 import BeautifulSoup as bs
-# get data
-url = 'https://data.gov.tw/dataset/14200'
-soup = bs(io.StringIO(requests.get(url).content.decode('utf-8')), 'html.parser')
-titles = soup.find_all('span', class_ = 'ff-desc')
-links = soup.find_all('a', text = 'CSV')
+from zipfile import ZipFile
+# get criminal data
+url_criminal = 'https://data.gov.tw/dataset/14200'
+soup_criminal = bs(io.StringIO(requests.get(url_criminal).content.decode('utf-8')), 'html.parser')
+titles_criminal = soup_criminal.find_all('span', class_ = 'ff-desc')
+links_criminal = soup_criminal.find_all('a', text = 'CSV')
+# get city data and unpack zipfile
+url_city = 'https://data.gov.tw/dataset/7441'
+soup_city = bs(io.StringIO(requests.get(url_city).content.decode('utf-8')), 'html.parser')
+link_city = soup_city.find('a', text = 'SHP').get('href')
+zipfile = ZipFile(io.StringIO(requests.get(link_city).content).read())
 # convert data to array
 table_array = np.array([])
-for i, j in zip(range(0,len(titles),2), range(len(links))):
-    table_array = np.append(table_array, [titles[i].text, links[j].get('href')])
+for i, j in zip(range(0,len(titles_criminal),2), range(len(links_criminal))):
+    table_array = np.append(table_array, [titles_criminal[i].text, links_criminal[j].get('href')])
 # convert array to pandas
 table_array = table_array.reshape(-1,2)
 data = pd.DataFrame(table_array)
@@ -25,10 +31,11 @@ for i in range(int(len(data)/5)):
 # show select data and read into pandas
 data_index = int(input('which year do you want to show ? ')) - 1
 print('you select: ' + str(data_index + 1) + "." + str(int(data[0][(i + 1) * 4][:3]) + 1911) + '年' + data[0][i * 4][-4:])
+city_index = int(input('which city do you want to show ? ')) - 1
 country_criminal = pd.DataFrame()
 for i in range(4):
     country_criminal = country_criminal.append(pd.read_csv(io.StringIO(requests.get(data[1][data_index * 4 + i]).content.decode('utf-8'))))
 city_criminal = country_criminal[country_criminal[country_criminal.columns[-1]].str.contains('彰化', na = False)]
 city_criminal.rename(columns = {str(city_criminal.columns[1]):'date', str(city_criminal.columns[2]):'place'}, inplace = True)
-print(city_criminal)
 print(city_criminal.groupby(city_criminal.columns[-1]).count())
+print(city_criminal.groupby(city_criminal.columns[0]).count())
