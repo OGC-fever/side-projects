@@ -5,6 +5,7 @@ import numpy as np
 import io ,os
 from bs4 import BeautifulSoup as bs
 from zipfile import ZipFile
+import matplotlib.pyplot as plt
 # get criminal data
 url_criminal = 'https://data.gov.tw/dataset/14200'
 soup_criminal = bs(io.StringIO(requests.get(url_criminal).content.decode('utf-8')), 'html.parser')
@@ -14,10 +15,10 @@ links_criminal = soup_criminal.find_all('a', text = 'CSV')
 url_city = 'https://data.gov.tw/dataset/7441'
 soup_city = bs(io.StringIO(requests.get(url_city).content.decode('utf-8')), 'html.parser')
 link_city = soup_city.find('a', text = 'SHP').get('href')
-with ZipFile(io.BytesIO(requests.get(link_city).content)) as file_city:
-    for i in range(len(file_city.infolist())):
-        print(file_city.infolist()[i])
-    file_city.extractall()
+# with ZipFile(io.BytesIO(requests.get(link_city).content)) as file_city:
+#     for i in range(len(file_city.infolist())):
+#         print(file_city.infolist()[i])
+#     file_city.extractall()
 # del unused files
 del_files = []
 shp_files = []
@@ -29,6 +30,11 @@ for i, j in enumerate(os.listdir()):
         shp_files.append(j)
 for i, j in enumerate(del_files):
     os.remove(del_files[i])
+# set plot
+fig, ax = plt.subplots(1, 1)
+map_data = gp.read_file(shp_files[-1])
+map_data.plot(ax = ax, legend = True)
+plt.show()
 # convert data to array
 table_array = np.array([])
 for i, j in zip(range(0,len(titles_criminal),2), range(len(links_criminal))):
