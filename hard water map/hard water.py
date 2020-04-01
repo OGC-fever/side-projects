@@ -5,6 +5,8 @@ import numpy as np
 from bs4 import BeautifulSoup as bs
 from zipfile import ZipFile as zf
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+
 # get hardness data
 url = 'https://www.water.gov.tw/opendata/qual5.csv'
 hardness = pd.read_csv(url)
@@ -44,12 +46,17 @@ city_map.drop(city_map.columns[[0,1,4,5,6]], axis = 1, inplace = True)
 city_map.sort_values(by = city_map.columns[1], inplace = True)
 city_map.reset_index(drop = 1, inplace = True)
 plot_data = city_map.join(city_data)
-plot_data.drop(plot_data.columns[:2], axis = 1, inplace = True)
+plot_data.drop(plot_data.columns[[-2, -3]], axis = 1, inplace = True)
 # set plot and show
+mpl.rcParams['font.sans-serif'] = ['Noto Sans CJK JP']
+plt.rcParams['axes.unicode_minus'] = False
+plt.rcParams['font.family'] = "sans-serif"
 fig, ax = plt.subplots()
-plot_data.plot(column = plot_data[plot_data.columns[-1]], ax = ax, legend = True, cmap = 'RdYlGn_r', edgecolor = 'k', linewidth = 1, norm = plt.Normalize(vmin = 0, vmax = 300))
+show = plot_data.plot(column = plot_data[plot_data.columns[-1]], ax = ax, legend = True, cmap = plt.get_cmap('RdYlGn_r', 5), edgecolor = 'k', linewidth = 1, norm = plt.Normalize(vmin = 0, vmax = 300))
+for i in range(len(plot_data)):
+    show.annotate(s = plot_data[plot_data.columns[1]][i], xy = (plot_data.centroid.x[i], plot_data.centroid.y[i]), ha = 'center', fontsize = 12)
 plt.axis('equal')
 ax.set_axis_off()
-ax.set_title('Countries and Ocean Basins')
+ax.set_title(city[city_index] + "自來水硬度", fontsize = 16)
 plt.tight_layout()
 plt.show()
