@@ -7,19 +7,19 @@ from zipfile import ZipFile as zf
 import matplotlib.pyplot as plt
 # get criminal data
 url_criminal = 'https://data.gov.tw/dataset/14200'
-soup_criminal = bs(io.StringIO(requests.get(url_criminal).content.decode('utf-8')), 'html.parser')
+soup_criminal = bs(io.StringIO(requests.get(url_criminal, stream = True, timeout = 5).content.decode('utf-8')), 'html.parser')
 titles_criminal = soup_criminal.find_all('span', class_ = 'ff-desc')
 links_criminal = soup_criminal.find_all('a', text = 'CSV')
-# get city data and unpack zipfile
+# get city data and unpack zipfile, del unused files
 url_city = 'https://data.gov.tw/dataset/7441'
 soup_city = bs(io.StringIO(requests.get(url_city).content.decode('utf-8')), 'html.parser')
 link_city = soup_city.find('a', text = 'SHP').get('href')
-with zf(io.BytesIO(requests.get(link_city, stream = True, timeout = 5).content)) as file_city:
-    for i, j in enumerate(file_city.infolist()):
-        print(file_city.infolist()[i])
-    file_city.extractall()
-# del unused files
-del_files, shp_files = [], []
+del_files, shp_files, bool_list = [], [], []
+for i, j in enumerate(os.listdir()):
+    bool_list.append('shp' in j)
+while True not in bool_list:
+    with zf(io.BytesIO(requests.get(link_city, stream = True, timeout = 5).content)) as file_city:
+        file_city.extractall()
 for i, j in enumerate(os.listdir()):
     if 'TOWN' not in j:
         if 'py' not in j:
