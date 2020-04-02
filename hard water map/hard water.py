@@ -6,6 +6,10 @@ from bs4 import BeautifulSoup as bs
 from zipfile import ZipFile as zf
 import matplotlib.pyplot as plt
 import matplotlib as mpl
+import matplotlib.patheffects as pe
+import matplotlib.colors
+import matplotlib.patches as mpatches
+from matplotlib import cm
 
 # get hardness data
 url = 'https://www.water.gov.tw/opendata/qual5.csv'
@@ -52,11 +56,18 @@ mpl.rcParams['font.sans-serif'] = ['Noto Sans CJK JP']
 plt.rcParams['axes.unicode_minus'] = False
 plt.rcParams['font.family'] = "sans-serif"
 fig, ax = plt.subplots()
-show = plot_data.plot(column = plot_data[plot_data.columns[-1]], ax = ax, legend = True, cmap = plt.get_cmap('RdYlGn_r', 5), edgecolor = 'k', linewidth = 1, norm = plt.Normalize(vmin = 0, vmax = 300))
+norm = matplotlib.colors.BoundaryNorm(np.arange(0, 301, 60), 5)
+show = plot_data.plot(column = plot_data[plot_data.columns[-1]], ax = ax, legend = True, cmap = plt.get_cmap('RdYlGn_r', 5), edgecolor = 'black', linewidth = 1, norm = norm)
 for i in range(len(plot_data)):
-    show.annotate(s = plot_data[plot_data.columns[1]][i], xy = (plot_data.centroid.x[i], plot_data.centroid.y[i]), ha = 'center', fontsize = 12)
+    show.annotate(s = plot_data[plot_data.columns[1]][i], xy = (plot_data.centroid.x[i], plot_data.centroid.y[i]), ha = 'center', va = 'center', fontsize = 'large', color = 'black', path_effects = [pe.withStroke(linewidth = 2, foreground = 'white')])
 plt.axis('equal')
 ax.set_axis_off()
-ax.set_title(city[city_index] + "自來水硬度", fontsize = 16)
+ax.set_title(city[city_index] + "自來水硬度", fontsize = 'x-large')
 plt.tight_layout()
+# legend_list = []
+# legend_dict = dict(matplotlib.colors.BoundaryNorm(np.arange(0, 301, 60), 5))
+# for i in legend_dict:
+#     string = mpatches.Patch(color = legend_dict[i], label = i)
+#     legend_list.append(string)
+# plt.legend(handles = legend_list, loc = 0)
 plt.show()
