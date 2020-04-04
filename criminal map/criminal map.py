@@ -5,14 +5,14 @@ import numpy as np
 from bs4 import BeautifulSoup as bs
 from zipfile import ZipFile as zf
 import matplotlib.pyplot as plt
-# get criminal data and unpack zipfile, del unused files
+# get criminal data and unpack zipfile
 url_criminal = 'https://data.gov.tw/dataset/14200'
-timeout = 1
+timeout = 3
 soup_criminal = bs(io.StringIO(requests.get(url_criminal, stream = True, timeout = timeout).content.decode('utf-8')), 'html.parser')
 titles_criminal = soup_criminal.find_all('span', class_ = 'ff-desc')
 links_criminal = soup_criminal.find_all('a', text = 'CSV')
 url_city = 'https://data.gov.tw/dataset/7441'
-del_files, shp_file, bool_list = [], [], []
+shp_file, bool_list = [], []
 timeout = 1
 for i, j in enumerate(os.listdir()):
     bool_list.append('shp' in j)
@@ -22,13 +22,8 @@ if True not in bool_list:
     with zf(io.BytesIO(requests.get(link_city, stream = True, timeout = timeout).content)) as file_city:
         file_city.extractall()
 for i, j in enumerate(os.listdir()):
-    if 'TOWN' not in j:
-        if 'py' not in j:
-            del_files.append(j)
-    elif 'shp' in j:
+    if 'shp' in j:
         shp_file.append(j)
-for i, j in enumerate(del_files):
-    os.remove(del_files[i])
 # convert data to array
 table_array = np.array([])
 for i, j in zip(range(0,len(titles_criminal),2), range(len(links_criminal))):
