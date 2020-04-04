@@ -43,7 +43,7 @@ city_map.reset_index(drop = 1, inplace = True)
 plot_data = city_map.join(city_data)
 plot_data.drop(plot_data.columns[[-2, -3]], axis = 1, inplace = True)
 # set plot and show
-mpl.rcParams['font.sans-serif'] = ['Noto Sans CJK JP']
+mpl.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'sans-serif']
 plt.rcParams['axes.unicode_minus'] = False
 plt.rcParams['font.family'] = "sans-serif"
 fig, ax = plt.subplots()
@@ -54,11 +54,11 @@ cmap = plt.get_cmap('RdYlGn_r', step)
 path_effects = [pe.withStroke(linewidth = 1, foreground = 'white')]
 show = plot_data.plot(column = plot_data[plot_data.columns[-1]], ax = ax, cmap = cmap, edgecolor = 'black', linewidth = 1, norm = norm)
 for i in range(len(plot_data)):
-    show.annotate(s = plot_data[plot_data.columns[1]][i], xy = (plot_data.centroid.x[i], plot_data.centroid.y[i]), ha = 'center', va = 'center', fontsize = 'large', color = 'black', path_effects = path_effects)
+    show.annotate(s = plot_data[plot_data.columns[1]][i], xy = (plot_data.centroid.x[i], plot_data.centroid.y[i]), ha = 'center', va = 'center', fontsize = 'large', weight = 'bold', color = 'black', path_effects = path_effects)
 plt.axis('equal')
 ax.axis('off')
 ax.set_title(city[city_index] + "自來水硬度", fontsize = 'x-large')
-# plt.tight_layout()
+plt.tight_layout()
 # set legend
 colors = list(map(cmap, range(step)))
 handles = [plt.Rectangle((0, 0), 3, 6, facecolor = c, edgecolor = 'black', linewidth = 0.5) for c in colors]
