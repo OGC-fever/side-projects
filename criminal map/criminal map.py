@@ -5,27 +5,28 @@ import numpy as np
 from bs4 import BeautifulSoup as bs
 from zipfile import ZipFile as zf
 import matplotlib.pyplot as plt
-# get criminal data
+# get criminal data and unpack zipfile, del unused files
 url_criminal = 'https://data.gov.tw/dataset/14200'
-soup_criminal = bs(io.StringIO(requests.get(url_criminal, stream = True, timeout = 5).content.decode('utf-8')), 'html.parser')
+timeout = 1
+soup_criminal = bs(io.StringIO(requests.get(url_criminal, stream = True, timeout = timeout).content.decode('utf-8')), 'html.parser')
 titles_criminal = soup_criminal.find_all('span', class_ = 'ff-desc')
 links_criminal = soup_criminal.find_all('a', text = 'CSV')
-# get city data and unpack zipfile, del unused files
 url_city = 'https://data.gov.tw/dataset/7441'
-soup_city = bs(io.StringIO(requests.get(url_city).content.decode('utf-8')), 'html.parser')
-link_city = soup_city.find('a', text = 'SHP').get('href')
-del_files, shp_files, bool_list = [], [], []
+del_files, shp_file, bool_list = [], [], []
+timeout = 1
 for i, j in enumerate(os.listdir()):
     bool_list.append('shp' in j)
-while True not in bool_list:
-    with zf(io.BytesIO(requests.get(link_city, stream = True, timeout = 5).content)) as file_city:
+if True not in bool_list:
+    soup_city = bs(io.StringIO(requests.get(url_city, stream = True, timeout = timeout).content.decode('utf-8')), 'html.parser')
+    link_city = soup_city.find('a', text = 'SHP').get('href')
+    with zf(io.BytesIO(requests.get(link_city, stream = True, timeout = timeout).content)) as file_city:
         file_city.extractall()
 for i, j in enumerate(os.listdir()):
     if 'TOWN' not in j:
         if 'py' not in j:
             del_files.append(j)
-    elif 'TOWN' in j:
-        shp_files.append(j)
+    elif 'shp' in j:
+        shp_file.append(j)
 for i, j in enumerate(del_files):
     os.remove(del_files[i])
 # convert data to array
@@ -44,6 +45,7 @@ for i in range(int(len(data)/5)):
 data_index = int(input('which year do you want to show ? ')) - 1
 print('you select: ' + str(data_index + 1) + "." + str(int(data[0][(i + 1) * 4][:3]) + 1911) + '年' + data[0][i * 4][-4:])
 city_index = int(input('which city do you want to show ? ')) - 1
+
 country_criminal = pd.DataFrame()
 for i in range(4):
     country_criminal = country_criminal.append(pd.read_csv(io.StringIO(requests.get(data[1][data_index * 4 + i]).content.decode('utf-8'))))
@@ -53,6 +55,6 @@ print(city_criminal.groupby(city_criminal.columns[-1]).count())
 print(city_criminal.groupby(city_criminal.columns[0]).count())
 # set plot and show
 fig, ax = plt.subplots(1, 1)
-map_data = gp.read_file(shp_files[-1])
+map_data = gp.read_file(shp_file[0])
 map_data.plot(ax = ax, legend = True)
 plt.show()

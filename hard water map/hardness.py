@@ -8,28 +8,22 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import matplotlib.patheffects as pe
 import matplotlib.colors
-from mpl_toolkits.axes_grid1 import make_axes_locatable
-# get data
+# get data and unpack zipfile
 url = 'https://www.water.gov.tw/opendata/qual5.csv'
 hardness = pd.read_csv(url)
 url_city = 'https://data.gov.tw/dataset/7441'
-soup_city = bs(io.StringIO(requests.get(url_city, stream = True, timeout = 3).content.decode('utf-8')), 'html.parser')
-link_city = soup_city.find('a', text = 'SHP').get('href')
-# get city data and unpack zipfile, del unused files
-del_files, shp_file, bool_list = [], [], []
+shp_file, bool_list = [], []
+timeout = 3
 for i, j in enumerate(os.listdir()):
     bool_list.append('shp' in j)
 if True not in bool_list:
-    with zf(io.BytesIO(requests.get(link_city, stream = True, timeout = 3).content)) as file_city:
+    soup_city = bs(io.StringIO(requests.get(url_city, stream = True, timeout = timeout).content.decode('utf-8')), 'html.parser')
+    link_city = soup_city.find('a', text = 'SHP').get('href')
+    with zf(io.BytesIO(requests.get(link_city, stream = True, timeout = timeout).content)) as file_city:
         file_city.extractall()
 for i, j in enumerate(os.listdir()):
-    if 'TOWN' not in j:
-        if 'py' not in j:
-            del_files.append(j)
-    elif 'shp' in j:
+    if 'shp' in j:
         shp_file.append(j)
-for i, j in enumerate(del_files):
-    os.remove(del_files[i])
 # read/filter/select city hardness and map, combine together
 map_data = gp.read_file(shp_file[0], encoding = 'utf-8')
 city = np.unique(hardness[hardness.columns[0]].values)
@@ -52,18 +46,20 @@ plot_data.drop(plot_data.columns[[-2, -3]], axis = 1, inplace = True)
 mpl.rcParams['font.sans-serif'] = ['Noto Sans CJK JP']
 plt.rcParams['axes.unicode_minus'] = False
 plt.rcParams['font.family'] = "sans-serif"
-fig, ax = plt.subplots(figsize = (10, 10))
+fig, ax = plt.subplots()
 step = 5
 level = 300 / step
 norm = matplotlib.colors.BoundaryNorm(np.arange(0, 301, level), step)
 cmap = plt.get_cmap('RdYlGn_r', step)
+path_effects = [pe.withStroke(linewidth = 1, foreground = 'white')]
 show = plot_data.plot(column = plot_data[plot_data.columns[-1]], ax = ax, cmap = cmap, edgecolor = 'black', linewidth = 1, norm = norm)
 for i in range(len(plot_data)):
-    show.annotate(s = plot_data[plot_data.columns[1]][i], xy = (plot_data.centroid.x[i], plot_data.centroid.y[i]), ha = 'center', va = 'center', fontsize = 'large', color = 'black', path_effects = [pe.withStroke(linewidth = 2, foreground = 'white')])
+    show.annotate(s = plot_data[plot_data.columns[1]][i], xy = (plot_data.centroid.x[i], plot_data.centroid.y[i]), ha = 'center', va = 'center', fontsize = 'large', color = 'black', path_effects = path_effects)
 plt.axis('equal')
 ax.axis('off')
 ax.set_title(city[city_index] + "自來水硬度", fontsize = 'x-large')
-plt.tight_layout()
+# plt.tight_layout()
+# set legend
 colors = list(map(cmap, range(step)))
 handles = [plt.Rectangle((0, 0), 3, 6, facecolor = c, edgecolor = 'black', linewidth = 0.5) for c in colors]
 labels = ["0~60:軟水", "61~120:中等軟水", "121~180:硬水", ">181:超硬水", ">241:你在喝沙?"]
