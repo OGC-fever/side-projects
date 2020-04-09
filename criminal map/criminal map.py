@@ -13,7 +13,6 @@ titles_criminal = soup_criminal.find_all('span', class_ = 'ff-desc')
 links_criminal = soup_criminal.find_all('a', text = 'CSV')
 url_city = 'https://data.gov.tw/dataset/7441'
 shp_file, bool_list = [], []
-timeout = 1
 for i, j in enumerate(os.listdir()):
     bool_list.append('shp' in j)
 if True not in bool_list:
@@ -39,17 +38,21 @@ for i in range(int(len(data)/5)):
 # show select data and read into pandas
 data_index = int(input('which year do you want to show ? ')) - 1
 print('you select: ' + str(data_index + 1) + "." + str(int(data[0][(i + 1) * 4][:3]) + 1911) + '年' + data[0][i * 4][-4:])
-city_index = int(input('which city do you want to show ? ')) - 1
-
+map_data = gp.read_file(shp_file[0], encoding = 'utf-8')
+city = np.unique(map_data[map_data.columns[2]].values)
+for i, j in enumerate(city):
+    print(str(i + 1) + '.' +  j, end = ' ')
+    if (i + 1) % 5 == 0:
+        print()
+city_index = int(input('\nwhich city do you want to query ? ')) -1
 country_criminal = pd.DataFrame()
 for i in range(4):
-    country_criminal = country_criminal.append(pd.read_csv(io.StringIO(requests.get(data[1][data_index * 4 + i]).content.decode('utf-8'))))
-city_criminal = country_criminal[country_criminal[country_criminal.columns[-1]].str.contains('彰化', na = False)]
+    country_criminal = country_criminal.append(pd.read_csv(io.StringIO(requests.get(data[1][data_index * 4 + i], stream = True, timeout = timeout).content.decode('utf-8'))))
+city_criminal = country_criminal[country_criminal[country_criminal.columns[-1]].str.contains(city[city_index], na = False)]
 city_criminal.rename(columns = {str(city_criminal.columns[1]):'date', str(city_criminal.columns[2]):'place'}, inplace = True)
-print(city_criminal.groupby(city_criminal.columns[-1]).count())
-print(city_criminal.groupby(city_criminal.columns[0]).count())
+city_criminal[city_criminal.type.str.contains(np.unique(city_criminal.type)[-1])]
+
 # set plot and show
 fig, ax = plt.subplots(1, 1)
-map_data = gp.read_file(shp_file[0])
 map_data.plot(ax = ax, legend = True)
 plt.show()
