@@ -34,14 +34,14 @@ for i, j in enumerate(city):
 city_index = int(input('\nwhich city do you want to query ? ')) -1
 print('you select : ' + str(city_index + 1) + '.' + city[city_index])
 city_data = hardness[hardness[hardness.columns[0]].str.contains(city[city_index])]
-city_data.sort_values(by = city_data.columns[1], inplace = True)
-city_data.reset_index(drop = 1, inplace = True)
+city_data = city_data.sort_values(by = city_data.columns[1])
+city_data = city_data.reset_index(drop = 1)
 city_map = map_data[map_data[map_data.columns[2]].str.contains(city[city_index])]
-city_map.drop(city_map.columns[[0,1,4,5,6]], axis = 1, inplace = True)
-city_map.sort_values(by = city_map.columns[1], inplace = True)
-city_map.reset_index(drop = 1, inplace = True)
+city_map = city_map.drop(city_map.columns[[0,1,4,5,6]], axis = 1)
+city_map = city_map.sort_values(by = city_map.columns[1])
+city_map = city_map.reset_index(drop = 1)
 plot_data = city_map.join(city_data)
-plot_data.drop(plot_data.columns[[-2, -3]], axis = 1, inplace = True)
+plot_data = plot_data.drop(plot_data.columns[[-2, -3]], axis = 1)
 # set plot and show
 mpl.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'sans-serif']
 plt.rcParams['axes.unicode_minus'] = False

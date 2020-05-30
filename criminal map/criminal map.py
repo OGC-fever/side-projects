@@ -32,7 +32,7 @@ table_array = table_array.reshape(-1,2)
 data = pd.DataFrame(table_array)
 data.sort_values(by = data.columns[0], inplace = True)
 data.reset_index(drop = 1, inplace = True)
-# print gotten data
+# print data
 for i in range(int(len(data)/5)):
     print(str(i + 1) + "." + str(int(data[0][(i + 1) * 4][:3]) + 1911) + '年' + data[0][i * 4][-4:])
 # show select data and read into pandas
@@ -53,6 +53,6 @@ city_criminal.rename(columns = {str(city_criminal.columns[1]):'date', str(city_c
 city_criminal[city_criminal.type.str.contains(np.unique(city_criminal.type)[-1])]
 
 # set plot and show
-fig, ax = plt.subplots(1, 1)
-map_data.plot(ax = ax, legend = True)
-plt.show()
+# fig, ax = plt.subplots(1, 1)
+# map_data.plot(ax = ax, legend = True)
+# plt.show()
