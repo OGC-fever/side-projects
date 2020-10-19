@@ -2,6 +2,6 @@
 
 Personal side projects just for fun
 
-## hard water map
+## hardness
 - visualize relationship between hardness of water and places in taiwan
 - package:GeoPandas, matplotlib
