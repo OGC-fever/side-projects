@@ -24,8 +24,8 @@ for i in range(len(url)):
     soup.append(bs(page[i].content, 'lxml'))
     img_url.append(soup[i].find_all(
         'meta', {'name': "twitter:image"})[0]["content"])
-    pic.append(np.array(Image.open(BytesIO(requests.get(img_url[i]).content))))
-
+    pic.append(np.array(Image.open(
+        BytesIO(requests.get(img_url[i], stream=True, timeout=3).content))))
 img_hight = 5
 fig, ax = plt.subplots(1, len(url))
 fig.set_tight_layout("tight")
