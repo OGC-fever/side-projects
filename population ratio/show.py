@@ -36,15 +36,14 @@ for i in range(2):
 total_ratio = total_ratio[0]/total_ratio[1]
 total_ratio = list(total_ratio)
 
-
 def show_town():
     for i in range(int(len(new_data[new_data.columns[0]])/2)):
         town.append((new_data[new_data.columns[0]].values[i*2]))
-    for i in range(len(town)):
-        if (i+1) % 7 != 0:
-            print(str(i) + " " + town[i], end=' ')
-        else:
-            print(str(i) + " " + town[i])
+#     for i in range(len(town)):
+#         if (i+1) % 7 != 0:
+#             print(str(i) + " " + town[i], end=' ')
+#         else:
+#             print(str(i) + " " + town[i])
 
 plt.figure()
 plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'sans-serif']
@@ -60,7 +59,7 @@ show_town()
 14 大村鄉 15 埔鹽鄉 16 埔心鄉 17 永靖鄉 18 社頭鄉 19 二水鄉 20 田尾鄉
 21 埤頭鄉 22 芳苑鄉 23 大城鄉 24 竹塘鄉 25 溪州鄉
 '''
-select_town = 22
+select_town = 23
 plt.title("彰化縣男女比率/年齡分佈", fontsize='x-large')
 plt.plot(total_ratio, 'C0-.', label='彰化縣')
 plt.plot(ratio[select_town], 'C1-.', label=town[select_town])
