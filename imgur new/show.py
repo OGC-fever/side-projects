@@ -34,4 +34,5 @@ for i in range(len(url)):
     plt.imshow(pic[i])
     ax[i].set_axis_off()
     ax[i].imshow(pic[i])
+
 plt.show()

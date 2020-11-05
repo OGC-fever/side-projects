@@ -10,21 +10,10 @@ data = pd.read_csv(csv).iloc[:-2]
 new_data = pd.DataFrame(data[data.columns[0:2].append(data.columns[3:])])
 plot_data = new_data[new_data.columns[2:]]
 
-# ratio = []
-# for i in range(int(len(plot_data.index)/2)):
-#     for j in range(len(plot_data.columns)):
-#         try:
-#             ratio.append(plot_data.iloc[i*2][j]/plot_data.iloc[i*2+1][j])
-#         except:
-#             ratio.append(0)
-# ratio = np.array(ratio).reshape(-1, len(plot_data.columns))
 ratio = []
 for i, _ in enumerate(plot_data.index):
     if i % 2 == 1:
-        try:
-            ratio.append([plot_data.iloc[i-1].values/plot_data.iloc[i].values])
-        except:
-            ratio.append(0)
+        ratio.append([plot_data.iloc[i-1].values/plot_data.iloc[i].values])
 
 ratio=np.array(ratio).reshape(-1)
 for i,_ in enumerate(ratio):
@@ -70,9 +59,11 @@ show_town()
 21 埤頭鄉 22 芳苑鄉 23 大城鄉 24 竹塘鄉 25 溪州鄉
 '''
 select_town = 5
+# towns=[0,1,5]
 plt.title("彰化縣男女比率-年齡分佈", fontsize='x-large')
 plt.plot(total_ratio, 'C0-.', label='彰化縣')
 plt.plot(ratio[select_town], 'C1-.', label=town[select_town])
+# plt.subplots(1,3)
 plt.axhline(y=1, color='gray')
 plt.legend(loc=0)
 plt.grid()
