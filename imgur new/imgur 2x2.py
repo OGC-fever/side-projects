@@ -16,8 +16,8 @@ link_prefix = "https://imgur.com"
 link = []
 for i in range(len(output)):
     link.append(link_prefix + output[i]['href'])
-img_columns = 4
-url = link[0:img_columns]
+imgs = 4
+url = link[0:imgs]
 page, soup, img_url, pic = [], [], [], []
 for i in range(len(url)):
     page.append(requests.get(url[i]))
@@ -26,7 +26,6 @@ for i in range(len(url)):
         'meta', {'name': "twitter:image"})[0]["content"])
     pic.append(np.array(Image.open(
         BytesIO(requests.get(img_url[i], stream=True, timeout=3).content))))
-# img_hight = 5
 
 fig, ax = plt.subplots(2, 2)
 fig.set_tight_layout("tight")
