@@ -10,3 +10,7 @@ Personal side projects just for fun & practice & memo
 
 ## population ratio
 - visualize ratio curve of males vs. females
+
+## spam calls
+- spam calls CRUD 
+- bootstrap + flask + sqlite3
