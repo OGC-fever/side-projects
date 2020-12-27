@@ -7,6 +7,7 @@
     <label class="form-label">result of {{action}} : {{msg}}</label>
     <div class="row mb-2">
 
+        {% if msg != None%}
         {% if action == 'query'%}
         <div class="col-md-1"></div>
         <div class="col-md-1">Rank</div>
@@ -17,6 +18,7 @@
 
         {% if action == 'query'%}
         <div class="col-md-3">Time</div>
+        {% endif %}
         {% endif %}
 
     </div>
@@ -32,18 +34,20 @@
     <div class="row mb-2">
 
         {% if action == 'query'%}
+
         <div class="col-md-1">
             <div class="btn-group" role="group" aria-label="...">
-                <button type="button" class="btn btn-sm btn-success">+</button>
-                <button type="button" class="btn btn-sm btn-danger">-</button>
+                <a href="{{url_for('rank_up', id=rec[0]) }}" name="rank_up" class="btn btn-sm btn-success">+</a>
+                <a href="{{url_for('rank_down', id=rec[0]) }}" name="rank_down" class="btn btn-sm btn-danger">-</a>
             </div>
         </div>
-        {% endif %}
 
         <div class="col-md-1">{{ rec["rank"] }}</div>
         <div class="col-md-2">{{ rec["phone"] }}</div>
         <div class="col-md-3">{{ rec["comments"] }}</div>
         <div class="col-md-3">{{ rec["time"] }}</div>
+
+        {% endif %}
 
     </div>
     {% endfor %}

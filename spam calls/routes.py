@@ -57,6 +57,9 @@ def query_calls():
             msg = "Operation error"
     else:
         return render_template("oops.html")
+    if data == []:
+        msg = None
+        return render_template("result.html", action='query', msg=msg)
     return render_template("result.html", data=data, action='query', msg=msg)
 
 
@@ -68,7 +71,54 @@ def not_found(e):
 @app.route("/")
 @app.route("/about")
 def index():
-    return render_template("index.html")
+    sql = f"select * from calls order by id desc limit 5"
+    if request.method == 'GET':
+        try:
+            con = sqlite3.connect(database)
+            con.row_factory = sqlite3.Row
+            cur = con.cursor()
+            cur.execute(sql)
+            data = cur.fetchall()
+            con.close()
+            msg = ""
+        except:
+            con.rollback()
+            msg = "Operation error"
+    else:
+        return render_template("oops.html")
+    if data == []:
+        msg = None
+        return render_template("result.html", action='query', msg=msg)
+    return render_template("index.html", data=data)
+
+@app.route("/rank_up/<int:id>")
+def rank_up(id):
+    sql = f"update calls set rank = rank + 1 where id = ?"
+    try:
+        con = sqlite3.connect(database)
+        cur = con.cursor()
+        cur.execute(sql,(id,))
+        con.commit()
+        con.close()
+    except:
+        con.rollback()
+        msg = "Operation error"
+    return (''), 204
+
+
+@app.route("/rank_down/<int:id>")
+def rank_down(id):
+    sql = f"update calls set rank = rank - 1 where id = ?"
+    try:
+        con = sqlite3.connect(database)
+        cur = con.cursor()
+        cur.execute(sql,(id,))
+        con.commit()
+        con.close()
+    except:
+        con.rollback()
+        msg = "Operation error"
+    return (''), 204
 
 
 if __name__ == "__main__":
