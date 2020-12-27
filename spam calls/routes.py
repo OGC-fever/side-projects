@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 from db_crud import init_db
 import sqlite3
 
@@ -25,6 +25,7 @@ def add_calls():
         sql = f"insert into calls (phone, comments) values (?, ?)"
         try:
             con = sqlite3.connect(database)
+            con.row_factory = sqlite3.Row
             cur = con.cursor()
             cur.execute(sql, (phone, comments))
             con.commit()
@@ -33,9 +34,7 @@ def add_calls():
             data = [phone, comments]
         except:
             con.rollback()
-            msg = "Error in insert operation"
-    else:
-        return render_template("oops.html")
+            return render_template("oops.html")
     return render_template("result.html", data=data, msg=msg, action='add')
 
 
@@ -52,14 +51,12 @@ def query_calls():
             data = cur.fetchall()
             con.close()
             msg = ""
+            if data == []:
+                msg = None
+                return render_template("result.html", action='query', msg=msg)
         except:
             con.rollback()
-            msg = "Operation error"
-    else:
-        return render_template("oops.html")
-    if data == []:
-        msg = None
-        return render_template("result.html", action='query', msg=msg)
+            return render_template("oops.html")
     return render_template("result.html", data=data, action='query', msg=msg)
 
 
@@ -70,7 +67,7 @@ def not_found(e):
 
 @app.route("/")
 @app.route("/about")
-def index():
+def about():
     sql = f"select * from calls order by id desc limit 5"
     if request.method == 'GET':
         try:
@@ -81,29 +78,31 @@ def index():
             data = cur.fetchall()
             con.close()
             msg = ""
+            if data == []:
+                msg = None
+                return render_template("result.html", action='query', msg=msg)
         except:
             con.rollback()
-            msg = "Operation error"
-    else:
-        return render_template("oops.html")
-    if data == []:
-        msg = None
-        return render_template("result.html", action='query', msg=msg)
+            return render_template("oops.html")
     return render_template("index.html", data=data)
+
 
 @app.route("/rank_up/<int:id>")
 def rank_up(id):
     sql = f"update calls set rank = rank + 1 where id = ?"
     try:
         con = sqlite3.connect(database)
+        con.row_factory = sqlite3.Row
         cur = con.cursor()
-        cur.execute(sql,(id,))
+        cur.execute(sql, (id,))
         con.commit()
+        cur.execute(f"select * from calls where id = '{id}'")
+        data = cur.fetchall()
         con.close()
     except:
         con.rollback()
-        msg = "Operation error"
-    return (''), 204
+        return render_template("oops.html")
+    return render_template("result.html", data=data, action='query')
 
 
 @app.route("/rank_down/<int:id>")
@@ -111,14 +110,17 @@ def rank_down(id):
     sql = f"update calls set rank = rank - 1 where id = ?"
     try:
         con = sqlite3.connect(database)
+        con.row_factory = sqlite3.Row
         cur = con.cursor()
-        cur.execute(sql,(id,))
+        cur.execute(sql, (id,))
         con.commit()
+        cur.execute(f"select * from calls where id = '{id}'")
+        data = cur.fetchall()
         con.close()
     except:
         con.rollback()
-        msg = "Operation error"
-    return (''), 204
+        return render_template("oops.html")
+    return render_template("result.html", data=data, action='query')
 
 
 if __name__ == "__main__":
