@@ -17,42 +17,52 @@ def add():
     return render_template("add_calls.html")
 
 
-@app.route("/add_calls", methods=["GET", "POST"])
+@app.route("/add_calls", methods=["POST"])
 def add_calls():
     if request.method == 'POST':
         phone = request.form['phone']
         comments = request.form['comments']
-        con = sqlite3.connect(database)
-        cur = con.cursor()
-        sql = f"insert into calls (phone,comments) values ('{phone}','{comments}')"
+        sql = f"insert into calls (phone, comments) values (?, ?)"
         try:
-            cur.execute(sql)
+            con = sqlite3.connect(database)
+            cur = con.cursor()
+            cur.execute(sql, (phone, comments))
             con.commit()
             con.close()
-            msg = "Successfully added"
+            msg = "Successfully"
+            data = [phone, comments]
         except:
             con.rollback()
             msg = "Error in insert operation"
     else:
-        msg = "Access Denial"
-    return render_template("result.html", msg=msg)
+        return render_template("oops.html")
+    return render_template("result.html", data=data, msg=msg, action='add')
 
 
-@app.route("/query_calls")
+@app.route("/query_calls", methods=["POST"])
 def query_calls():
-    con = sqlite3.connect(database)
-    cur = con.cursor()
-    phone = request.form['phone']
-    sql=f"select * from calls where phone = '{phone}'"
-    try:
-        cur.execute(sql)
-        con.commit()
-        con.close()
-        msg = "Successfully added"
-    except:
-        con.rollback()
-        msg = "Error in insert operation"
-    return render_template("result.html", msg=msg)
+    if request.method == 'POST':
+        phone = request.form['phone']
+        sql = f"select * from calls where phone = ?"
+        try:
+            con = sqlite3.connect(database)
+            con.row_factory = sqlite3.Row
+            cur = con.cursor()
+            cur.execute(sql, (phone,))
+            data = cur.fetchall()
+            con.close()
+            msg = ""
+        except:
+            con.rollback()
+            msg = "Operation error"
+    else:
+        return render_template("oops.html")
+    return render_template("result.html", data=data, action='query', msg=msg)
+
+
+@app.route("/oops")
+def oops():
+    return render_template("oops.html")
 
 
 @app.route("/")

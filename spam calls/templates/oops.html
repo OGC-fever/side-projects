@@ -27,24 +27,10 @@
     <br>
     <div class="container">
         <div class="mb-3">
-
-            <label class="form-label">result of {{action}} : {{msg}}</label>
-
-            {% if action == 'add'%}
-            <br>
-            <div class="container">{{ data[0] }}</div>
-            <div class="container">{{ data[1] }}</div>
-            {% endif %}
-
-            <br>
-            {% for rec in data %}
-            <label class="form-label">{{ rec["phone"] }}</label>
-            <label class="form-label">{{ rec["comments"] }}</label>
-            <br>
-            {% endfor %}
+            <label class="form-label">Oops! Something went wrong.</label>
+            <p class="text-justify">Please reload the page and try again.</p>
         </div>
     </div>
-
 </body>
 
 </html>
