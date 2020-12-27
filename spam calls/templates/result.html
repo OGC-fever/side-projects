@@ -1,50 +1,31 @@
-<html>
+{% extends "template.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <style type="text/css">
-        body {
-            background: Silver !important;
-        }
-    </style>
-    <title>SPAM Calls</title>
-</head>
+{% block main %}
 
-<body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/about">About</a>
-                <a class="navbar-brand" href="/query">Query SPAM Calls</a>
-                <a class="navbar-brand" href="/add">Add SPAM Calls</a>
-            </div>
+<div class="container">
+    <div class="row">
+
+        <label class="form-label">result of {{action}} : {{msg}}</label>
+        <div class="row">
+            <div class="col-2">Phone number</div>
+            <div class="col-4">comments</div>
         </div>
-    </nav>
-    <br>
-    <div class="container">
-        <div class="mb-3">
-
-            <label class="form-label">result of {{action}} : {{msg}}</label>
-
-            {% if action == 'add'%}
-            <br>
-            <div class="container">{{ data[0] }}</div>
-            <div class="container">{{ data[1] }}</div>
-            {% endif %}
-
-            <br>
-            {% for rec in data %}
-            <label class="form-label">{{ rec["phone"] }}</label>
-            <label class="form-label">{{ rec["comments"] }}</label>
-            <br>
-            {% endfor %}
+        
+        {% if action == 'add'%}
+        <div class="row">
+            <div class="col-2">{{ data[0] }}</div>
+            <div class="col-4">{{ data[1] }}</div>
         </div>
+        {% endif %}
+
+        {% for rec in data %}
+        <div class="row">
+            <div class="col-2">{{ rec["phone"] }}</div>
+            <div class="col-4">{{ rec["comments"] }}</div>
+        </div>
+        {% endfor %}
+
     </div>
+</div>
 
-</body>
-
-</html>
+{% endblock %}

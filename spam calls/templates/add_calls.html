@@ -1,53 +1,20 @@
-<html>
+{% extends "template.html" %}
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <style type="text/css">
-        body {
-            background: Silver !important;
-        }
+{% block main %}
 
-        input#calls {
-            background: Gainsboro !important;
-        }
-
-        textarea#calls {
-            background: Gainsboro !important;
-        }
-    </style>
-    <title>SPAM Calls</title>
-</head>
-
-<body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/about">About</a>
-                <a class="navbar-brand" href="/query">Query SPAM Calls</a>
-                <a class="navbar-brand" href="/add">Add SPAM Calls</a>
-            </div>
+<div class="container">
+    <form action="{{ url_for('add_calls') }}" method="POST">
+        <div class="mb-1">
+            <label class="form-label">Phone Number</label>
+            <input id=calls name="phone" type="text" class="form-control form-group w-25" placeholder="0912-345678">
         </div>
-    </nav>
-    <br>
-    <div class="container">
-        <form action="{{ url_for('add_calls') }}" method="POST">
-            <div class="mb-3">
-                <label class="form-label">Phone Number</label>
-                <input id=calls name="phone" type="text" class="form-control form-group w-25" placeholder="0921-123456">
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Comments</label>
-                <textarea id=calls name="comments" class="form-control form-group w-50" rows="3"
-                    placeholder="Write a comment"></textarea>
-            </div>
-            <input type="submit" class="btn btn-success" value="Post">
-        </form>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Comments</label>
+            <textarea id=calls name="comments" class="form-control form-group w-50" rows="3"
+                placeholder="Write a comment"></textarea>
+        </div>
+        <input type="submit" class="btn btn-success" value="Post">
+    </form>
+</div>
 
-</body>
-
-</html>
+{% endblock %}

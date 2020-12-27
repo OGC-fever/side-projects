@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, render_template, request, url_for
 from db_crud import init_db, get_data
 import sqlite3
 
@@ -60,8 +60,8 @@ def query_calls():
     return render_template("result.html", data=data, action='query', msg=msg)
 
 
-@app.route("/oops")
-def oops():
+@app.errorhandler(404)
+def not_found(e):
     return render_template("oops.html")
 
 
