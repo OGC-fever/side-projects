@@ -84,7 +84,7 @@ def about():
         except:
             con.rollback()
             return render_template("oops.html")
-    return render_template("index.html", data=data)
+    return render_template("about.html", data=data)
 
 
 @app.route("/rank_up/<int:id>")
