@@ -3,29 +3,51 @@
 {% block main %}
 
 <div class="container">
-    <div class="row">
 
-        <label class="form-label">result of {{action}} : {{msg}}</label>
-        <div class="row">
-            <div class="col-2">Phone number</div>
-            <div class="col-4">comments</div>
-        </div>
-        
-        {% if action == 'add'%}
-        <div class="row">
-            <div class="col-2">{{ data[0] }}</div>
-            <div class="col-4">{{ data[1] }}</div>
+    <label class="form-label">result of {{action}} : {{msg}}</label>
+    <div class="row mb-2">
+
+        {% if action == 'query'%}
+        <div class="col-md-1"></div>
+        <div class="col-md-1">Rank</div>
+        {% endif %}
+
+        <div class="col-md-2">Phone number</div>
+        <div class="col-md-3">Comments</div>
+
+        {% if action == 'query'%}
+        <div class="col-md-3">Time</div>
+        {% endif %}
+
+    </div>
+
+    {% if action == 'add'%}
+    <div class="row mb-2">
+        <div class="col-md-2">{{ data[0] }}</div>
+        <div class="col-md-3">{{ data[1] }}</div>
+    </div>
+    {% endif %}
+
+    {% for rec in data %}
+    <div class="row mb-2">
+
+        {% if action == 'query'%}
+        <div class="col-md-1">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-sm btn-success">+</button>
+                <button type="button" class="btn btn-sm btn-danger">-</button>
+            </div>
         </div>
         {% endif %}
 
-        {% for rec in data %}
-        <div class="row">
-            <div class="col-2">{{ rec["phone"] }}</div>
-            <div class="col-4">{{ rec["comments"] }}</div>
-        </div>
-        {% endfor %}
+        <div class="col-md-1">{{ rec["rank"] }}</div>
+        <div class="col-md-2">{{ rec["phone"] }}</div>
+        <div class="col-md-3">{{ rec["comments"] }}</div>
+        <div class="col-md-3">{{ rec["time"] }}</div>
 
     </div>
+    {% endfor %}
+
 </div>
 
 {% endblock %}

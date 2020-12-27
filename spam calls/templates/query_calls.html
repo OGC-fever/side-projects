@@ -6,7 +6,8 @@
     <form action="{{ url_for('query_calls') }}" method="POST">
         <div class="mb-2">
             <label class="form-label">Phone Number</label>
-            <input id=calls name="phone" type="text" class="form-control form-group w-25" placeholder="0912-345678">
+            <input id=calls name="phone" type="tel" class="form-control form-group w-25" placeholder="0912-345678"
+                pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" maxlength="20" required>
         </div>
         <input type="submit" class="btn btn-success" value="Query">
     </form>

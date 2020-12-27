@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for
-from db_crud import init_db, get_data
+from db_crud import init_db
 import sqlite3
 
 app = Flask(__name__)
