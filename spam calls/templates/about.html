@@ -16,16 +16,16 @@
     {% if msg != None%}
     <label class="form-label">Latest 5 records</label>
     <div class="row mb-2">
-        <div class="col-md-2">Phone number</div>
-        <div class="col-md-3">Comments</div>
-        <div class="col-md-3">Time (UTC)</div>
+        <div class="col-3">Phone number</div>
+        <div class="col-4">Comments</div>
+        <div class="col-4">Time (UTC)</div>
     </div>
 
     {% for rec in data %}
     <div class="row mb-2">
-        <div class="col-md-2">{{ rec["phone"] }}</div>
-        <div class="col-md-3">{{ rec["comments"] }}</div>
-        <div class="col-md-3">{{ rec["time"] }}</div>
+        <div class="col-3">{{ rec["phone"] }}</div>
+        <div class="col-4">{{ rec["comments"] }}</div>
+        <div class="col-4">{{ rec["time"] }}</div>
     </div>
     {% endfor %}
     {% endif %}

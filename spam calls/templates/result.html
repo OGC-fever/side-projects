@@ -9,15 +9,15 @@
 
         {% if msg != None%}
         {% if action == 'query'%}
-        <div class="col-md-1"></div>
-        <div class="col-md-1">Rank</div>
+        <div class="col-1"></div>
+        <div class="col-1">Rank</div>
         {% endif %}
 
-        <div class="col-md-2">Phone number</div>
-        <div class="col-md-3">Comments</div>
+        <div class="col-3">Phone number</div>
+        <div class="col-4">Comments</div>
 
         {% if action == 'query'%}
-        <div class="col-md-3">Time (UTC)</div>
+        <div class="col-3">Time (UTC)</div>
         {% endif %}
         {% endif %}
 
@@ -25,8 +25,8 @@
 
     {% if action == 'add'%}
     <div class="row mb-2">
-        <div class="col-md-2">{{ data[0] }}</div>
-        <div class="col-md-3">{{ data[1] }}</div>
+        <div class="col-3">{{ data[0] }}</div>
+        <div class="col-4">{{ data[1] }}</div>
     </div>
     {% endif %}
 
@@ -35,17 +35,17 @@
 
         {% if action == 'query'%}
 
-        <div class="col-md-1">
+        <div class="col-1">
             <div class="btn-group" role="group" aria-label="...">
                 <a href="{{url_for('rank_up', id=rec[0]) }}" name="rank_up" class="btn btn-sm btn-success">+</a>
                 <a href="{{url_for('rank_down', id=rec[0]) }}" name="rank_down" class="btn btn-sm btn-danger">-</a>
             </div>
         </div>
 
-        <div class="col-md-1">{{ rec["rank"] }}</div>
-        <div class="col-md-2">{{ rec["phone"] }}</div>
-        <div class="col-md-3">{{ rec["comments"] }}</div>
-        <div class="col-md-3">{{ rec["time"] }}</div>
+        <div class="col-1">{{ rec["rank"] }}</div>
+        <div class="col-3">{{ rec["phone"] }}</div>
+        <div class="col-4">{{ rec["comments"] }}</div>
+        <div class="col-3">{{ rec["time"] }}</div>
 
         {% endif %}
 
