@@ -31,7 +31,7 @@ def add_calls():
     con.commit()
     con.close()
     msg = "Successfully"
-    data = [phone, comments]
+    data = {"phone":phone, "comments":comments}
         # except:
         #     con.rollback()
         #     return render_template("oops.html")
@@ -42,7 +42,7 @@ def add_calls():
 def query_calls():
     # if request.method == 'POST':
     phone = request.form['phone']
-    sql = "select * from calls where phone = ?"
+    sql = "select * from calls where phone = ? order by time desc"
         # try:
     con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
