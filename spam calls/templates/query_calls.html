@@ -1,16 +1,32 @@
 {% extends "template.html" %}
 
 {% block main %}
+<div class="mb-2">
+    <div class="container">
+        <form action="{{ url_for('query_calls') }}" method="POST">
 
-<div class="container">
-    <form action="{{ url_for('query_calls') }}" method="POST">
-        <div class="mb-2">
-            <label class="form-label">Phone Number</label>
-            <input id=calls name="phone" type="tel" class="form-control form-group w-25" placeholder="0912-345678"
-                pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" maxlength="20" required>
-        </div>
-        <input type="submit" class="btn btn-success" value="Query">
-    </form>
+            <div class="form-group row">
+                <div class="w-25">
+                    <input name="phone" type="tel" class="form-control" id="calls" required placeholder="Phone Number"
+                        maxlength="20" pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$">
+                </div>
+            </div>
+
+            <div class="mb-2"></div>
+
+            <div class="form-group row">
+                <div class="w-25">
+                    <input type="number" name="rank" class="form-control" id="calls" placeholder="Rank, optional"
+                        pattern="^[0-9]*$">
+                </div>
+            </div>
+
+            <div class="mb-2"></div>
+
+            <input type="submit" class="col-1 btn btn-success" value="Query">
+
+        </form>
+    </div>
 </div>
 
 {% endblock %}

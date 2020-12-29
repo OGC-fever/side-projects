@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from db_crud import init_db
+from mods.about import about
 import sqlite3
 from werkzeug.exceptions import HTTPException, InternalServerError
 
@@ -69,24 +70,8 @@ def not_found(e):
 
 @app.route("/", methods=["POST", "GET"])
 @app.route("/about", methods=["POST", "GET"])
-def about():
-    sql = "select * from calls order by id desc limit 5"
-    # if request.method == 'GET':
-    # try:
-    con = sqlite3.connect(database)
-    con.row_factory = sqlite3.Row
-    cur = con.cursor()
-    cur.execute(sql)
-    data = cur.fetchall()
-    con.close()
-    msg = ""
-    if data == []:
-        msg = None
-        return render_template("result.html", action='query', msg=msg)
-    # except:
-    #     con.rollback()
-    #     return render_template("oops.html")
-    return render_template("about.html", data=data)
+def index():
+    return about(database)
 
 
 @app.route("/rank_up/<int:id>", methods=["POST", "GET"])

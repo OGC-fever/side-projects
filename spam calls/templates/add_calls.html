@@ -4,13 +4,11 @@
 
 <div class="container">
     <form action="{{ url_for('add_calls') }}" method="POST">
-        <div class="mb-1">
-            <label class="form-label">Phone Number</label>
-            <input id=calls name="phone" type="tel" class="form-control form-group w-25" placeholder="0912-345678"
+        <div class="mb-2">
+            <input id=calls name="phone" type="tel" class="form-control form-group w-25" placeholder="Phone Number"
                 pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" maxlength="20" required>
         </div>
         <div class="mb-2">
-            <label class="form-label">Comments</label>
             <textarea id=calls name="comments" class="form-control form-group w-50" rows="3"
                 placeholder="Write a comment" required></textarea>
         </div>
