@@ -1,42 +1,13 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <style type="text/css">
-        body {
-            background: Silver !important;
-        }
-
-        input#calls {
-            background: Gainsboro !important;
-        }
-
-        textarea#calls {
-            background: Gainsboro !important;
-        }
-
-        div .newline {
-            white-space: pre-wrap;
-        }
-    </style>
+    {% include "head.html" %}
     <title>SPAM Calls</title>
 </head>
 
 <body>
     <main>
-        <nav class="navbar navbar-dark bg-dark">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/about">About</a>
-                    <a class="navbar-brand" href="/query">Query SPAM Calls</a>
-                    <a class="navbar-brand" href="/add">Add SPAM Calls</a>
-                </div>
-            </div>
-        </nav>
+        {% include "nav.html" %}
         <div class="mb-3"></div>
         {% block main %}{% endblock %}
     </main>

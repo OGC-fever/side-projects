@@ -1,0 +1,15 @@
+body {
+    background: Silver !important;
+}
+
+input#calls {
+    background: Gainsboro !important;
+}
+
+textarea#calls {
+    background: Gainsboro !important;
+}
+
+div .newline {
+    white-space: pre-wrap;
+}

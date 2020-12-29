@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request
 from db_crud import init_db
 import sqlite3
+from werkzeug.exceptions import HTTPException, InternalServerError
 
 app = Flask(__name__)
 init_db()
@@ -23,7 +24,7 @@ def add_calls():
     phone = request.form['phone']
     comments = request.form['comments']
     sql = "insert into calls (phone, comments) values (?, ?)"
-        # try:
+    # try:
     con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
@@ -31,10 +32,10 @@ def add_calls():
     con.commit()
     con.close()
     msg = "Successfully"
-    data = {"phone":phone, "comments":comments}
-        # except:
-        #     con.rollback()
-        #     return render_template("oops.html")
+    data = {"phone": phone, "comments": comments}
+    # except:
+    #     con.rollback()
+    #     return render_template("oops.html")
     return render_template("result.html", data=data, msg=msg, action='add')
 
 
@@ -42,12 +43,12 @@ def add_calls():
 def query_calls():
     # if request.method == 'POST':
     phone = request.form['phone']
-    sql = "select * from calls where phone = ? order by time desc"
-        # try:
+    sql = "select * from calls where phone like ? order by time desc"
+    # try:
     con = sqlite3.connect(database)
     con.row_factory = sqlite3.Row
     cur = con.cursor()
-    cur.execute(sql, (phone,))
+    cur.execute(sql, ('%'+phone+'%',))
     data = cur.fetchall()
     con.close()
     msg = ""
@@ -60,7 +61,8 @@ def query_calls():
     return render_template("result.html", data=data, action='query', msg=msg)
 
 
-@app.errorhandler(404)
+@app.errorhandler(HTTPException)
+@app.errorhandler(InternalServerError)
 def not_found(e):
     return render_template("oops.html")
 
