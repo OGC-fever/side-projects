@@ -8,6 +8,22 @@ database = 'spam_calls.db'
 init_db(database)
 
 
+@app.route("/message")
+def bbs():
+    msg = "◢▆▅▄▃ 崩╰(〒皿〒)╯潰 ▃▄▅▆◣"
+    msg = """\
+  ╚═══╩═══╝     ═╗ ╔══╬══╗
+  ╔══╗ ╔══╗      ║ ╚══╬══╝
+  ║  ║ ║  ║      ║ ═══╩═══
+  ╠══╣ ╠══╣     ═╗ ╔═════╗
+  ║  ║ ║  ║      ║ ╠═════╣
+  ╠══╣ ╠══╣      ╔ ╠═════╣
+  ║  ║ ║  ║      ║ ╚╦═══╦╝
+  ╝  ╝ ╝  ╝     ═╝ ═╝   ╚═
+"""
+    return render_template("oops.html", msg=msg)
+
+
 @app.route("/query")
 def query():
     return render_template("query_calls.html")
@@ -37,7 +53,6 @@ def add_calls():
 def query_calls():
     phone = request.form['phone']
     rank = request.form['rank']
-    # return phone
     if rank == "":
         sql = "select * from calls where phone like ? order by time desc"
     else:

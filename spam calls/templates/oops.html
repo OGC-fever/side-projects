@@ -7,6 +7,10 @@
     <label class="form-label">Oops! Something went wrong.</label>
     <p class="text-justify">Please reload the page and try again.</p>
 
+    {% if msg: %}
+    <pre class="newline">{{ msg }}</pre>
+    {% endif %}
+
 </div>
 
 {% endblock %}

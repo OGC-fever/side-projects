@@ -1,9 +1,15 @@
 {% extends "template.html" %}
 
 {% block main %}
+<script>
+    function formSubmit(token) {
+        document.getElementById("test").submit();
+        return true;
+    }
+</script>
 
 <div class="container">
-    <form action="{{ url_for('add_calls') }}" method="POST">
+    <form id="test" action="{{ url_for('add_calls') }}" method="POST">
         <div class="mb-2">
             <input id=calls name="phone" type="tel" class="form-control form-group w-25" placeholder="Phone Number"
                 pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" maxlength="20" required>
@@ -12,7 +18,10 @@
             <textarea id=calls name="comments" class="form-control form-group w-50" rows="3"
                 placeholder="Write a comment" required></textarea>
         </div>
-        <input type="submit" class="btn btn-success" value="Post">
+        <button data-action='submit' data-callback='formSubmit' data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy"
+            class="visually-hidden g-recaptcha">
+        </button>
+        <button class="btn btn-success">Post</button>
     </form>
 </div>
 
