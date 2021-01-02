@@ -1,12 +1,14 @@
 {% extends "template.html" %}
 
 {% block main %}
+<!-- reCAPTCHA v3 -->
+<!-- <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
     function formSubmit(token) {
         document.getElementById("test").submit();
-        return true;
+        // return true;
     }
-</script>
+</script> -->
 
 <div class="container">
     <form id="test" action="{{ url_for('add_calls') }}" method="POST">
@@ -18,9 +20,9 @@
             <textarea id=calls name="comments" class="form-control form-group w-50" rows="3"
                 placeholder="Write a comment" required></textarea>
         </div>
-        <button data-action='submit' data-callback='formSubmit' data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy"
+        <!-- <button data-action='submit' data-callback='formSubmit' data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy"
             class="visually-hidden g-recaptcha">
-        </button>
+        </button> -->
         <button class="btn btn-success">Post</button>
     </form>
 </div>

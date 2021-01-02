@@ -10,18 +10,7 @@ init_db(database)
 
 @app.route("/message")
 def bbs():
-    msg = "◢▆▅▄▃ 崩╰(〒皿〒)╯潰 ▃▄▅▆◣"
-    msg = """\
-  ╚═══╩═══╝     ═╗ ╔══╬══╗
-  ╔══╗ ╔══╗      ║ ╚══╬══╝
-  ║  ║ ║  ║      ║ ═══╩═══
-  ╠══╣ ╠══╣     ═╗ ╔═════╗
-  ║  ║ ║  ║      ║ ╠═════╣
-  ╠══╣ ╠══╣      ╔ ╠═════╣
-  ║  ║ ║  ║      ║ ╚╦═══╦╝
-  ╝  ╝ ╝  ╝     ═╝ ═╝   ╚═
-"""
-    return render_template("oops.html", msg=msg)
+    return render_template("message.html")
 
 
 @app.route("/query")
