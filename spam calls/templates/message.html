@@ -1,6 +1,7 @@
 {% extends "template.html" %}
 
-{% block main %}
+{% block head %}
+
 <!-- reCAPTCHA v3 -->
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
@@ -8,49 +9,53 @@
         document.getElementById("validation").submit();
     }
 </script>
+{% endblock %}
 
-<div class="container">
-    <div class="row">
-        <div class="col" data-masonry='{"percentPosition": true }'>
+{% block body %}
 
-            {% if data == "" %}
-            <p class="text-justify">No one leave a message yet.</p>
-
-            {% else %}
-            {% for rec in data %}
-            <div class="card col-5 mb-2 mx-1">
-                <div class="card-body">
-                    <h5 class="card-title">{{ rec["name"] }}</h5>
-                    <p class="card-text">
-                        {{ rec["msg"].replace("\n","<br>")|safe }}
-                    </p>
+<div class="container-fluid">
+    <div class="justify-content-center row">
+        <form role="form" class="col-4" id="validation" method="POST">
+            <div class="form-group" action="{{ url_for('msg') }}">
+                <div class="mb-2 mx-1">
+                    <input name="name" type="text" class="mb-2 form-control form-group form-control" id="calls"
+                        value="nobody" required placeholder="Nick Name" maxlength="20" pattern="^[0-9A-Z.\sa-z]{1,20}$"
+                        required>
+                    <textarea id=calls name="msg" class="form-control form-group" rows="3" placeholder="Write a message"
+                        required></textarea>
                 </div>
             </div>
-            {% endfor %}
-            {% endif %}
+            <button data-action='submit' data-callback='formSubmit'
+                data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
+            </button>
+            <button type="submit" class="mx-1 mb-1 btn btn-success">Post</button>
+        </form>
+        <!-- <div>
+            <p class="text-center">
+                Only latest 9 messages here
+            </p>
+        </div> -->
+    </div>
+    <div class="justify-content-center row">
+        {% if data == "" %}
+        <p class="text-justify">No one leave a message yet.</p>
+        {% else %}
 
-        </div>
-        <div class="col-3">
-            <form role="form" id="validation" method="POST">
-                <div class="form-group" action="{{ url_for('msg') }}">
-                    <div class="mb-2 mx-1">
-                        <input name="name" type="text" class="mb-2 form-control form-group form-control" id="calls"
-                            required placeholder="Nick Name" maxlength="20" pattern="^[0-9A-Z.\sa-z]{1,20}$" required>
-                        <textarea id=calls name="msg" class="form-control form-group" rows="3"
-                            placeholder="Write a message" required></textarea>
-                    </div>
-                </div>
-                <button data-action='submit' data-callback='formSubmit'
-                    data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
-                </button>
-                <button type="submit" class="mx-1 mb-1 btn btn-success">Post</button>
-            </form>
-            <div>
-                <p class="text-center">
-                    Only latest 9 messages here
+        {% for rec in data %}
+
+        <div class="card col-3 mb-2 mx-1">
+            <div class="card-body">
+                <h5 class="card-title">{{ rec["name"] }}</h5>
+                <p class="card-text">
+                    {{ rec["msg"].replace("\n","<br>")|safe }}
                 </p>
             </div>
         </div>
+
+        {% endfor %}
+        {% endif %}
     </div>
+
 </div>
+
 {% endblock %}

@@ -2,15 +2,21 @@
 
 <head>
     {% include "head.html" %}
+    {% block head %}
+    {% endblock %}
     <title>SPAM Calls</title>
 </head>
 
 <body>
-    <main>
-        {% include "nav.html" %}
-        <div class="m-2"></div>
-        {% block main %}{% endblock %}
-    </main>
+    <!-- <main> -->
+    {% include "nav.html" %}
+    <div class="mb-2"></div>
+
+    {% block body %}
+    <!-- {% include "nav.html" %} -->
+
+    {% endblock %}
+    <!-- </main> -->
 </body>
 
 </html>

@@ -14,4 +14,4 @@ Personal side projects just for fun & practice & memo
 ## spam calls
 - spam calls CRUD 
 - bootstrap + flask + sqlite3
-- + message board
+- w/ message board

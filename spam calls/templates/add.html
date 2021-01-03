@@ -1,6 +1,6 @@
 {% extends "template.html" %}
 
-{% block main %}
+{% block head %}
 <!-- reCAPTCHA v3 -->
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
@@ -8,17 +8,16 @@
         document.getElementById("validation").submit();
     }
 </script>
+{% endblock %}
+
+{% block body %}
 
 <div class="container">
-    <form id="validation" action="{{ url_for('add') }}" method="POST">
-        <div class="m-2">
-            <input id=calls name="phone" type="tel" class="form-control form-group w-25" placeholder="Phone Number"
-                maxlength="20" pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" required>
-        </div>
-        <div class="m-2">
-            <textarea id=calls name="comments" class="form-control form-group w-50" rows="3" required
-                placeholder="Write a comment"></textarea>
-        </div>
+    <form id="validation" class="col-3" action="{{ url_for('add') }}" method="POST">
+        <input id=calls name="phone" type="tel" class="mx-2 mb-2 form-control" maxlength="20" placeholder="Phone Number"
+            pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" required>
+        <textarea id=calls name="comments" class="mx-2 mb-2 form-control" rows="5" required
+            placeholder="Write a comment"></textarea>
         <button data-action='submit' data-callback='formSubmit' data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy"
             class="visually-hidden g-recaptcha">
         </button>
