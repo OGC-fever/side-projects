@@ -18,7 +18,7 @@ def about():
         cur.execute(sql)
         data = cur.fetchall()
     if data == []:
-        return render_template("result.html", action='query', msg="")
+        return render_template("about.html", action='query', msg="")
     return render_template("about.html", data=data)
 
 
