@@ -5,25 +5,24 @@
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script>
     function formSubmit(token) {
-        document.getElementById("test").submit();
-        // return true;
+        document.getElementById("validation").submit();
     }
 </script>
 
 <div class="container">
-    <form id="test" action="{{ url_for('add_calls') }}" method="POST">
-        <div class="mb-2">
+    <form id="validation" action="{{ url_for('add') }}" method="POST">
+        <div class="m-2">
             <input id=calls name="phone" type="tel" class="form-control form-group w-25" placeholder="Phone Number"
-                pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" maxlength="20" required>
+                maxlength="20" pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" required>
         </div>
-        <div class="mb-2">
-            <textarea id=calls name="comments" class="form-control form-group w-50" rows="3"
-                placeholder="Write a comment" required></textarea>
+        <div class="m-2">
+            <textarea id=calls name="comments" class="form-control form-group w-50" rows="3" required
+                placeholder="Write a comment"></textarea>
         </div>
         <button data-action='submit' data-callback='formSubmit' data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy"
             class="visually-hidden g-recaptcha">
         </button>
-        <button class="btn btn-success">Post</button>
+        <button class="mx-2 btn btn-success">Post</button>
     </form>
 </div>
 

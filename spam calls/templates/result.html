@@ -7,7 +7,7 @@
     <label class="form-label">result of {{action}} : {{msg}}</label>
     <div class="row mb-2">
 
-        {% if msg != None%}
+        {% if msg != "No record" %}
         {% if action == 'query'%}
         <div class="col-1"></div>
         <div class="col-1">Rank</div>
@@ -26,7 +26,7 @@
     {% if action == 'add'%}
     <div class="row mb-2">
         <div class="col-3">{{ data["phone"] }}</div>
-        <div class="col-4 newline">{{ data["comments"] }}</div>
+        <div class="col-4">{{ data["comments"] }}</div>
     </div>
     {% endif %}
 
@@ -41,7 +41,7 @@
         </div>
         <div class="col-1">{{ rec["rank"] }}</div>
         <div class="col-3">{{ rec["phone"] }}</div>
-        <div class="col-4 newline">{{ rec["comments"] }}</div>
+        <div class="col-4">{{ rec["comments"].replace("\n","<br>")|safe }}</div>
         <div class="col-3">{{ rec["time"] }}</div>
     </div>
     {% endfor %}

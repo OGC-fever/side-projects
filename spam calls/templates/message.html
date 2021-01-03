@@ -1,40 +1,56 @@
 {% extends "template.html" %}
 
 {% block main %}
+<!-- reCAPTCHA v3 -->
+<script src="https://www.google.com/recaptcha/api.js"></script>
+<script>
+    function formSubmit(token) {
+        document.getElementById("validation").submit();
+    }
+</script>
 
 <div class="container">
     <div class="row">
-        <div class="col-6">
-            <div class="card bg-light mb-3">
+        <div class="col-8" data-masonry='{"percentPosition": true }'>
+
+            {% if data == "" %}
+            <p class="text-justify">No one leave a message yet.</p>
+
+            {% else %}
+            {% for rec in data %}
+            <div class="card col-5 mb-2 mx-1">
                 <div class="card-body">
-                    <h5 class="card-title">author</h5>
-                    <p class="newline card-text">
-                        Card content
+                    <h5 class="card-title">{{ rec["name"] }}</h5>
+                    <p class="card-text">
+                        {{ rec["msg"].replace("\n","<br>")|safe }}
                     </p>
                 </div>
             </div>
-            <div class="card bg-light mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">author</h5>
-                    <p class="newline card-text">
-                        Card content
-                    </p>
-                </div>
-            </div>
+            {% endfor %}
+            {% endif %}
 
         </div>
-        <div class="col-4">
-            <form role="form">
-                <div class="form-group">
-                    <div class="mb-2">
-                        <textarea id=calls name="comments" class="form-control form-group" rows="3"
+        <div class="col-3">
+            <form role="form" id="validation" method="POST">
+                <div class="form-group" action="{{ url_for('msg') }}">
+                    <div class="mb-2 mx-1">
+                        <input name="name" type="text" class="mb-2 form-control form-group form-control" id="calls"
+                            required placeholder="Nick Name" maxlength="20" pattern="^[0-9A-Z.\sa-z]{1,20}$" required>
+                        <textarea id=calls name="msg" class="form-control form-group" rows="3"
                             placeholder="Write a message" required></textarea>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success">Post</button>
+                <button data-action='submit' data-callback='formSubmit'
+                    data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
+                </button>
+                <button type="submit" class="mx-1 mb-1 btn btn-success">Post</button>
             </form>
+            <div>
+                <p class="text-center">
+                    Only latest 9 messages here
+                </p>
+            </div>
         </div>
     </div>
 </div>
-
 {% endblock %}
