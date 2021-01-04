@@ -1,6 +1,6 @@
 import sqlite3
 
-sql = {"init_msg": "create table if not exists msgs (\
+sql = {"init_msg": "create table if not exists msg (\
                 id INTEGER PRIMARY KEY AUTOINCREMENT,\
                 name TEXT NOT NULL,\
                 msg TEXT NOT NULL,\

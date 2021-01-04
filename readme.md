@@ -1,6 +1,14 @@
 # OGC-fever's Side Projects
 
-Personal side projects just for fun & practice & memo
+Personal side projects just for fun & practice
+
+## 99 msg
+- bootstrap + flask + sqlite3
+- message board
+
+## spam calls
+- spam calls CRUD
+- bootstrap + flask + sqlite3
 
 ## hardness
 - visualize relationship between hardness of water and places in taiwan
@@ -10,12 +18,3 @@ Personal side projects just for fun & practice & memo
 
 ## population ratio
 - visualize ratio curve of males vs. females
-
-## spam calls
-- spam calls CRUD
-- bootstrap + flask + sqlite3
-- w/ message board
-
-## 99 msg
-- bootstrap + flask + sqlite3
-- message board
