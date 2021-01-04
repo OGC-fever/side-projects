@@ -12,6 +12,10 @@ Personal side projects just for fun & practice & memo
 - visualize ratio curve of males vs. females
 
 ## spam calls
-- spam calls CRUD 
+- spam calls CRUD
 - bootstrap + flask + sqlite3
 - w/ message board
+
+## 99 msg
+- bootstrap + flask + sqlite3
+- message board

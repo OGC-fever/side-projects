@@ -4,27 +4,33 @@
 
 <!-- reCAPTCHA v3 -->
 <script src="https://www.google.com/recaptcha/api.js"></script>
+
 <script>
     function formSubmit(token) {
         document.getElementById("validation").submit();
     }
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
+    integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
+    async></script>
+    
 {% endblock %}
 
 {% block body %}
 
 <div class="container-fluid">
     <div class="justify-content-center row">
-        <form role="form" class="col-8 col-sm-6 col-md-4 col-lg-3" id="validation" method="POST">
+        <form role="form" class="col-10 col-sm-6 col-md-6 col-lg-4" id="validation" method="POST">
             <div class="form-group" action="{{ url_for('msg') }}">
                 <div class="mb-2 mx-1">
-                    <input name="name" type="text" class="mb-2 form-control form-group form-control" id="calls"
-                        placeholder="Nick Name" maxlength="20"
+                    <input name="name" type="text" placeholder="Nick Name" maxlength="20"
+                        class="bg-dark text-white mb-2 form-control form-group form-control"
                         pattern="^[0-9a-zA-Z.\s\-\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
                     <!--\u3400-\u4DBF\u4E00-\u9FFF 中文-->
                     <!--\u3040-\u309F\u30A0-\u30FF 日文-->
-                    <textarea id=calls name="msg" class="form-control form-group" rows="3" placeholder="Write a message"
-                        required></textarea>
+                    <textarea name="msg" class="bg-dark text-white form-control form-group" rows="3"
+                        placeholder="Write a message" required></textarea>
                 </div>
             </div>
             <button data-action='submit' data-callback='formSubmit'
@@ -33,26 +39,29 @@
             <button type="submit" class="mx-1 mb-1 btn btn-success">Post</button>
         </form>
     </div>
-    <div class="justify-content-center row">
-        {% if data == "" %}
-        <p class="text-justify">No one leave a message yet.</p>
-        {% else %}
-
-        {% for rec in data %}
-
-        <div class="card col-8 col-sm-5 col-md-3 col-lg-3 mb-2 mx-1">
-            <div class="card-body">
-                <h5 class="card-title">{{ rec["name"] }}</h5>
-                <p class="card-text">
-                    {{ rec["msg"].replace("\n","<br>")|safe }}
-                </p>
-            </div>
-        </div>
-
-        {% endfor %}
-        {% endif %}
-    </div>
 
 </div>
 
+<div class="container">
+    <div class="row" data-masonry='{"percentPosition": true }'>
+
+        {% if data == "" %}
+        <p class="text-justify">No one leave a message yet.</p>
+        {% else %}
+        {% for rec in data %}
+        <div class="col-10 col-sm-6 col-md-5 col-lg-4 py-1 px-1">
+            <div class="card text-white bg-dark">
+                <div class="card-body">
+                    <h5 class="card-title">{{ rec["name"] }}</h5>
+                    <p class="card-text">
+                        {{ rec["msg"].replace("\n","<br>")|safe }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
 {% endblock %}

@@ -68,15 +68,15 @@ def query():
         return render_template("query.html")
     phone = request.form['phone']
     rank = request.form['rank']
-    sql = {"rank_empty": "select * from calls where phone like ? order by time desc limit 10",
-           "rank": "select * from calls where phone like ? and rank >= ? order by time desc limit 10"}
+    sql = "select * from calls where phone like ? order by time desc limit 10"
     with sqlite3.connect(database) as con:
         con.row_factory = sqlite3.Row
         cur = con.cursor()
         if rank == "":
-            cur.execute(sql["rank_empty"], ('%'+phone+'%',))
+            cur.execute(sql, ('%' + phone + '%',))
         else:
-            cur.execute(sql["rank"], ('%'+phone+'%', rank))
+            sql = sql.replace("?", "? and rank >= ?")
+            cur.execute(sql, ('%' + phone + '%', rank,))
         data = cur.fetchall()
     if data == []:
         msg = "No record"

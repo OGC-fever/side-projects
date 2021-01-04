@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    {% include "head.html" %}
+    {% block head %}
+    {% endblock %}
+    <title>SPAM Calls</title>
+</head>
+
+<body class="bg-light">
+    <!-- <main> -->
+    {% include "nav.html" %}
+    <div class="mb-2"></div>
+
+    {% block body %}
+    <!-- {% include "nav.html" %} -->
+
+    {% endblock %}
+    <!-- </main> -->
+</body>
+
+</html>

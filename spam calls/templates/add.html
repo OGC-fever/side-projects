@@ -13,9 +13,9 @@
 {% block body %}
 
 <div class="container">
-    <form id="validation" class="col-3" action="{{ url_for('add') }}" method="POST">
-        <input id=calls name="phone" type="tel" class="mx-2 mb-2 form-control" maxlength="20" placeholder="Phone Number"
-            pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" required>
+    <form id="validation" class="col-8 col-sm-6 col-md-4 col-lg-3" action="{{ url_for('add') }}" method="POST">
+        <input id=calls name="phone" type="tel" class="mx-2 mb-2 form-control w-75" maxlength="20"
+            placeholder="Phone Number" pattern="^[+]*[0-9]{1,4}[-\s0-9]{1,}[0-9]{1,}$" required>
         <textarea id=calls name="comments" class="mx-2 mb-2 form-control" rows="5" required
             placeholder="Write a comment"></textarea>
         <button data-action='submit' data-callback='formSubmit' data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy"
