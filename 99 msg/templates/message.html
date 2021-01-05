@@ -14,36 +14,44 @@
 <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
     integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
     async></script>
-    
+
 {% endblock %}
 
 {% block body %}
+<div class="container-fluid">
+    <div class="row col-6 col-sm-4 col-md-3 col-lg-2 mx-auto ">
+        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">Write a message</button>
+    </div>
+</div>
 
 <div class="container-fluid">
     <div class="justify-content-center row">
-        <form role="form" class="col-10 col-sm-6 col-md-6 col-lg-4" id="validation" method="POST">
-            <div class="form-group" action="{{ url_for('msg') }}">
-                <div class="mb-2 mx-1">
-                    <input name="name" type="text" placeholder="Nick Name" maxlength="20"
-                        class="bg-dark text-white mb-2 form-control form-group form-control"
-                        pattern="^[0-9a-zA-Z.\s\-\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
-                    <!--\u3400-\u4DBF\u4E00-\u9FFF 中文-->
-                    <!--\u3040-\u309F\u30A0-\u30FF 日文-->
-                    <textarea name="msg" class="bg-dark text-white form-control form-group" rows="3"
-                        placeholder="Write a message" required></textarea>
-                </div>
-            </div>
-            <button data-action='submit' data-callback='formSubmit'
-                data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
-            </button>
-            <button type="submit" class="mx-1 mb-1 btn btn-success">Post</button>
-        </form>
+        <div id="collapseExample"
+            class="card collapse bg-light border-light px-0 py-0 col-10 col-sm-6 col-md-6 col-lg-4">
+            <form role="form" class="col form-group mx-1 my-1" action="/msg" id="validation" method="POST">
+                <input name="name" type="text" class="mb-1 text-white bg-dark form-control " id="calls"
+                    placeholder="Nick Name" maxlength="20"
+                    pattern="^[0-9A-Z.\sa-z\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
+                <textarea id=calls name="msg" class="text-white bg-dark form-control mb-1" rows="4" required
+                    placeholder="Write a message"></textarea>
+                <button data-action='submit' data-callback='formSubmit'
+                    data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
+                </button>
+                <button type="submit" class="form-group mb-1 btn btn-success">Post</button>
+            </form>
+        </div>
     </div>
 
 </div>
+</div>
 
-<div class="container">
-    <div class="row" data-masonry='{"percentPosition": true }'>
+<!--\u3400-\u4DBF\u4E00-\u9FFF 中文-->
+<!--\u3040-\u309F\u30A0-\u30FF 日文-->
+
+
+<div class="container-fluid">
+    <div class="row content-center mx-auto" data-masonry='{"percentPosition": true }'>
 
         {% if data == "" %}
         <p class="text-justify">No one leave a message yet.</p>
@@ -61,7 +69,6 @@
         </div>
         {% endfor %}
         {% endif %}
-
     </div>
 </div>
 {% endblock %}

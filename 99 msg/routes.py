@@ -9,16 +9,15 @@ database = 'msg.db'
 init_db(database)
 
 
-@app.route("/", methods=["GET"])
 @app.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
 
-
+@app.route("/", methods=["GET"])
 @app.route("/msg", methods=["GET", "POST"])
 def msg():
     if request.method == "GET":
-        sql = "select * from msgs order by id desc limit 99"
+        sql = "select * from msg order by id desc limit 99"
         with sqlite3.connect(database) as con:
             con.row_factory = sqlite3.Row
             cur = con.cursor()
@@ -31,7 +30,7 @@ def msg():
     msg = request.form['msg']
     if name == "":
         name = random.choice(["nobody", "anonymous", "路人甲", "無名"])
-    sql = "insert into msgs (name, msg) values (?, ?)"
+    sql = "insert into msg (name, msg) values (?, ?)"
     with sqlite3.connect(database) as con:
         con.row_factory = sqlite3.Row
         cur = con.cursor()
