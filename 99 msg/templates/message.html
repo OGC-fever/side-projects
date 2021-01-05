@@ -60,9 +60,11 @@
         <div class="col-10 col-sm-6 col-md-5 col-lg-4 py-1 px-1">
             <div class="card text-white bg-dark">
                 <div class="card-body">
-                    <h5 class="card-title">{{ rec["name"] }}</h5>
                     <p class="card-text">
                         {{ rec["msg"].replace("\n","<br>")|safe }}
+                    </p>
+                    <p class="blockquote-footer card-text text-end ">
+                        {{ rec["name"] }}
                     </p>
                 </div>
             </div>
