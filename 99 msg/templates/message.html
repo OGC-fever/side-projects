@@ -29,12 +29,13 @@
     <div class="justify-content-center row">
         <div id="collapseExample"
             class="card collapse bg-light border-light px-0 py-0 col-10 col-sm-6 col-md-6 col-lg-4">
-            <form role="form" class="col form-group mx-1 my-1" action="/msg" id="validation" method="POST">
-                <input name="name" type="text" class="mb-1 text-white bg-dark form-control " id="calls"
-                    placeholder="Nick Name" maxlength="20"
-                    pattern="^[0-9A-Z.\sa-z\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
-                <textarea id=calls name="msg" class="text-white bg-dark form-control mb-1" rows="4" required
+            <form role="form" id="validation" class="col form-group mx-1 my-1" action="/msg"
+                enctype="multipart/form-data" method="POST">
+                <input name="name" type="text" class="mb-1 text-white bg-dark form-control" placeholder="Nick Name"
+                    maxlength="20" pattern="^[0-9A-Z.\sa-z\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
+                <textarea name="msg" class="text-white bg-dark form-control mb-1" rows="4" required
                     placeholder="Write a message"></textarea>
+                <input type="file" class="text-white bg-dark form-control mb-1" name="upload">
                 <button data-action='submit' data-callback='formSubmit'
                     data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
                 </button>
@@ -49,8 +50,7 @@
 <!--\u3400-\u4DBF\u4E00-\u9FFF 中文-->
 <!--\u3040-\u309F\u30A0-\u30FF 日文-->
 
-
-<div class="container-fluid">
+<div class="container">
     <div class="row content-center mx-auto" data-masonry='{"percentPosition": true }'>
 
         {% if data == "" %}
@@ -59,6 +59,9 @@
         {% for rec in data %}
         <div class="col-10 col-sm-6 col-md-5 col-lg-4 py-1 px-1">
             <div class="card text-white bg-dark">
+                {% if rec["image"]: %}
+                <img src="data:;base64,{{ rec['image'].decode()|safe }}" class="card-img-top" alt="OOPS">
+                {% endif %}
                 <div class="card-body">
                     <p class="card-text">
                         {{ rec["msg"].replace("\n","<br>")|safe }}
