@@ -1,12 +1,7 @@
 import sqlite3
 
-sql = {"init_msg": "create table if not exists msg (\
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,\
-                    name TEXT NOT NULL,\
-                    msg TEXT NOT NULL,\
-                    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
-                    image blob,\
-                    thumbnail blob)"}
+sql = {
+    "init_msg": "create table if not exists msg (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,msg TEXT NOT NULL,time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,image blob,thumbnail text)"}
 
 
 def init_db(database):
