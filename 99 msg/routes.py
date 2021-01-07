@@ -20,8 +20,8 @@ def about():
     return render_template("about.html")
 
 
-def check_file(filename, extensions):
-    if "." in filename and filename.split(".")[-1].lower() in extensions:
+def check_file(filename, file_exts):
+    if "." in filename and filename.split(".")[-1].lower() in file_exts:
         return True
     else:
         return False
@@ -29,6 +29,8 @@ def check_file(filename, extensions):
 
 def get_file_ext(filename):
     ext = filename.split(".")[-1].upper()
+    if ext == "JPG":
+        ext = "JPEG"
     return ext
 
 
@@ -40,13 +42,12 @@ def image_route(id):
         cur = con.cursor()
         cur.execute(sql, (id,))
         result = cur.fetchone()
-        # image_bytes = result[0]
         image = BytesIO(result[0])
     return send_file(image, mimetype="image/png")
 
 
-@ app.route("/", methods=["GET"])
-@ app.route("/msg", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
+@app.route("/msg", methods=["GET", "POST"])
 def msg():
     sql = {"read": "select * from msg order by id desc limit 99",
            "create": "insert into msg (name, msg, image, thumbnail) values (?, ?, ?, ?)"}
@@ -62,13 +63,14 @@ def msg():
     name = request.form['name']
     msg = request.form['msg']
     file = request.files["upload"]
-    extensions = {'jpg', 'jpeg', "png", "gif"}
-    thumbnail_size = (300, 300)
+    file_exts = {'jpg', 'jpeg', "png", "gif"}
+    thumbnail_size = (500, 500)
+    image, thumbnail = None, None
     if not name:
         name = random.choice(["nobody", "anonymous", "路人甲", "無名"])
-    if not msg and not file:
+    if not msg and not check_file(file.filename, file_exts):
         return redirect(url_for("msg"))
-    elif file.filename and check_file(file.filename, extensions):
+    if file.filename and check_file(file.filename, file_exts):
         buf_file = BytesIO()
         buf_thumb = BytesIO()
         file.save(buf_file)
@@ -76,10 +78,9 @@ def msg():
         im = Image.open(file)
         im.thumbnail(thumbnail_size)
         im.save(buf_thumb, get_file_ext(file.filename))
-        # im.save(buf_thumb, "PNG")
         thumbnail = base64.b64encode(buf_thumb.getbuffer()).decode()
     else:
-        image, thumbnail = None
+        return redirect(url_for("msg"))    
     with sqlite3.connect(database) as con:
         con.row_factory = sqlite3.Row
         cur = con.cursor()
