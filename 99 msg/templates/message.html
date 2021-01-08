@@ -20,25 +20,27 @@
 {% block body %}
 <div class="container-fluid">
     <div class="row col-6 col-sm-4 col-md-3 col-lg-2 mx-auto ">
-        <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMenu">Write a
+        <button class="btn btn-Primary col-auto mt-2 mb-1" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseMenu">Write a
             message</button>
     </div>
 </div>
 
 <div class="container-fluid">
     <div class="justify-content-center row">
-        <div id="collapseMenu" class="card collapse bg-light border-light px-0 py-0 col-10 col-sm-6 col-md-6 col-lg-4">
-            <form role="form" id="validation" class="col form-group mx-1 my-1" action="/msg"
-                enctype="multipart/form-data" method="POST">
-                <input name="name" type="text" class="mb-1 text-white bg-dark form-control" placeholder="Nick Name"
+        <div id="collapseMenu" class="card collapse border-dark bg-dark col-10 col-sm-6 col-md-6 col-lg-4">
+            <form role="form" id="validation" class="col form-group my-0 mx-1" action="/msg" enctype="multipart/form-data"
+                method="POST">
+                <input name="name" type="text" class="my-2 border-Primary text-white bg-dark form-control" placeholder="Nick Name"
                     maxlength="20" pattern="^[0-9A-Z.\sa-z\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
-                <textarea class="text-white bg-dark form-control mb-1" rows="4" name="msg"
+                <textarea class="text-white bg-dark border-Primary form-control mb-2" rows="4" name="msg"
                     placeholder="Write a message"></textarea>
-                <input type="file" class="text-white bg-dark form-control mb-1" name="upload">
+                <input type="file" class="border-Primary mb-2 text-secondary bg-dark form-control" name="upload">
                 <button data-action='submit' data-callback='formSubmit'
                     data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
                 </button>
-                <button type="submit" class="form-group mb-1 btn btn-success">Post</button>
+                <button type="submit"
+                    class="form-control btn btn-Primary">Post</button>
             </form>
         </div>
     </div>
@@ -49,21 +51,20 @@
 <!--\u3400-\u4DBF\u4E00-\u9FFF 中文-->
 <!--\u3040-\u309F\u30A0-\u30FF 日文-->
 
-<div class="container">
+<div class="container-fluid">
     <div class="row content-center mx-auto" data-masonry='{"percentPosition": true }'>
 
         {% if data == "" %}
         <p class="text-justify">No one leave a message yet.</p>
         {% else %}
         {% for rec in data %}
-        <div class="col-10 col-sm-6 col-md-5 col-lg-4 py-2 px-2">
-            <div class="card text-white bg-dark">
-                <!-- {% if rec["image"]: %}
-                <img src="{{ url_for('image_route',id=rec['id']) }}" class="card-img-top" alt="OOPS">
-                {% endif %} -->
-                {% if rec["thumbnail"]: %}
-                <img src="data:;base64,{{ rec['thumbnail']|safe }}" class="card-img-top" alt="OOPS">
-                {% endif %}
+        <div class="col-10 col-sm-4 col-md-3 col-lg-2 py-2 px-2">
+            <div class="card text-white border-Warning bg-dark">
+                {% if rec["image"]: %}
+                <a href="{{ url_for('image_route',id=rec['id']) }}" class="card-img-top" alt="OOPS">
+                    {% if rec["thumbnail"]: %}
+                    <img src="data:;base64,{{ rec['thumbnail']|safe }}" class="card-img-top" alt="OOPS"></a>
+                {% endif %}{% endif %}
                 <div class="card-body">
                     <p class="card-text">
                         {{ rec["msg"].replace("\n","<br>")|safe }}
