@@ -1,64 +1,14 @@
 from flask import Flask, render_template, request, url_for, redirect, send_file, Response
 from flask.helpers import flash
-from PIL import Image
 import sqlite3
 import random
 from werkzeug.exceptions import HTTPException, InternalServerError
 from io import BytesIO
+from flask import app
+from modules.addon import *
 
 app = Flask(__name__)
-
-
-def init_db(database):
-    sql = {
-        "init_msg": "create table if not exists msg (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,msg TEXT NOT NULL,time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,image blob,thumbnail blob)"}
-    db_crud(database=database, sql=sql["init_msg"],
-            prm="", fetch=False, commit=True)
-
-
-def check_file(filename):
-    file_exts = {'jpg', 'jpeg', "jfif", "png", "gif"}
-    if filename and "." in filename:
-        if filename.split(".")[-1].lower() in file_exts:
-            return True
-    else:
-        return False
-
-
-def get_file_ext(filename):
-    ext = filename.split(".")[-1].upper()
-    if ext == "JPG":
-        ext = "JPEG"
-    return ext
-
-
-def db_crud(database, sql, prm, fetch, commit):
-    with sqlite3.connect(database) as con:
-        con.row_factory = sqlite3.Row
-        cur = con.cursor()
-        if prm == "":
-            cur.execute(sql)
-        if prm != "":
-            cur.execute(sql, prm)
-        if fetch != False:
-            if fetch == "all":
-                return cur.fetchall()
-            if fetch == "one":
-                return cur.fetchone()
-        if commit:
-            con.commit()
-
-
-def make_timg(file, type):  # make thumbnail
-    image_size = [(1000, 1000), (300, 300)]
-    buf = BytesIO()
-    im = Image.open(file)
-    if type == "image":
-        im.thumbnail(image_size[0])
-    if type == "timg":
-        im.thumbnail(image_size[1])
-    im.save(buf, get_file_ext(file.filename))
-    return buf
+database = 'msg.db'
 
 
 @app.route("/<type>/<int:id>", methods=["GET"])
@@ -66,7 +16,7 @@ def image_route(id, type):
     sql = f"select {type} from msg where id = {id}"
     # sql = "select ? from msg where id = ?"
     data = db_crud(database=database, sql=sql, prm="",
-                   fetch="one", commit=False)
+                   fetch="one", commit=False, query=False)
     image = BytesIO(data[0])
     # return send_file(image, mimetype="image/png") # standard
     # for pythonanywhere
@@ -76,11 +26,13 @@ def image_route(id, type):
 @app.route("/", methods=["GET"])
 @app.route("/msg", methods=["GET", "POST"])
 def msg():
-    sql = {"read": "select * from msg order by id desc limit 49",
+    limit = 49
+    init_db(database, 49)
+    sql = {"read": f"select * from msg order by id desc limit {limit}",
            "create": "insert into msg (name, msg, image, thumbnail) values (?, ?, ?, ?)"}
     if request.method == "GET":
         data = db_crud(database=database,
-                       sql=sql["read"], prm="", fetch="all", commit=False)
+                       sql=sql["read"], prm="", fetch="all", commit=False, query=False)
         if data == []:
             return render_template("message.html", data="")
         return render_template("message.html", data=data)
@@ -100,7 +52,7 @@ def msg():
         else:
             return redirect(url_for("msg"))
     db_crud(database=database, sql=sql["create"], prm=(
-        name, msg, image, thumbnail), fetch="all", commit=True)
+        name, msg, image, thumbnail), fetch="all", commit=True, query=False)
     return redirect(url_for("msg"))
 
 # @ app.errorhandler(HTTPException)
@@ -110,8 +62,5 @@ def msg():
 #     return render_template("oops.html")
 
 
-database = 'msg.db'
-
 if __name__ == "__main__":
     app.run(debug=True)
-    init_db(database)
