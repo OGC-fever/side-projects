@@ -47,6 +47,19 @@ def image_route(id):
     # for pythonanywhere
     return Response(image, mimetype='image/jpeg', direct_passthrough=True)
 
+@app.route("/thumbnail/<int:id>", methods=["GET", "POST"])
+def thumbnail_route(id):
+    sql = "select thumbnail from msg where id = ?"
+    with sqlite3.connect(database) as con:
+        con.row_factory = sqlite3.Row
+        cur = con.cursor()
+        cur.execute(sql, (id,))
+        result = cur.fetchone()
+    image = BytesIO(result[0])
+    # return send_file(image, mimetype="image/png")
+    # for pythonanywhere
+    return Response(image, mimetype='image/jpeg', direct_passthrough=True)
+
 
 @app.route("/", methods=["GET"])
 @app.route("/msg", methods=["GET", "POST"])
@@ -66,17 +79,23 @@ def msg():
     msg = request.form['msg']
     file = request.files["upload"]
     file_exts = {'jpg', 'jpeg', "jfif", "png", "gif"}
-    thumbnail_size = (400, 400)
+    image_size = (800, 800)
+    thumbnail_size = (300, 300)
     if not name:
         name = random.choice(["nobody", "anonymous", "路人甲", "無名"])
     if check_file(file.filename, file_exts):
         buf_file, buf_thumb = BytesIO(), BytesIO()
-        file.save(buf_file)
+        # file.save(buf_file)
+        im_image = Image.open(file)
+        im_image.thumbnail(image_size)
+        im_image.save(buf_file, get_file_ext(file.filename))
         image = sqlite3.Binary(buf_file.getbuffer())
         im_thumb = Image.open(file)
         im_thumb.thumbnail(thumbnail_size)
         im_thumb.save(buf_thumb, get_file_ext(file.filename))
-        thumbnail = base64.b64encode(buf_thumb.getbuffer()).decode()
+        # thumbnail = base64.b64encode(buf_thumb.getbuffer()).decode()
+        thumbnail = sqlite3.Binary(buf_thumb.getbuffer())
+
     else:
         if msg:
             image, thumbnail = None, None
