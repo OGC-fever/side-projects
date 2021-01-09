@@ -50,18 +50,20 @@
 <!--\u3040-\u309F\u30A0-\u30FF 日文-->
 
 <div class="container-fluid content-center">
-    <div class="row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 mx-auto" data-masonry='{"percentPosition": true }'>
+    <div class="row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-2 mx-auto"
+        data-masonry='{"percentPosition": true }'>
 
         {% if data == "" %}
         <p class="text-justify">No one leave a message yet.</p>
         {% else %}
         {% for rec in data %}
-        <div class="py-2 px-2" >
+        <div class="py-2 px-2">
             <div class="card text-white border-Warning bg-dark">
                 {% if rec["image"]: %}
-                <a href="{{ url_for('image_route',id=rec['id']) }}" class="card-img-top" alt="OOPS">
+                <a href="{{ url_for('image_route',id=rec['id'],kind='image') }}" class="card-img-top" alt="OOPS">
                     {% if rec["thumbnail"]: %}
-                    <img src="{{ url_for('thumbnail_route',id=rec['id']) }}" class="card-img-top" alt="OOPS"></a>
+                    <img src="{{ url_for('image_route',id=rec['id'],kind='thumbnail') }}" class="card-img-top"
+                        alt="OOPS"></a>
                 <!-- <img src="data:;base64,{{ rec['thumbnail']|safe }}" class="card-img-top" alt="OOPS"></a> -->
                 {% endif %}{% endif %}
                 <div class="card-body">
