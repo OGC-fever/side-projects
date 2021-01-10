@@ -15,15 +15,13 @@
     integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
     async></script>
 
+<link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
+
 {% endblock %}
 
 {% block body %}
-<!-- <div class="container content-center">
-    <div class="row  col-6 col-sm-4 col-md-3 col-lg-2 mx-auto text-center">
-        <button class="btn content-center btn-Primary col-auto mt-2 mb-1" type="button" data-bs-toggle="collapse"
-            data-bs-target="#collapseMenu">Write a message</button>
-    </div>
-</div> -->
+
+<div type="button" class="fab bg-primary" data-bs-toggle="collapse" data-bs-target="#collapseMenu"> + </div>
 
 <div class="container-fluid">
     <div class="justify-content-center row">
@@ -40,6 +38,8 @@
                     data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
                 </button>
                 <button type="submit" class="form-control btn btn-Primary">Post</button>
+                <button type="button" data-bs-toggle="collapse" data-bs-target="#collapseMenu"
+                    class="form-control btn btn-secondary">Canel</button>
             </form>
         </div>
     </div>
@@ -67,10 +67,11 @@
                 <a href="{{ url_for('image_route',id=rec['id'],type='image') }}" class="card-img-top" alt="OOPS">
                     {% if rec["thumbnail"]: %}
                     <img src="{{ url_for('image_route',id=rec['id'],type='thumbnail') }}" class="card-img-top"
-                        alt="OOPS"></a>
+                        alt="OOPS" loading="lazy"></a>
                 <!-- <img src="data:;base64,{{ rec['thumbnail']|safe }}" class="card-img-top" alt="OOPS"></a> -->
                 {% endif %}{% endif %}
                 <div class="card-body">
+                    <!-- 2 -->
                     {% if rec["msg"]: %}
                     <p class="card-text">
                         {{ rec["msg"].replace("\n","<br>")|safe }}

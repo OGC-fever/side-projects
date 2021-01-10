@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, send_file, Response
-from flask.helpers import flash
+from flask import Flask, render_template, request, url_for, redirect, Response
 import sqlite3
 import random
 from werkzeug.exceptions import HTTPException, InternalServerError
@@ -27,7 +26,7 @@ def image_route(id, type):
 @app.route("/msg", methods=["GET", "POST"])
 def msg():
     limit = 49
-    init_db(database, 49)
+    init_db(database, limit)
     sql = {"read": f"select * from msg order by id desc limit {limit}",
            "create": "insert into msg (name, msg, image, thumbnail) values (?, ?, ?, ?)"}
     if request.method == "GET":
