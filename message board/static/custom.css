@@ -2,14 +2,6 @@ body {
     background: Silver !important;
 }
 
-input#calls {
-    background: Gainsboro !important;
-}
-
-textarea#calls {
-    background: Gainsboro !important;
-}
-
 .fab {
     width: 50px;
     height: 50px;
@@ -20,17 +12,17 @@ textarea#calls {
     position: fixed;
     right: 25px;
     bottom: 25px;
-    color: yellow;
+    color: Orange;
     /* background-color: red; */
     /* background:green;  */
-    box-shadow: 0 6px 10px 0 yellow;
-    transition: all 0.1s ease-in-out;
+    box-shadow: 0 6px 10px 0 GoldenRod;
+    transition: all 0.3s ease-in-out;
 
     z-index: 99;
 }
 
 .fab:hover {
-    box-shadow: 0 6px 14px 0 yellow;
+    box-shadow: 0 6px 10px 0 GoldenRod;
     transform: scale(1.2);
 
     z-index: 100;
