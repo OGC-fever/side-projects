@@ -6,10 +6,6 @@ Personal side projects just for fun & practice
 - bootstrap + flask + sqlite3
 - message board
 
-## spam calls
-- spam calls CRUD
-- bootstrap + flask + sqlite3
-
 ## hardness
 - visualize relationship between hardness of water and places in taiwan
 
