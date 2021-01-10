@@ -2,9 +2,8 @@
 
 Personal side projects just for fun & practice
 
-## 99 msg
+## message board
 - bootstrap + flask + sqlite3
-- message board
 
 ## hardness
 - visualize relationship between hardness of water and places in taiwan
