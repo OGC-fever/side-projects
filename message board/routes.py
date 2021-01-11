@@ -13,9 +13,11 @@ database = 'msg.db'
 @app.route("/<type>/<int:id>", methods=["GET"])
 def image_route(id, type):
     sql = f"select {type} from msg where id = {id}"
-    # sql = "select ? from msg where id = ?"
+    # sql = "select {} from msg where id = ?".format(type)
+    # prm = (id,)
     data = db_crud(database=database, sql=sql, prm="",
                    fetch="one", commit=False, query=False)
+    # return data[0]
     image = BytesIO(data[0])
     # return send_file(image, mimetype="image/png") # standard
     # for pythonanywhere
@@ -26,12 +28,12 @@ def image_route(id, type):
 @app.route("/msg", methods=["GET", "POST"])
 def msg():
     limit = 49
-    init_db(database, limit)
-    sql = {"read": f"select * from msg order by id desc limit {limit}",
+    init_db(database)
+    sql = {"read": "select * from msg order by id desc limit ?",
            "create": "insert into msg (name, msg, image, thumbnail) values (?, ?, ?, ?)"}
     if request.method == "GET":
         data = db_crud(database=database,
-                       sql=sql["read"], prm="", fetch="all", commit=False, query=False)
+                       sql=sql["read"], prm=(limit,), fetch="all", commit=False, query=False)
         if data == []:
             return render_template("message.html", data="")
         return render_template("message.html", data=data)

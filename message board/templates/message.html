@@ -11,23 +11,45 @@
     }
 </script>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('img').click(function (event) {
+            var img_src = $(this).attr('image');
+            var card_id = img_src.split("/")[2];
+            var text_modal = $(this).closest('.card').find('#card_text_' + card_id).text();
+            var author_modal = $(this).closest('.card').find('#card_author_' + card_id).text();
+
+            $('#photo_modal').attr('src', img_src);
+            document.getElementById("text_modal").innerHTML = text_modal;
+            document.getElementById("author_modal").innerHTML = author_modal;
+            $('#cardModal').modal('handleUpdate')
+            $('#cardModal').modal('show');
+        })
+    });
+</script>
+
+<!--masonry-->
 <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
     integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
     async></script>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
 
+<!--icon-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
 {% endblock %}
 
 {% block body %}
 
-<div type="button" class="fab bg-primary" data-bs-toggle="modal" data-bs-target="#formModal"> + </div>
+<button class="fab btn-light" data-bs-toggle="modal" data-bs-target="#formModal"><i
+        class="bi bi-pencil align-middle"></i></button>
 
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formModal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content text-white border-dark bg-dark ">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Write some message</h5>
+                <h5 class="modal-title">Write some message</h5>
             </div>
             <div class="modal-body">
                 <form role="form" id="validation" class="col form-group my-0 mx-1" action="/msg"
@@ -51,8 +73,24 @@
     </div>
 </div>
 
-<!--\u3400-\u4DBF\u4E00-\u9FFF 中文-->
-<!--\u3040-\u309F\u30A0-\u30FF 日文-->
+
+<div class="modal fade" id="cardModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content text-white border-dark bg-dark">
+            <div class="modal-body">
+                <div class="card text-white border-Warning bg-dark">
+                    <img class="card-img-top" id="photo_modal" loading="lazy"></img>
+                    <div class="card-body">
+                        <p id="text_modal" class="card-text"></p>
+                        <p class="card-text text-end">
+                            <small id="author_modal" class="blockquote-footer"></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% if data == "" %}
 <div class="content-center">
@@ -68,22 +106,19 @@
         {% for rec in data %}
         <div class="py-2 px-2">
             <div class="card text-white border-Warning bg-dark">
-                {% if rec["image"]: %}
-                <a href="{{ url_for('image_route',id=rec['id'],type='image') }}" class="card-img-top" alt="OOPS">
-                    {% if rec["thumbnail"]: %}
-                    <img src="{{ url_for('image_route',id=rec['id'],type='thumbnail') }}" class="card-img-top"
-                        alt="OOPS" loading="lazy"></a>
-                <!-- <img src="data:;base64,{{ rec['thumbnail']|safe }}" class="card-img-top" alt="OOPS"></a> -->
-                {% endif %}{% endif %}
+                {% if rec["thumbnail"]: %}
+                <img id="card_image_{{ rec['id']}}" src="{{ url_for('image_route',id=rec['id'],type='thumbnail') }}"
+                    image="{{ url_for('image_route',id=rec['id'],type='image') }}" class="card-img-top"
+                    data-bs-toggle="modal" data-bs-target="#cardModal" loading="lazy">
+                {% endif %}
                 <div class="card-body">
-                    <!-- 2 -->
                     {% if rec["msg"]: %}
-                    <p class="card-text">
+                    <p id="card_text_{{ rec['id']}}" class="card-text">
                         {{ rec["msg"].replace("\n","<br>")|safe }}
                     </p>
                     {% endif %}
                     <p class="card-text text-end">
-                        <small class="blockquote-footer">
+                        <small id="card_author_{{ rec['id']}}" class="blockquote-footer">
                             {{ rec["name"] }}
                         </small>
                     </p>

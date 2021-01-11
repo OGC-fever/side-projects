@@ -3,16 +3,11 @@ from io import BytesIO
 from PIL import Image
 
 
-def init_db(database, limit):
-    sql = {"init_msg": "create table if not exists msg (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,msg TEXT NOT NULL,time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,image blob,thumbnail blob)",
-           "query": "select count(id) from msg", "limit": f"delete from msg where id in (select id from msg limit (select count(id) - {limit} from msg))"}
+def init_db(database):
+    sql = {
+        "init_msg": "create table if not exists msg (id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,msg TEXT NOT NULL,time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,image blob,thumbnail blob)"}
     db_crud(database=database, sql=sql["init_msg"],
             prm="", fetch=False, commit=True, query=False)
-    query = db_crud(database=database,
-                    sql=sql["query"], prm="", fetch=False, commit=False, query=True)
-    if query > limit:
-        db_crud(database=database,
-                sql=sql["limit"], prm="", fetch="one", commit=True, query=False)
 
 
 def db_crud(database, sql, prm, fetch, commit, query):
