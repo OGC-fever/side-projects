@@ -12,13 +12,16 @@ database = 'msg.db'
 
 @app.route("/<type>/<int:id>", methods=["GET"])
 def image_route(id, type):
-    sql = f"select {type} from msg where id = {id}"
-    # sql = "select {} from msg where id = ?".format(type)
-    # prm = (id,)
-    data = db_crud(database=database, sql=sql, prm="",
+    sql = "select image,thumbnail from msg where id = ?"
+    data = db_crud(database=database, sql=sql, prm=(id,),
                    fetch="one", commit=False, query=False)
-    # return data[0]
-    image = BytesIO(data[0])
+    # return len(data)
+    if type == "image":
+        image = BytesIO(data[0])
+    elif type == "timg":
+        image = BytesIO(data[1])
+    else:
+        image = []
     # return send_file(image, mimetype="image/png") # standard
     # for pythonanywhere
     return Response(image, mimetype='image/jpeg', direct_passthrough=True)

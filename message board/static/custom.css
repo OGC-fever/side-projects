@@ -17,7 +17,7 @@
     box-shadow: 0 6px 10px 0 LightSkyBlue;
     transition: all 0.3s ease-in-out;
 
-    z-index: 99;
+    z-index: 98;
 }
 
 .fab:hover {

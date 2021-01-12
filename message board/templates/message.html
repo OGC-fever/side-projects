@@ -5,6 +5,9 @@
 <!-- reCAPTCHA v3 -->
 <script src="https://www.google.com/recaptcha/api.js"></script>
 
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+
 <script>
     function formSubmit(token) {
         document.getElementById("validation").submit();
@@ -20,9 +23,10 @@
             var author_modal = $(this).closest('.card').find('#card_author_' + card_id).text();
 
             $('#photo_modal').attr('src', img_src);
-            document.getElementById("text_modal").innerHTML = text_modal;
-            document.getElementById("author_modal").innerHTML = author_modal;
-            $('#cardModal').modal('handleUpdate')
+            $('#text_modal').text(text_modal);
+            $('#author_modal').text(author_modal);
+            $('#cardModal').modal('handleUpdate');
+            myModal.handleUpdate();
             $('#cardModal').modal('show');
         })
     });
@@ -75,11 +79,18 @@
 
 
 <div class="modal fade" id="cardModal" tabindex="-1">
-    <div class="modal-dialog">
+
+
+    <div class="modal-dialog modal-fullscreen-lg-down modal-dialog-scrollable">
+
         <div class="modal-content text-white border-dark bg-dark">
+
             <div class="modal-body">
                 <div class="card text-white border-Warning bg-dark">
                     <img class="card-img-top" id="photo_modal" loading="lazy"></img>
+                    <div class="card-img-overlay text-end py-0 px-0 mx-1 my-1">
+                        <button class="btn-close bg-warning" data-bs-dismiss="modal"></button>
+                    </div>
                     <div class="card-body">
                         <p id="text_modal" class="card-text"></p>
                         <p class="card-text text-end">
@@ -107,7 +118,7 @@
         <div class="py-2 px-2">
             <div class="card text-white border-Warning bg-dark">
                 {% if rec["thumbnail"]: %}
-                <img id="card_image_{{ rec['id']}}" src="{{ url_for('image_route',id=rec['id'],type='thumbnail') }}"
+                <img id="card_image_{{ rec['id']}}" src="{{ url_for('image_route',id=rec['id'],type='timg') }}"
                     image="{{ url_for('image_route',id=rec['id'],type='image') }}" class="card-img-top"
                     data-bs-toggle="modal" data-bs-target="#cardModal" loading="lazy">
                 {% endif %}
