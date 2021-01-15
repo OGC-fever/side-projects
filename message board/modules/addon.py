@@ -1,6 +1,15 @@
 import sqlite3
 from io import BytesIO
 from PIL import Image
+from random import randint
+
+
+def verify():
+    verify_len = 6
+    text = ""
+    for i in range(verify_len):
+        text += str(randint(0, 9))
+    return text
 
 
 def init_db(database):

@@ -15,7 +15,6 @@ def image_route(id, type):
     sql = "select image,thumbnail from msg where id = ?"
     data = db_crud(database=database, sql=sql, prm=(id,),
                    fetch="one", commit=False, query=False)
-    # return len(data)
     if type == "image":
         image = BytesIO(data[0])
     elif type == "timg":
@@ -30,7 +29,7 @@ def image_route(id, type):
 @app.route("/", methods=["GET"])
 @app.route("/msg", methods=["GET", "POST"])
 def msg():
-    limit = 49
+    limit = 99
     init_db(database)
     sql = {"read": "select * from msg order by id desc limit ?",
            "create": "insert into msg (name, msg, image, thumbnail) values (?, ?, ?, ?)"}
