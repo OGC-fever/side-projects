@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messasge.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///message.db'
 db = SQLAlchemy(app)
 
 
