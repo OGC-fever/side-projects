@@ -29,7 +29,10 @@
     <div class="modal-dialog">
         <div class="modal-content text-white border-dark bg-dark ">
             <div class="modal-header">
-                <h5 class="modal-title">Write some message</h5>
+                <div>
+                    <h5 class="modal-title">Write some message</h5>
+                    <h6>Duplicate images deleted every 24 hours</h6>
+                </div>
             </div>
             <div class="modal-body">
                 <form role="form" id="validation" class="col form-group my-0 mx-1" action="/msg"
@@ -46,6 +49,11 @@
 
                     <button type="submit" class="w-25 btn btn-Primary">Post</button>
                     <button type="button" data-bs-dismiss="modal" class="w-25 mx-1 btn btn-secondary">Canel</button>
+                    {% if code: %}
+                    <label class="text-end">
+                        Delete code : {{ code }}
+                    </label>
+                    {% endif %}
                 </form>
             </div>
         </div>

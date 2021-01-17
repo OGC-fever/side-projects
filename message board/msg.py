@@ -4,7 +4,7 @@ import random
 from werkzeug.exceptions import HTTPException, InternalServerError
 from io import BytesIO
 from flask import app
-from modules.addon import *
+from image_process import check_file, make_timg, verify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
@@ -21,6 +21,11 @@ class post(db.Model):
     image = db.Column(db.LargeBinary, nullable=True)
     timg = db.Column(db.LargeBinary, nullable=True)
     time = db.Column(db.DateTime, default=datetime.utcnow)
+    # code = db.Column(db.Text, nullable=True)
+
+    def post(self):
+        db.session.add(self)
+        db.session.commit()
 
 
 @app.route("/test")
@@ -45,12 +50,13 @@ def image_route(id, type):
 @app.route("/msg", methods=["GET", "POST"])
 def messages():
     db.create_all()
+    code = verify()
     if request.method == "GET":
         try:
             data = post.query.order_by(post.id.desc()).all()
         except:
             return render_template("message.html", data="")
-        return render_template("message.html", data=data)
+        return render_template("message.html", data=data, code=code)
     name = request.form['name']
     msg = request.form['msg']
     file = request.files["upload"]
@@ -64,9 +70,8 @@ def messages():
             return render_template("message.html")
         image = None
         timg = None  # msg exist
-    data = post(name=name, msg=msg, image=image, timg=timg)
-    db.session.add(data)
-    db.session.commit()
+    data = post(name=name, msg=msg, image=image, timg=timg, code=code)
+    data.post()
     return redirect("msg")
 
 # @ app.errorhandler(HTTPException)
