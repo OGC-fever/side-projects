@@ -89,20 +89,20 @@
 
         <div class="py-2 px-2">
             <div class="card text-white bg-dark">
-                {% if rec["thumbnail"]: %}
-                <img id="card_image_{{ rec['id']}}" src="{{ url_for('image_route',id=rec['id'],type='timg') }}"
-                    image="{{ url_for('image_route',id=rec['id'],type='image') }}" class="card-img-top rounded-0"
+                {% if rec.timg: %}
+                <img id="card_image_{{ rec.id}}" src="{{ url_for('image_route',id=rec.id,type='timg') }}"
+                    image="{{ url_for('image_route',id=rec.id,type='image') }}" class="card-img-top rounded-0"
                     data-bs-toggle="modal" data-bs-target="#cardModal" loading="lazy">
                 {% endif %}
                 <div class="card-body">
-                    {% if rec["msg"]: %}
-                    <p id="card_text_{{ rec['id']}}" class="card-text">
-                        {{ rec["msg"].replace("\n","<br>")|safe }}
+                    {% if rec.msg: %}
+                    <p id="card_text_{{ rec.id}}" class="card-text">
+                        {{ rec.msg.replace("\n","<br>")|safe }}
                     </p>
                     {% endif %}
                     <p class="card-text text-end">
-                        <small id="card_author_{{ rec['id']}}" class="blockquote-footer">
-                            {{ rec["name"] }}
+                        <small id="card_author_{{ rec.id}}" class="blockquote-footer">
+                            {{ rec.name }}
                         </small>
                     </p>
                 </div>

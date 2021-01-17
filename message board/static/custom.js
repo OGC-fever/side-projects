@@ -4,9 +4,8 @@ $(document).ready(function () {
         var card_id = img_src.split("/")[2];
         var text_modal = $(this).closest('.card').find('#card_text_' + card_id).text();
         var author_modal = $(this).closest('.card').find('#card_author_' + card_id).text();
-
         $('#photo_modal').attr('src', img_src);
-        $('#text_modal').text(text_modal);
+        if (text_modal != "") { $('#text_modal').text(text_modal); }
         $('#author_modal').text(author_modal);
         $('#cardModal').modal('show');
     })
@@ -15,9 +14,7 @@ $(document).ready(function () {
     $container.imagesLoaded(function () { $container.masonry(); })
 
     window.onclick = function (event) {
-        if (event.target.id = "photo_modal") {
-            $("#cardModal").modal("hide");
-        }
+        if (event.target.id = "photo_modal") { $("#cardModal").modal("hide"); }
     }
 });
 
