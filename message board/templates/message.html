@@ -46,14 +46,14 @@
                     <button data-action='submit' data-callback='formSubmit'
                         data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
                     </button>
-
-                    <button type="submit" class="w-25 btn btn-Primary">Post</button>
-                    <button type="button" data-bs-dismiss="modal" class="w-25 mx-1 btn btn-secondary">Canel</button>
-                    {% if code: %}
-                    <label class="text-end">
-                        Delete code : {{ code }}
-                    </label>
-                    {% endif %}
+                        <button type="submit" class="col-3 justify-content-start btn btn-Primary">Post</button>
+                        <button type="button" data-bs-dismiss="modal"
+                            class="col-3 mx-1 btn btn-secondary">Canel</button>
+                        {% if code: %}
+                        <span>
+                            Delete code : {{ code }}
+                        </span>
+                        {% endif %}
                 </form>
             </div>
         </div>
@@ -90,7 +90,7 @@
 {% else %}
 
 <div class="container content-center">
-    <div class="row row-cols-lg-6 row-cols-md-4 row-cols-sm-3 row-cols-1 mx-auto"
+    <div class="row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 mx-auto"
         data-masonry='{"percentPosition": true }' id="grid">
 
         {% for rec in data %}

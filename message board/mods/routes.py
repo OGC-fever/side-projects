@@ -1,37 +1,10 @@
-from flask import Flask, render_template, request, url_for, redirect, Response
+from main import app, db
+from .db_crud import post
+from flask import render_template, request, redirect, Response, url_for
+from io import BytesIO
+from .image_process import check_file, make_timg, verify
 import sqlite3
 import random
-from werkzeug.exceptions import HTTPException, InternalServerError
-from io import BytesIO
-from flask import app
-from image_process import check_file, make_timg, verify
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///message.db'
-db = SQLAlchemy(app)
-
-
-class post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, nullable=True)
-    msg = db.Column(db.Text, nullable=True)
-    image = db.Column(db.LargeBinary, nullable=True)
-    timg = db.Column(db.LargeBinary, nullable=True)
-    time = db.Column(db.DateTime, default=datetime.utcnow)
-    # code = db.Column(db.Text, nullable=True)
-
-    def post(self):
-        db.session.add(self)
-        db.session.commit()
-
-
-@app.route("/test")
-def index():
-    data = post.query.all()
-    return data
 
 
 @app.route("/<type>/<int:id>", methods=["GET"])
@@ -52,11 +25,13 @@ def messages():
     db.create_all()
     code = verify()
     if request.method == "GET":
-        try:
-            data = post.query.order_by(post.id.desc()).all()
-        except:
-            return render_template("message.html", data="")
-        return render_template("message.html", data=data, code=code)
+        data = post.query.order_by(post.id.desc()).all()
+        data_count = db.session.query(post.id).count()
+        if data_count == 0:
+            return render_template("message.html", data="", code=code)
+        else:
+            return render_template("message.html", data=data, code=code)
+
     name = request.form['name']
     msg = request.form['msg']
     file = request.files["upload"]
@@ -67,12 +42,12 @@ def messages():
         timg = sqlite3.Binary(make_timg(file, "timg").getbuffer())
     else:  # file isn't exist
         if msg == "":  # msg isn't exist
-            return render_template("message.html")
+            return ("", 204)
         image = None
         timg = None  # msg exist
     data = post(name=name, msg=msg, image=image, timg=timg, code=code)
     data.post()
-    return redirect("msg")
+    return redirect(url_for("messages"))
 
 # @ app.errorhandler(HTTPException)
 # @ app.errorhandler(InternalServerError)

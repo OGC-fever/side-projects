@@ -1,4 +1,3 @@
-import sqlite3
 from io import BytesIO
 from PIL import Image
 from random import randint
