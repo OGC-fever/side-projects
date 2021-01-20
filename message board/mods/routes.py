@@ -1,3 +1,5 @@
+from flask import json
+from flask.json import jsonify
 from main import app, db
 from .db_crud import post
 from flask import render_template, request, redirect, Response, url_for
@@ -16,13 +18,35 @@ def image_route(id, type):
         image = BytesIO(data.timg)
     else:
         return redirect("msg")
-    return Response(image, mimetype='image/jpeg', direct_passthrough=True)
+    resp = Response(image, mimetype='image/jpeg', direct_passthrough=True)
+    return resp
+
+
+@app.route("/modal/card", methods=["GET", "POST"])
+def card():
+    id = request.args.get("id")
+    data = post.query.filter_by(id=id).first()
+    return render_template("card_modal.html", data=data)
+
+
+@app.route("/author/<id>", methods=["GET", "POST"])
+def author(id):
+    data = post.query.filter_by(id=id).first()
+    print(id)
+
+    print(data.name)
+    return jsonify(data.name)
+
+
+@app.route("/msg/<id>", methods=["GET", "POST"])
+def msg(id):
+    data = post.query.filter_by(id=id).first()
+    return data.msg
 
 
 @app.route("/", methods=["GET"])
 @app.route("/msg", methods=["GET", "POST"])
 def messages():
-    db.create_all()
     code = verify()
     if request.method == "GET":
         data = post.query.order_by(post.id.desc()).all()

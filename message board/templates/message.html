@@ -2,21 +2,15 @@
 
 {% block head %}
 
-<script src="https://www.google.com/recaptcha/api.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-
-<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
     integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
     async></script>
 
-<script src="/static/custom.js"></script>
+<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 
-<link rel="stylesheet" href="/static/custom.css">
+<script src="{{ url_for('static',filename='modal.js') }}"></script>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<script src="{{ url_for('static',filename='masonry.js') }}"></script>
 
 {% endblock %}
 
@@ -25,62 +19,9 @@
 <button class="fab btn-light" data-bs-toggle="modal" data-bs-target="#formModal"><i
         class="bi bi-pencil align-middle"></i></button>
 
-<div class="modal fade" id="formModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content text-white border-dark bg-dark ">
-            <div class="modal-header">
-                <div>
-                    <h5 class="modal-title">Write some message</h5>
-                    <h6>Duplicate images deleted every 24 hours</h6>
-                </div>
-            </div>
-            <div class="modal-body">
-                <form role="form" id="validation" class="col form-group my-0 mx-1" action="/msg"
-                    enctype="multipart/form-data" method="POST">
-                    <input name="name" type="text" class="mb-2 mt-1 border-Primary text-white bg-dark form-control"
-                        placeholder="Nick Name" maxlength="20"
-                        pattern="^[0-9A-Z.\sa-z\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
-                    <textarea class="text-white bg-dark border-Primary form-control mb-2" rows="4" name="msg"
-                        placeholder="Write a message"></textarea>
-                    <input type="file" class="border-Primary mb-2 text-secondary bg-dark form-control" name="upload">
-                    <button data-action='submit' data-callback='formSubmit'
-                        data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
-                    </button>
-                        <button type="submit" class="col-3 justify-content-start btn btn-Primary">Post</button>
-                        <button type="button" data-bs-dismiss="modal"
-                            class="col-3 mx-1 btn btn-secondary">Canel</button>
-                        {% if code: %}
-                        <span>
-                            Delete code : {{ code }}
-                        </span>
-                        {% endif %}
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+{% include "form_modal.html" %}
 
 
-<div class="modal fade" id="cardModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-fullscreen modal-dialog-scrollable">
-        <div class="modal-content text-white border-dark bg-dark">
-            <div class="modal-body mx-auto vh-100">
-                <div class="card text-white bg-dark">
-                    <img class="card-img-top rounded-0" id="photo_modal" loading="lazy"></img>
-                    <div class="card-img-overlay text-end py-0 px-0 mx-1 my-1">
-                        <button class="btn-close bg-warning" data-bs-dismiss="modal"></button>
-                    </div>
-                    <div class="card-body">
-                        <p id="text_modal" class="card-text"></p>
-                        <p class="card-text text-end">
-                            <small id="author_modal" class="blockquote-footer"></small>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 {% if data == "" %}
 <div class="content-center">
@@ -98,22 +39,27 @@
         <div class="py-2 px-2">
             <div class="card text-white bg-dark">
                 {% if rec.timg: %}
-                <img id="card_image_{{ rec.id}}" src="{{ url_for('image_route',id=rec.id,type='timg') }}"
-                    image="{{ url_for('image_route',id=rec.id,type='image') }}" class="card-img-top rounded-0"
-                    data-bs-toggle="modal" data-bs-target="#cardModal" loading="lazy">
+
+                <a href="{{ url_for('image_route',id=rec.id,type='image') }}">
+                    <img id="card_image_{{ rec.id}}" src="{{ url_for('image_route',id=rec.id,type='timg') }}"
+                        class="card-img-top rounded-0" data-bs-toggle="modal" data-bs-target="#cardModal"
+                        loading="lazy"></a>
                 {% endif %}
-                <div class="card-body">
-                    {% if rec.msg: %}
-                    <p id="card_text_{{ rec.id}}" class="card-text">
+                {% if rec.msg: %}
+                <div class="card-body px-2 py-2">
+
+                    <p id="card_text_{{ rec.id}}" class="fs-6 card-text">
                         {{ rec.msg.replace("\n","<br>")|safe }}
                     </p>
-                    {% endif %}
-                    <p class="card-text text-end">
+
+                    <!-- <p class="card-text text-end">
                         <small id="card_author_{{ rec.id}}" class="blockquote-footer">
                             {{ rec.name }}
                         </small>
-                    </p>
+                    </p> -->
                 </div>
+
+                {% endif %}
             </div>
         </div>
         {% endfor %}
