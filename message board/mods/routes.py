@@ -22,11 +22,10 @@ def image_route(id, type):
     return resp
 
 
-@app.route("/modal/card", methods=["GET", "POST"])
-def card():
-    id = request.args.get("id")
+@app.route("/modal/card/<id>", methods=["GET", "POST"])
+def card(id):
     data = post.query.filter_by(id=id).first()
-    return render_template("card_modal.html", data=data)
+    return render_template("card_modal.html", data=data, id=id)
 
 
 @app.route("/author/<id>", methods=["GET", "POST"])

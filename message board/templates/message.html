@@ -21,8 +21,6 @@
 
 {% include "form_modal.html" %}
 
-
-
 {% if data == "" %}
 <div class="content-center">
     <p></p>
@@ -39,8 +37,7 @@
         <div class="py-2 px-2">
             <div class="card text-white bg-dark">
                 {% if rec.timg: %}
-
-                <a href="{{ url_for('image_route',id=rec.id,type='image') }}">
+                <a href="{{ url_for('card',id=rec.id) }}">
                     <img id="card_image_{{ rec.id}}" src="{{ url_for('image_route',id=rec.id,type='timg') }}"
                         class="card-img-top rounded-0" data-bs-toggle="modal" data-bs-target="#cardModal"
                         loading="lazy"></a>
@@ -52,11 +49,6 @@
                         {{ rec.msg.replace("\n","<br>")|safe }}
                     </p>
 
-                    <!-- <p class="card-text text-end">
-                        <small id="card_author_{{ rec.id}}" class="blockquote-footer">
-                            {{ rec.name }}
-                        </small>
-                    </p> -->
                 </div>
 
                 {% endif %}
