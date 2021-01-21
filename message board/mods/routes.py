@@ -22,25 +22,10 @@ def image_route(id, type):
     return resp
 
 
-@app.route("/modal/card/<id>", methods=["GET", "POST"])
+@app.route("/post/<id>", methods=["GET", "POST"])
 def card(id):
     data = post.query.filter_by(id=id).first()
     return render_template("card_modal.html", data=data, id=id)
-
-
-@app.route("/author/<id>", methods=["GET", "POST"])
-def author(id):
-    data = post.query.filter_by(id=id).first()
-    print(id)
-
-    print(data.name)
-    return jsonify(data.name)
-
-
-@app.route("/msg/<id>", methods=["GET", "POST"])
-def msg(id):
-    data = post.query.filter_by(id=id).first()
-    return data.msg
 
 
 @app.route("/", methods=["GET"])
