@@ -1,8 +1,13 @@
-from flask import render_template
+from flask import request
 from mods.db_crud import post
 from config import app
 
-@app.route("/post/<id>", methods=["GET", "POST"])
-def card(id):
+
+@app.route("/card_info", methods=["POST", "GET"])
+def info():
+    id = request.form['id']
     data = post.query.filter_by(id=id).first()
-    return render_template("card.html", data=data, id=id)
+    data = {"id": data.id,
+            "name": data.name,
+            "msg": data.msg}
+    return data

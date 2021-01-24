@@ -2,12 +2,6 @@
 
 {% block head %}
 
-<script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js"
-    integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"
-    async></script>
-
-<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
-
 <script src="{{ url_for('static',filename='modal.js') }}"></script>
 
 <link rel="stylesheet" href="/static/masonry.css">
@@ -20,6 +14,8 @@
         class="bi bi-pencil align-middle"></i></button>
 
 {% include "form.html" %}
+{% include "card.html" %}
+
 
 {% if data == "" %}
 <div class="content-center">
@@ -33,9 +29,8 @@
     {% for rec in data %}
     <div class="item">
         {% if rec.timg: %}
-        <a href="{{ url_for('card',id=rec.id) }}">
-            <img id="card_image_{{ rec.id}}" src="{{ url_for('image_route',id=rec.id,type='timg') }}"
-                class="card-img-top rounded-0" data-bs-toggle="modal" data-bs-target="#cardModal" loading="lazy"></a>
+        <img id="card_image_{{ rec.id}}" class="card-img-top rounded-0" loading="lazy"
+            src="{{ url_for('image_route',id=rec.id,type='timg') }}" data-bs-toggle="modal" data-bs-target="#cardModal">
         {% endif %}
         {% if rec.msg: %}
         <div class="card-body text-white px-2 py-2">
@@ -48,35 +43,7 @@
     {% endfor %}
 </div>
 
-<!-- <div class="container content-center">
-    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mx-auto"
-        data-masonry='{"percentPosition": true }' id="grid">
 
-        {% for rec in data %}
-
-        <div class="py-2 px-2">
-            <div class="card text-white bg-dark">
-                {% if rec.timg: %}
-                <a href="{{ url_for('card',id=rec.id) }}">
-                    <img id="card_image_{{ rec.id}}" src="{{ url_for('image_route',id=rec.id,type='timg') }}"
-                        class="card-img-top rounded-0" data-bs-toggle="modal" data-bs-target="#cardModal"
-                        loading="lazy"></a>
-                {% endif %}
-                {% if rec.msg: %}
-                <div class="card-body px-2 py-2">
-
-                    <p id="card_text_{{ rec.id}}" class="fs-6 card-text">
-                        {{ rec.msg.replace("\n","<br>")|safe }}
-                    </p>
-
-                </div>
-
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div> -->
 {% endif %}
 
 {% endblock %}
