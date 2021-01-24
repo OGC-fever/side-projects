@@ -1,5 +1,11 @@
 from datetime import datetime
-from main import db
+from flask_sqlalchemy import SQLAlchemy
+from flask import app
+from config import app
+
+db = SQLAlchemy(app)
+db.init_app(app)
+db.create_all()
 
 
 class post(db.Model):

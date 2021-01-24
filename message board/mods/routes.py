@@ -1,12 +1,11 @@
-from flask import json
-from flask.json import jsonify
-from main import app, db
 from .db_crud import post
 from flask import render_template, request, redirect, Response, url_for
 from io import BytesIO
 from .image_process import check_file, make_timg, verify
 import sqlite3
 import random
+from flask import app, Flask
+from main import *
 
 
 @app.route("/<type>/<int:id>", methods=["GET"])
@@ -25,7 +24,7 @@ def image_route(id, type):
 @app.route("/post/<id>", methods=["GET", "POST"])
 def card(id):
     data = post.query.filter_by(id=id).first()
-    return render_template("card_modal.html", data=data, id=id)
+    return render_template("card.html", data=data, id=id)
 
 
 @app.route("/", methods=["GET"])
@@ -38,7 +37,7 @@ def messages():
         if data_count == 0:
             return render_template("message.html", data="", code=code)
         else:
-            return render_template("message.html", data=data, code=code)
+            return render_template("message.html", data=data[:10], code=code)
 
     name = request.form['name']
     msg = request.form['msg']
@@ -62,7 +61,3 @@ def messages():
 # @ app.errorhandler(TypeError)
 # def not_found(e):
 #     return render_template("oops.html")
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
