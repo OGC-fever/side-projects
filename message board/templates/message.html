@@ -10,7 +10,7 @@
 
 <script src="{{ url_for('static',filename='modal.js') }}"></script>
 
-<script src="{{ url_for('static',filename='masonry.js') }}"></script>
+<link rel="stylesheet" href="/static/masonry.css">
 
 {% endblock %}
 
@@ -19,7 +19,7 @@
 <button class="fab btn-light" data-bs-toggle="modal" data-bs-target="#formModal"><i
         class="bi bi-pencil align-middle"></i></button>
 
-{% include "form_modal.html" %}
+{% include "form.html" %}
 
 {% if data == "" %}
 <div class="content-center">
@@ -28,7 +28,27 @@
 </div>
 {% else %}
 
-<div class="container content-center">
+
+<div class="masonry">
+    {% for rec in data %}
+    <div class="item">
+        {% if rec.timg: %}
+        <a href="{{ url_for('card',id=rec.id) }}">
+            <img id="card_image_{{ rec.id}}" src="{{ url_for('image_route',id=rec.id,type='timg') }}"
+                class="card-img-top rounded-0" data-bs-toggle="modal" data-bs-target="#cardModal" loading="lazy"></a>
+        {% endif %}
+        {% if rec.msg: %}
+        <div class="card-body text-white px-2 py-2">
+            <p id="card_text_{{ rec.id}}" class="fs-6 card-text">
+                {{ rec.msg.replace("\n","<br>")|safe }}
+            </p>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- <div class="container content-center">
     <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 mx-auto"
         data-masonry='{"percentPosition": true }' id="grid">
 
@@ -56,7 +76,7 @@
         </div>
         {% endfor %}
     </div>
-</div>
+</div> -->
 {% endif %}
 
 {% endblock %}
