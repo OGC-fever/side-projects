@@ -16,7 +16,7 @@ def msg():
         if data_count == 0:
             return render_template("message.html", data="", code=code)
         else:
-            return render_template("message.html", data=data[:], code=code)
+            return render_template("message.html", data=data, code=code)
 
     name = request.form['name']
     msg = request.form['msg']

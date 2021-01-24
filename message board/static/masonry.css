@@ -1,13 +1,13 @@
 .masonry {
-    margin: 15px auto;
+    margin: 10px auto;
     max-width: 80%;
-    column-gap: 15px;
+    column-gap: 10px;
 }
 
 .item {
-    /* background: rgba(0, 0, 0, 0.500);
-    padding: 10px; */
-    margin: 15px auto;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2px;
+    margin:  10px auto;
 }
 
 @media only screen and (min-width: 1024px) {
