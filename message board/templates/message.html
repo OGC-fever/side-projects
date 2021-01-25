@@ -4,7 +4,7 @@
 
 <script src="{{ url_for('static',filename='modal.js') }}"></script>
 
-<link rel="stylesheet" href="{{ url_for('static',filename='masonry.css') }}">
+<!-- <link rel="stylesheet" href="{{ url_for('static',filename='masonry.css') }}"> -->
 
 {% endblock %}
 
@@ -14,7 +14,7 @@
         class="bi bi-pencil align-middle"></i></button>
 
 {% include "form.html" %}
-{% include "card.html" %}
+{% include "popup.html" %}
 
 
 {% if data == "" %}
@@ -24,25 +24,29 @@
 </div>
 {% else %}
 
-
-<div class="masonry">
+<div class="align-items-end text-center col-10 row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-3 mx-auto">
     {% for rec in data[:20] %}
-    <div class="item">
-        {% if rec.timg: %}
-        <img id="card_image_{{ rec.id}}" class="card-img-top rounded-0" loading="lazy"
-            src="{{ url_for('image_route',id=rec.id,type='timg') }}" data-bs-toggle="modal" data-bs-target="#cardModal">
-        {% endif %}
-        {% if rec.msg: %}
-        <div class="card-body text-white px-2 py-2">
-            <p id="card_text_{{ rec.id}}" class="fs-6 card-text">
-                {{ rec.msg.replace("\n","<br>")|safe }}
-            </p>
+    <div class="col">
+        <div class="h-100">
+            {% if rec.timg: %}
+            <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" class="my-auto img-fluid rounded-3"
+                loading="lazy" data-bs-toggle="modal" data-bs-target="#cardModal">
+            {% endif %}
+            <!-- {% if rec.msg: %}
+            <div class="border border-danger">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">
+                    {{ rec.msg.replace("\n","<br>")|safe }}
+                </p>
+            </div>
+            {% endif %} -->
+            <!-- <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
+            </div> -->
         </div>
-        {% endif %}
-    </div>
-    {% endfor %}
-</div>
+    </div> {% endfor %}
 
+</div>
 
 {% endif %}
 
