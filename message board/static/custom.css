@@ -26,3 +26,7 @@
 .modal {
     background-color: rgba(0, 0, 0, 0.8) !important;
 }
+
+.bg-card {
+    background-color: rgb(0, 0, 0) ;
+}

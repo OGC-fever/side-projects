@@ -3,7 +3,7 @@
 Personal side projects just for fun & practice
 
 ## message board
-- bootstrap + python + flask + sqlite3 + sqlalchemy + jquery + ajax
+- bootstrap + flask + sqlite3 + sqlalchemy + jquery
 
 ## hardness
 - visualize relationship between hardness of water and places in taiwan

@@ -2,6 +2,9 @@ $(document).ready(function () {
     $('img').click(function () {
         var src = $(this).attr('src');
         var id = src.split("/")[2];
+        $('#image_modal').attr('src', "/image/" + id);
+        // $('#msg_modal').html(data["msg"].replace("\n", "<br>"));
+        // $('#author_modal').html(data["name"]);
 
         $.ajax({
             url: "/card_info",
@@ -9,7 +12,7 @@ $(document).ready(function () {
             dataType: "json",
             data: { "id": id },
             success: function (data) {
-                $('#image_modal').attr('src', "/image/" + id);
+                // $('#image_modal').attr('src', "/image/" + id);
                 $('#msg_modal').html(data["msg"].replace("\n", "<br>"));
                 $('#author_modal').html(data["name"]);
             },
