@@ -15,12 +15,11 @@ $(document).ready(function () {
                 } else {
                     $('#image_modal').attr('src', " ");
                 }
-                $('#msg_modal').html(data["msg"].replace(/\n/g, "<br>"));
+                $('#msg_modal').html(data["msg"].split("\n").join("<br>"));
                 $('#author_modal').html(data["name"]);
             },
             error: function (error) {
                 alert("OOPS!");
-                console.log(error);
             }
         })
 

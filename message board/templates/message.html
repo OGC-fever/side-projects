@@ -21,7 +21,7 @@
 </div>
 {% else %}
 
-<div class="col-10 row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-2 mx-auto">
+<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 g-2 mx-auto">
     {% for rec in data %}
     <div class="col px-1 py-1">
         <div class="card h-100 bg-card popup" id="{{ rec.id }}">
@@ -34,11 +34,11 @@
                 {{ rec.msg.replace("\n","<br>")|safe }}
             </div>
             {% endif %}
-            <div class="card-footer px-2 py-1 text-end">
+            <!-- <div class="card-footer px-2 py-1 text-end">
                 <small class="blockquote-footer text-muted">
                     {{ rec.name }}
                 </small>
-            </div>
+            </div> -->
         </div>
     </div>
     {% endfor %}
