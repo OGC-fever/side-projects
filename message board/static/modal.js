@@ -1,23 +1,26 @@
 $(document).ready(function () {
-    $('img').click(function () {
-        var src = $(this).attr('src');
-        var id = src.split("/")[2];
-        $('#image_modal').attr('src', "/image/" + id);
-        // $('#msg_modal').html(data["msg"].replace("\n", "<br>"));
-        // $('#author_modal').html(data["name"]);
-
+    $('.popup').click(function () {
+        var id = $(this).attr('id');
+        if ($(this).find('img').attr("src")) {
+            var check_img = true
+        }
         $.ajax({
             url: "/card_info",
             type: "POST",
             dataType: "json",
             data: { "id": id },
             success: function (data) {
-                // $('#image_modal').attr('src', "/image/" + id);
-                $('#msg_modal').html(data["msg"].replace("\n", "<br>"));
+                if (check_img) {
+                    $('#image_modal').attr('src', "/image/" + id);
+                } else {
+                    $('#image_modal').attr('src', " ");
+                }
+                $('#msg_modal').html(data["msg"].replace(/\n/g, "<br>"));
                 $('#author_modal').html(data["name"]);
             },
-            error: function () {
+            error: function (error) {
                 alert("OOPS!");
+                console.log(error);
             }
         })
 
@@ -26,5 +29,9 @@ $(document).ready(function () {
 
     $('.modal-dialog').click(function () {
         $("#cardModal").modal("hide");
+    })
+
+    $('.form-button').click(function () {
+        $("#formModal").modal("hide");
     })
 });

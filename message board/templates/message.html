@@ -14,7 +14,6 @@
 {% include "form.html" %}
 {% include "popup.html" %}
 
-
 {% if data == "" %}
 <div class="content-center">
     <p></p>
@@ -24,23 +23,22 @@
 
 <div class="col-10 row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-2 mx-auto">
     {% for rec in data %}
-    <div class="col">
-        <div class="card h-100 bg-card">
+    <div class="col px-1 py-1">
+        <div class="card h-100 bg-card popup" id="{{ rec.id }}">
             {% if rec.timg: %}
-            <img src=" {{ url_for('image_route',id=rec.id,type='timg' ) }}"
-                class="my-auto py-1 px-1 img-fluid rounded-3" loading="lazy" data-bs-toggle="modal"
-                data-bs-target="#cardModal">
+            <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" class="my-auto py-1 px-1 img-fluid round-5"
+                loading="lazy" data-bs-toggle="modal" data-bs-target="#cardModal">
             {% endif %}
             {% if rec.msg: %}
-            <p class=" text-start text-light mx-2 my-1">
-            {{ rec.msg.replace("\n","<br>")|safe }}
-            </p>
+            <div class="card-body text-start text-light px-3 pt-3">
+                {{ rec.msg.replace("\n","<br>")|safe }}
+            </div>
             {% endif %}
-            <p class="mx-2 my-1 text-end">
+            <div class="card-footer px-2 py-1 text-end">
                 <small class="blockquote-footer text-muted">
                     {{ rec.name }}
                 </small>
-            </p>
+            </div>
         </div>
     </div>
     {% endfor %}

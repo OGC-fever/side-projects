@@ -1,12 +1,14 @@
+from typing import Text
 from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
+
 from mods.image_process import check_file, make_timg, verify
 from mods.db_crud import post
 from config import app
 
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET", "POST"])
 @app.route("/msg", methods=["GET", "POST"])
 def msg():
     code = verify()
@@ -33,4 +35,5 @@ def msg():
         timg = None  # msg exist
     data = post(name=name, msg=msg, image=image, timg=timg, code=code)
     data.post()
-    return redirect(url_for("msg"))
+    # return redirect(url_for("msg"))
+    return ("", 204)

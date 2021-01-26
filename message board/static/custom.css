@@ -9,9 +9,6 @@
     position: fixed;
     right: 25px;
     bottom: 25px;
-    /*color: dark;*/
-    /* background-color: red; */
-    /* background:green;  */
     box-shadow: 0 6px 10px 0 LightSkyBlue;
     transition: all 0.3s ease-in-out;
     z-index: 98;
@@ -29,5 +26,9 @@
 }
 
 .bg-card {
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.round-5 {
+    border-radius: 5%;
 }
