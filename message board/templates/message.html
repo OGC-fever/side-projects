@@ -21,13 +21,14 @@
 </div>
 {% else %}
 
-<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 g-2 mx-auto">
+<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 g-1 mx-auto">
     {% for rec in data %}
-    <div class="col px-1 py-1">
+    <div class="col px-2 py-1">
         <div class="card h-100 bg-card popup" id="{{ rec.id }}">
             {% if rec.timg: %}
-            <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" class="my-auto py-1 px-1 img-fluid round-5"
-                loading="lazy" data-bs-toggle="modal" data-bs-target="#cardModal">
+            <img src="{{ url_for('image_route',id=rec.id,type='timg') }}"
+                class="card-img-top my-1 py-1 px-1 img-fluid" loading="lazy" data-bs-toggle="modal"
+                data-bs-target="#cardModal">
             {% endif %}
             {% if rec.msg: %}
             <div class="card-body text-start text-light px-3 pt-3">

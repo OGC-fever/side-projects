@@ -27,13 +27,13 @@ def get_file_ext(filename):
     return ext
 
 
-def make_timg(file, type):  # make thumbnail
-    image_size = [(1000, 1000), (300, 300)]
+def resize_img(file, type):  # make thumbnail
+    im_resize = [(1000, 1000), (400, 400)]
     buf = BytesIO()
     im = Image.open(file)
     if type == "image":
-        im.thumbnail(image_size[0])
+        im.thumbnail(im_resize[0])
     if type == "timg":
-        im.thumbnail(image_size[1])
+        im.thumbnail(im_resize[1])
     im.save(buf, get_file_ext(file.filename))
     return buf

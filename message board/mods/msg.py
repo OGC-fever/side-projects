@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
 
-from mods.image_process import check_file, make_timg, verify
+from mods.image_process import check_file, resize_img, verify
 from mods.db_crud import post
 from config import app
 
@@ -26,7 +26,7 @@ def msg():
         name = random.choice(["nobody", "anonymous", "路人甲", "無名"])
     if check_file(file.filename):  # file exist
         def pack(type):
-            return sqlite3.Binary(make_timg(file, type).getbuffer())
+            return sqlite3.Binary(resize_img(file, type).getbuffer())
         image = pack("image")
         timg = pack("timg")
     else:  # file isn't exist
