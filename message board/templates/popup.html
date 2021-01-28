@@ -1,30 +1,31 @@
 <div class="modal fade " id="cardModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-scrollable modal-fullscreen">
-        <div class="container row">
-            <div class="col-7 my-3">
-                <img id="image_modal" class="img-fluid modal-img col-12" src="" loading="lazy">
-                <div id="msg_modal" class="my-2 mx-2 text-light col-12">
+        <div class="container modal-content">
+            <!-- <div class="container"> -->
+            <div class="row">
+                <div class="col-10 col-lg-7 col-md-8 col-sm-9 mx-auto my-3">
+                    <img id="image_modal" class="img-fluid modal-img col-12" src="" loading="lazy">
                 </div>
-                <div class="text-end col-12">
-                    <small id="author_modal" class="blockquote-footer text-light-50">
-                    </small>
-                </div>
-
-            </div>
-            <div class="col-3 my-3 text-light">
-                <div class="btn-group">
-                    <button class="btn btn-outline-warning">
-                        <i class="fs-4 bi bi-chat-dots"></i>
-                    </button>
-                    <button class="btn btn-outline-warning">
-                        <i class="fs-4 bi bi-chat-dots"></i>
-                    </button>
-                    <button class="btn btn-outline-warning">
-                        <i class="fs-4 bi bi-chat-dots"></i>
-                    </button>
-                </div>
-                <div>
-                    test
+                <div class="col-10 col-lg-4 col-md-3 col-sm-3 mx-auto my-3">
+                    <div class="btn-group">
+                        <button type="button" onclick="alert('test');"
+                            class="btn btn-outline-warning">
+                            <i class="fs-4 bi bi-chat-dots"></i>
+                        </button>
+                        <button class="btn btn-outline-warning">
+                            <i class="fs-4 bi bi-chat-dots"></i>
+                        </button>
+                        <button class="btn btn-outline-warning">
+                            <i class="fs-4 bi bi-chat-dots"></i>
+                        </button>
+                    </div>
+                    <div id="msg_modal" class="my-2 mx-2 text-light col-12">
+                    </div>
+                    <div class="text-end col-12">
+                        <small id="author_modal" class="blockquote-footer text-light-50">
+                        </small>
+                        <!-- </div> -->
+                    </div>
                 </div>
             </div>
         </div>
