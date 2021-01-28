@@ -12,7 +12,7 @@ from config import app
 def msg():
     code = verify()
     if request.method == "GET":
-        data = post.query.order_by(post.id.desc()).all()
+        data = post.query.order_by(post.id.desc()).limit(15).all()
         data_count = post.query.count()
         if data_count == 0:
             return render_template("message.html", data="", code=code)
@@ -24,17 +24,13 @@ def msg():
     file = request.files["upload"]
     if name == "":
         name = random.choice(["nobody", "anonymous", "路人甲", "無名"])
+    if msg == "":  # msg isn't exist
+        return ("", 204)
     if check_file(file.filename):  # file exist
         def pack(type):
             return sqlite3.Binary(resize_img(file, type).getbuffer())
         image = pack("image")
         timg = pack("timg")
-    else:  # file isn't exist
-        if msg == "":  # msg isn't exist
-            return ("", 204)
-        image = None
-        timg = None  # msg exist
-    data = post(name=name, msg=msg, image=image, timg=timg, code=code)
-    data.post()
+        data = post(name=name, msg=msg, image=image, timg=timg, code=code)
+        data.post()
     return redirect(url_for("msg"))
-    # return ("", 204)

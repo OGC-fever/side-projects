@@ -21,25 +21,22 @@
 </div>
 {% else %}
 
-<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 g-1 mx-auto">
+<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 mx-auto">
     {% for rec in data %}
-    <div class="col px-2 py-1">
+    <div class="col px-1 py-1">
         <div class="card h-100 bg-card popup" id="{{ rec.id }}">
-            {% if rec.timg: %}
-            <img src="{{ url_for('image_route',id=rec.id,type='timg') }}"
-                class="card-img-top my-1 py-1 px-1 img-fluid" loading="lazy" data-bs-toggle="modal"
-                data-bs-target="#cardModal">
-            {% endif %}
-            {% if rec.msg: %}
-            <div class="card-body text-start text-light px-3 pt-3">
-                {{ rec.msg.replace("\n","<br>")|safe }}
+            <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" class="card-img my-1  px-1 py-1 img-fluid"
+                loading="lazy" data-bs-toggle="modal" data-bs-target="#cardModal">
+            <div class="card-img-overlay">
+                <div class="text-light px-1 pt-1 text-start">
+                    {{ rec.msg.replace("\n","<br>")|safe }}
+                </div>
+                <div class="card-footer px-1 py-1 text-end">
+                    <small class="blockquote-footer text-muted">
+                        {{ rec.name }}
+                    </small>
+                </div>
             </div>
-            {% endif %}
-            <!-- <div class="card-footer px-2 py-1 text-end">
-                <small class="blockquote-footer text-muted">
-                    {{ rec.name }}
-                </small>
-            </div> -->
         </div>
     </div>
     {% endfor %}
