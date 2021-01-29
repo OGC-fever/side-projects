@@ -14,10 +14,10 @@
 {% include "form.html" %}
 {% include "popup.html" %}
 
-{% if data == "" %}
+{% if not data %}
 <div class="content-center">
     <p></p>
-    <p class="text-white text-center">No one leave a message yet.</p>
+    <p class="text-white text-center">No one leave any message yet.</p>
 </div>
 {% else %}
 
@@ -27,7 +27,7 @@
         <div class="card h-100 bg-card popup" id="{{ rec.id }}">
             <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" class="card-img my-1  px-1 py-1 img-fluid"
                 loading="lazy" data-bs-toggle="modal" data-bs-target="#cardModal">
-            <div class="card-img-overlay">
+            <div class="card-img-overlay px-2 py-1">
                 <div class="text-light px-1 pt-1 text-start">
                     {{ rec.msg.replace("\n","<br>")|safe }}
                 </div>

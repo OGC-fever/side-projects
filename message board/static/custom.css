@@ -30,7 +30,7 @@
 }
 
 .bg-card {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: black;
 }
 
 .card-img {
@@ -42,8 +42,7 @@
 .card-img-overlay {
     opacity: 0;
     transition: .5s ease;
-    background-color: rgba(0, 0, 0, 0.9);
-    top: 20%;
+    background-color: rgba(0, 32, 128, 0.9);
 }
 
 .popup:hover .card-img-overlay {

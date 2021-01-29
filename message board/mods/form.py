@@ -12,7 +12,7 @@ def verify():
 
 
 def check_file(filename):
-    file_exts = {'jpg', 'jpeg', "jfif", "png", "gif", "webp"}
+    file_exts = ('jpg', 'jpeg', "jfif", "png", "gif", "webp")
     if filename and "." in filename:
         if filename.split(".")[-1].lower() in file_exts:
             return True
@@ -22,7 +22,7 @@ def check_file(filename):
 
 def get_file_ext(filename):
     ext = filename.split(".")[-1].upper()
-    if ext == ("JPG" or "JFIF"):
+    if ext in ("JPG", "JFIF"):
         ext = "JPEG"
     return ext
 

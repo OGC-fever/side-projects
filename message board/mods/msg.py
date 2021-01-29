@@ -2,8 +2,8 @@ from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
 
-from mods.image_process import check_file, resize_img, verify
-from mods.db_crud import post
+from mods.form import check_file, resize_img, verify
+from mods.db_crud import post, db
 from config import app
 
 
@@ -12,13 +12,12 @@ from config import app
 def msg():
     code = verify()
     if request.method == "GET":
-        data = post.query.order_by(post.id.desc()).limit(15).all()
-        data_count = post.query.count()
-        if data_count == 0:
-            return render_template("message.html", data="", code=code)
-        else:
+        try:
+            data = post.query.order_by(post.time.desc()).limit(60).all()
             return render_template("message.html", data=data, code=code)
-
+        except:
+            db.create_all()
+            return render_template("message.html", code=code)
     name = request.form['name']
     msg = request.form['msg']
     file = request.files["upload"]
