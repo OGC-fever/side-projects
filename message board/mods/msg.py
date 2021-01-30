@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
 
-from mods.form import check_file, resize_img, verify
+from mods.form import check_file, dummy_msg, resize_img, verify
 from mods.db_crud import post, db
 from config import app
 
@@ -24,7 +24,7 @@ def msg():
     if name == "":
         name = random.choice(["nobody", "anonymous", "路人甲", "無名"])
     if msg == "":  # msg isn't exist
-        return ("", 204)
+        msg = dummy_msg()
     if check_file(file.filename):  # file exist
         def pack(type):
             return sqlite3.Binary(resize_img(file, type).getbuffer())

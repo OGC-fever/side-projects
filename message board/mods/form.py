@@ -3,12 +3,20 @@ from PIL import Image
 from random import randint
 
 
+def dummy_msg():
+    char = list(set(range(0x3105, 0x3129)))
+    msg = ''
+    for i in range(randint(10, 50)):
+        msg += chr(char[randint(0, len(char)-1)])
+    return msg
+
+
 def verify():
     verify_len = 6
-    text = ""
+    code = ""
     for i in range(verify_len):
-        text += str(randint(0, 9))
-    return text
+        code += str(randint(0, 9))
+    return code
 
 
 def check_file(filename):
