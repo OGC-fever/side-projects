@@ -3,7 +3,11 @@ from config import app
 from mods.image_route import *
 from mods.card import *
 from mods.msg import *
+from mods.reply import *
+from mods.db_crud import db
 
+db.init_app(app)
+db.create_all()
 
 # @ app.errorhandler(HTTPException)
 # @ app.errorhandler(InternalServerError)
