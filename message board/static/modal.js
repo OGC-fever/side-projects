@@ -26,11 +26,11 @@ $(document).ready(function () {
         $('#cardModal').modal('show');
     })
 
-    $('.modal-dialog').click(function () {
-        $("#cardModal").modal("hide");
-    })
+    // $('#image_modal').click(function () {
+    //     $("#cardModal").modal("hide");
+    // })
 
-    $('.form-button').click(function () {
-        $("#formModal").modal("hide");
-    })
+    // $('.form-button').click(function () {
+    //     $("#formModal").modal("hide");
+    // })
 });

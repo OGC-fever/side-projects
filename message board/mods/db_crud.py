@@ -19,3 +19,16 @@ class post(db.Model):
     def post(self):
         db.session.add(self)
         db.session.commit()
+
+
+class reply(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=True, index=True)
+    msg = db.Column(db.Text, nullable=True, index=True)
+    time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    code = db.Column(db.Text, nullable=True)
+    ref_id = db.Column(db.Integer, db.ForeignKey("post.id"))
+
+    def post(self):
+        db.session.add(self)
+        db.session.commit()

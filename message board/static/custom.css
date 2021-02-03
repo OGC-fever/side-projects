@@ -11,18 +11,38 @@
     bottom: 25px;
     box-shadow: 0 6px 10px 0 LightSkyBlue;
     transition: all 0.3s ease-in-out;
-    z-index: 98;
+    z-index: 1;
 }
 
 .fab:hover {
     box-shadow: 0 6px 10px 0 GoldenRod;
     transform: scale(1.2);
-    z-index: 100;
+    z-index: 1;
 }
 
 .modal {
     background-color: rgba(0, 0, 0, 0.7) !important;
     backdrop-filter: blur(15px);
+}
+
+.modal-backdrop {
+    z-index: 1 !important;
+}
+
+.navbar {
+    z-index: 1 !important;
+}
+
+#formModal {
+    z-index: 5 !important;
+}
+
+#cardModal {
+    z-index: 5 !important;
+}
+
+#replyModal {
+    z-index: 10 !important;
 }
 
 .modal-content {

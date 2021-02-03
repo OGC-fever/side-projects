@@ -1,7 +1,7 @@
 <script src="https://www.google.com/recaptcha/api.js"></script>
 <script src="{{ url_for('static',filename='g-valid.js') }}"></script>
 
-<div class="modal fade" id="formModal">
+<div class="modal fade" id="replyModal">
     <div class="modal-dialog">
         <div class="modal-content text-white border-dark bg-dark">
             <div class="modal-header">
@@ -13,14 +13,12 @@
                 </div>
             </div>
             <div class="modal-body">
-                <form role="form" id="validation" class="col form-group my-0 mx-1" action="/msg"
-                    enctype="multipart/form-data" method="POST">
+                <form role="form" id="validation" class="col form-group my-0 mx-1" action="/reply" method="POST">
                     <input name="name" type="text" class="mb-2 mt-1 border-Primary text-white bg-dark form-control"
                         placeholder="Nick Name" maxlength="20"
                         pattern="^[0-9A-Z.\sa-z\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]{1,20}$">
                     <textarea class="text-white bg-dark border-Primary form-control mb-2" rows="4" name="msg"
                         placeholder="Write a message"></textarea>
-                    <input type="file" class="border-Primary mb-2 text-secondary bg-dark form-control" name="upload">
                     <button data-action='submit' data-callback='formSubmit'
                         data-sitekey="6Lft2hsaAAAAAF2t9ldcHaKiaRAQbGOdhz7wuEPy" class="visually-hidden g-recaptcha">
                     </button>
