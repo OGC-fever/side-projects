@@ -11,6 +11,10 @@
     z-index: 1;
 }
 
+.reply {
+    bottom: 175px;
+}
+
 .new-post {
     bottom: 100px;
 }

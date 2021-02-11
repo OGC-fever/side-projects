@@ -1,10 +1,26 @@
 {% extends "template.html" %}
 {% block head %}
+<script>
+    $(document).ready(function () {
+        var modal = document.getElementById('replyModal')
+        modal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget
+            var name = button.getAttribute('name')
+            var title = modal.querySelector('.modal-title')
+            var msg = modal.querySelector('.modal-body textarea')
+            if (name) {
+                title.textContent = 'Reply to : ' + name
+                msg.value = "@" + name + "\n"
+            }
+        })
+    })
+</script>
 {% endblock %}
 {% block body %}
 
 {% include "button/go-top.html" %}
 {% include "button/go-back.html" %}
+{% include "button/reply.html" %}
 {% include "modal/reply.html" %}
 
 <div class="container">
@@ -27,7 +43,7 @@
                         <div class='card-img-overlay d-flex align-items-center'>
                             <div class="col-12">
                                 <button class="btn btn-outline-warning" data-bs-toggle="modal"
-                                    data-bs-target="#replyModal">
+                                    data-bs-target="#replyModal" name='{{ data.name }}'>
                                     <i class="fs-4 bi bi-chat-dots"></i>
                                 </button>
                             </div>
@@ -52,7 +68,7 @@
                         <div class='card-img-overlay d-flex align-items-center'>
                             <div class="col-12">
                                 <button class="btn btn-outline-warning" data-bs-toggle="modal"
-                                    data-bs-target="#replyModal">
+                                    data-bs-target="#replyModal" name='{{ rec.name }}'>
                                     <i class="fs-4 bi bi-chat-dots"></i>
                                 </button>
                             </div>
