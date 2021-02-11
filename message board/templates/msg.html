@@ -1,18 +1,13 @@
 {% extends "template.html" %}
 
 {% block head %}
-
-
 {% endblock %}
 
 {% block body %}
 
-<button class="fab btn-light" data-bs-toggle="modal" data-bs-target="#formModal"><i
-        class="bi bi-pencil align-middle"></i></button>
-
-<button class="go-back btn-light" onclick="history.back(-1)"><i class="bi bi-box-arrow-left align-middle"></i></button>
-
-{% include "form.html" %}
+{% include "button/new-post.html" %}
+{% include "button/go-top.html" %}
+{% include "modal/new.html" %}
 
 {% if not data %}
 <div class="content-center">
@@ -24,7 +19,7 @@
 <div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 mx-auto">
     {% for rec in data %}
     <div class="col px-1 py-1">
-        <div class="card h-100 bg-card popup" id="{{ rec.id }}">
+        <div class="card h-100 bg-card info">
             <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" loading="lazy"
                 class="card-img my-1 px-1 py-1 img-fluid">
             <a href="{{ url_for('info',id=rec.id) }}">

@@ -3,19 +3,16 @@
 {% endblock %}
 {% block body %}
 
-<button class="go-top btn-light" onclick="window.scrollTo(0, 0);"><i
-        class="bi bi-chevron-bar-up align-middle"></i></button>
-<button class="go-back btn-light" onclick="history.back(-1)"><i class="bi bi-box-arrow-left align-middle"></i></button>
-
-
-{% include "reply.html" %}
+{% include "button/go-top.html" %}
+{% include "button/go-back.html" %}
+{% include "modal/reply.html" %}
 
 <div class="container">
     <div class="row">
-        <div class="col-10 col-lg-7 col-md-8 col-sm-9 mx-auto my-3">
+        <div class="col-10 col-lg-7 col-md-8 col-sm-9 text-center mx-auto my-3">
             <img class="img-fluid" src="{{ url_for('image_route',id=data.id,type='image') }}" loading="lazy">
         </div>
-        <div class="col-10 col-lg-4 col-md-3 col-sm-2 mx-auto my-2">
+        <div class="col-10 col-lg-4 col-md-3 col-sm-2 my-2">
             <div class="row">
                 <div class="col">
                     <div class="my-2 mx-2 text-light col-12">

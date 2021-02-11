@@ -8,36 +8,19 @@
     vertical-align: middle;
     position: fixed;
     right: 25px;
-    bottom: 100px;
     z-index: 1;
+}
+
+.new-post {
+    bottom: 100px;
 }
 
 .go-top {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 25px;
-    text-align: center;
-    line-height: normal;
-    vertical-align: middle;
-    position: fixed;
-    right: 25px;
     bottom: 25px;
-    z-index: 1;
 }
 
 .go-back {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    font-size: 25px;
-    text-align: center;
-    line-height: normal;
-    vertical-align: middle;
-    position: fixed;
-    right: 25px;
     bottom: 100px;
-    z-index: 1;
 }
 
 .modal {
@@ -57,10 +40,6 @@
     z-index: 10 !important;
 }
 
-.modal-content {
-    background-color: rgba(0, 0, 0, 0) !important;
-}
-
 .bg-card {
     background-color: black;
 }
@@ -74,9 +53,9 @@
 .card-img-overlay {
     opacity: 0;
     transition: .5s ease;
-    background-color: rgba(0, 32, 128, 0.9);
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
-.popup:hover .card-img-overlay {
+.info:hover .card-img-overlay {
     opacity: 1;
 }
