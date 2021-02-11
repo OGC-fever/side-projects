@@ -4,7 +4,7 @@ from config import app
 
 
 @app.route("/card_info", methods=["POST", "GET"])
-def info():
+def card_info():
     id = request.form['id']
     data = post.query.filter_by(id=id).first()
     data = {"id": data.id,

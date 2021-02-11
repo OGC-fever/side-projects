@@ -1,10 +1,11 @@
 from flask import app
 from config import app
 from mods.image_route import *
-from mods.card import *
+# from mods.card import *
 from mods.msg import *
 from mods.reply import *
 from mods.db_crud import db
+from mods.info import *
 
 db.init_app(app)
 db.create_all()

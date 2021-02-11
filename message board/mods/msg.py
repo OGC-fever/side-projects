@@ -13,9 +13,9 @@ def msg():
     if request.method == "GET":
         try:
             data = post.query.order_by(post.time.desc()).limit(60).all()
-            return render_template("message.html", data=data)
+            return render_template("msg.html", data=data)
         except:
-            return render_template("message.html")
+            return render_template("msg.html")
     name = request.form['name']
     msg = request.form['msg']
     file = request.files["upload"]
