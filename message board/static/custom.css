@@ -59,3 +59,11 @@
 .info:hover .card-img-overlay {
     opacity: 1;
 }
+
+.cover:hover .card-img-overlay {
+    opacity: 1;
+}
+
+.cover {
+    position: relative;
+}

@@ -3,7 +3,11 @@
 {% block id %}
 <div class="modal fade" id="formModal">
     {% endblock %}
+    {% block form %}
 
-    {% block file %}
-    <input type="file" class="border-Primary mb-2 text-secondary bg-dark form-control" name="upload">
-    {% endblock %}
+    <form role="form" id="validation" class="col form-group my-0 mx-1" method="POST" action="{{ url_for('msg') }}"
+        enctype="multipart/form-data">
+        {% endblock %}
+        {% block file %}
+        <input type="file" class="border-Primary mb-2 text-secondary bg-dark form-control" name="upload">
+        {% endblock %}

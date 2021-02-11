@@ -15,30 +15,54 @@
         <div class="col-10 col-lg-4 col-md-3 col-sm-2 my-2">
             <div class="row">
                 <div class="col">
-                    <div class="my-2 mx-2 text-light col-12">
-                        {{ data.msg.replace("\n","<br>")|safe }}
-                    </div>
-                    <div class="text-end col-12">
-                        <small class="blockquote-footer text-light-50">
-                            {{ data.name }}
-                        </small>
-                    </div>
-                </div>
-                <div class="col-1 align-self-center">
-                    <div class="btn-group">
-                        <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#replyModal">
-                            <i class="fs-4 bi bi-chat-dots"></i>
-                        </button>
+                    <div class="card bg-dark cover">
+                        <div class="my-2 mx-2 text-light col-12">
+                            {{ data.msg.replace("\n","<br>")|safe }}
+                        </div>
+                        <div class="text-end col-12">
+                            <small class="blockquote-footer text-light-50">
+                                {{ data.name }}
+                            </small>
+                        </div>
+                        <div class='card-img-overlay d-flex align-items-center'>
+                            <div class="col-12">
+                                <button class="btn btn-outline-warning" data-bs-toggle="modal"
+                                    data-bs-target="#replyModal">
+                                    <i class="fs-4 bi bi-chat-dots"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% if comment %}
+
             <div class="row">
                 <div class="col">
-                    {% for i in range(20) %}
-                    <p class="text-light">test</p>
+                    {% for rec in comment %}
+                    <div class="card bg-dark cover my-1">
+                        <div class="my-2 mx-2 text-light col-12">
+                            {{ rec.msg.replace("\n","<br>")|safe }}
+                        </div>
+                        <div class="text-end col-12">
+                            <small class="blockquote-footer text-light-50">
+                                {{ rec.name }}
+                            </small>
+                        </div>
+                        <div class='card-img-overlay d-flex align-items-center'>
+                            <div class="col-12">
+                                <button class="btn btn-outline-warning" data-bs-toggle="modal"
+                                    data-bs-target="#replyModal">
+                                    <i class="fs-4 bi bi-chat-dots"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
+            {% endif %}
+
         </div>
     </div>
 </div>

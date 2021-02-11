@@ -3,3 +3,7 @@
 {% block id %}
 <div class="modal fade" id="replyModal">
     {% endblock %}
+
+    {% block form %}
+    <form role="form" class="col form-group my-0 mx-1" method="POST" action="{{ url_for('comment',id=id) }}">
+        {% endblock %}
