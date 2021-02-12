@@ -18,6 +18,11 @@ class post(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def renew_time(id):
+        data = post.query.filter_by(id=id).first()
+        data.time = datetime.utcnow()
+        db.session.commit()
+
 
 class reply(db.Model):
     id = db.Column(db.Integer, primary_key=True)

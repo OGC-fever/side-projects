@@ -18,12 +18,14 @@
 
 <div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 mx-auto">
     {% for rec in data %}
-    <div class="col px-1 py-1">
-        <div class="card h-100 bg-card info">
-            <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" loading="lazy"
-                class="card-img my-1 px-1 py-1 img-fluid">
+    <div class="col px-2 my-2">
+        <div class="card h-100 bg-secondary info">
+            <div class="cropped">
+                <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" loading="lazy"
+                    class="card-img img-fluid">
+            </div>
             <a href="{{ url_for('info',id=rec.id) }}">
-                <div class="card-img-overlay px-2 py-1">
+                <div class="card-img-overlay bg-dark px-2 py-2">
                     <div class="text-light px-1 pt-1 text-start">
                         {{ rec.msg.replace("\n","<br>")|safe }}
                     </div>

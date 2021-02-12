@@ -9,6 +9,13 @@
     position: fixed;
     right: 25px;
     z-index: 1;
+    transition: all 0.3s ease-in-out;
+    opacity: 0.3;
+}
+
+.fab:hover {
+    transform: scale(1.2);
+    opacity: 1;
 }
 
 .reply {
@@ -44,20 +51,19 @@
     z-index: 10 !important;
 }
 
-.bg-card {
-    background-color: black;
+.cropped {
+    overflow: hidden;
 }
 
 .card-img {
     width: 100%;
     height: 30vh;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .card-img-overlay {
     opacity: 0;
     transition: .5s ease;
-    background-color: rgba(0, 0, 0, 0.9);
 }
 
 .info:hover .card-img-overlay {

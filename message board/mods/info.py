@@ -6,7 +6,7 @@ from config import app
 from flask import render_template
 
 
-@app.route("/info/<int:id>", methods=["POST", "GET"])
+@app.route("/info/<int:id>", methods=["GET"])
 def info(id):
     data = post.query.filter_by(id=id).first()
     comment = reply.query.filter_by(
@@ -14,7 +14,7 @@ def info(id):
     return render_template("info.html", data=data, comment=comment, id=id)
 
 
-@app.route("/reply/<id>", methods=["POST"])
+@app.route("/reply/<int:id>", methods=["POST"])
 def comment(id):
     name = request.form['name']
     msg = request.form['msg']
@@ -24,4 +24,5 @@ def comment(id):
         msg = dummy_msg()
     data = reply(name=name, msg=msg, ref_id=id)
     data.post()
+    data = post.renew_time(id)
     return redirect(url_for("info", id=id))

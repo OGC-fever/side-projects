@@ -25,22 +25,22 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-10 col-lg-7 col-md-8 col-sm-9 text-center mx-auto my-3">
+        <div class="col-10 col-lg-8 col-md-8 col-sm-8 text-center mx-auto my-2">
             <img class="img-fluid" src="{{ url_for('image_route',id=data.id,type='image') }}" loading="lazy">
         </div>
-        <div class="col-10 col-lg-4 col-md-3 col-sm-2 my-2">
+        <div class="col-10 col-lg-4 col-md-4 col-sm-4 mx-auto my-2">
             <div class="row">
                 <div class="col">
-                    <div class="card bg-dark cover">
-                        <div class="my-2 mx-2 text-light col-12">
+                    <div class="card bg-dark border border-secondary cover">
+                        <div class="px-2 py-2 text-light col-12">
                             {{ data.msg.replace("\n","<br>")|safe }}
                         </div>
-                        <div class="text-end col-12">
+                        <div class="text-end px-2 py-2 col-12">
                             <small class="blockquote-footer text-light-50">
                                 {{ data.name }}
                             </small>
                         </div>
-                        <div class='card-img-overlay d-flex align-items-center'>
+                        <div class='card-img-overlay bg-dark d-flex align-items-center'>
                             <div class="col-12">
                                 <button class="btn btn-outline-warning" data-bs-toggle="modal"
                                     data-bs-target="#replyModal" name='{{ data.name }}'>
@@ -56,16 +56,16 @@
             <div class="row">
                 <div class="col">
                     {% for rec in comment %}
-                    <div class="card bg-dark cover my-1">
-                        <div class="my-2 mx-2 text-light col-12">
+                    <div class="card bg-dark border border-secondary cover my-1">
+                        <div class="px-2 py-2 text-light col-12">
                             {{ rec.msg.replace("\n","<br>")|safe }}
                         </div>
-                        <div class="text-end col-12">
+                        <div class="text-end px-2 py-2 col-12">
                             <small class="blockquote-footer text-light-50">
                                 {{ rec.name }}
                             </small>
                         </div>
-                        <div class='card-img-overlay d-flex align-items-center'>
+                        <div class='card-img-overlay bg-dark d-flex align-items-center'>
                             <div class="col-12">
                                 <button class="btn btn-outline-warning" data-bs-toggle="modal"
                                     data-bs-target="#replyModal" name='{{ rec.name }}'>
