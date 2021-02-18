@@ -24,5 +24,5 @@ def comment(id):
         msg = dummy_msg()
     data = reply(name=name, msg=msg, ref_id=id)
     data.post()
-    data = post.renew_time(id)
+    post.renew_time(id)
     return redirect(url_for("info", id=id))

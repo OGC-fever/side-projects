@@ -11,14 +11,6 @@ def dummy_msg():
     return msg
 
 
-def verify():
-    verify_len = 6
-    code = ""
-    for i in range(verify_len):
-        code += str(randint(0, 9))
-    return code
-
-
 def check_file(filename):
     file_exts = ('jpg', 'jpeg', "jfif", "png", "gif", "webp")
     if filename and "." in filename:
