@@ -5,11 +5,11 @@ Personal side projects just for fun & practice
 ## photo board
 - bootstrap + flask + sqlite3 + sqlalchemy + jquery
 
-~~ ## hardness ~~
-~~ - visualize relationship between hardness of water and places in taiwan~~
+~~## hardness
+- visualize relationship between hardness of water and places in taiwan
 
-## imgur 2x2
+~~## imgur 2x2
 - fetch newest 4 viral images on imgur
 
-## population ratio
+~~## population ratio
 - visualize ratio curve of males vs. females
