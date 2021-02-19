@@ -1,7 +1,7 @@
 from io import BytesIO
 from flask import redirect, Response
-from mods.db_crud import post
-from config import app
+from msg.mods.db_crud import post
+from msg.config import app
 
 
 @app.route("/<type>/<int:id>", methods=["POST", "GET"])

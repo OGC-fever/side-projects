@@ -2,9 +2,9 @@ from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
 
-from mods.form import check_file, dummy_msg, resize_img
-from mods.db_crud import post
-from config import app
+from msg.mods.form import check_file, dummy_msg, resize_img
+from msg.mods.db_crud import post
+from msg.config import app
 
 
 @app.route("/", methods=["GET", "POST"])
