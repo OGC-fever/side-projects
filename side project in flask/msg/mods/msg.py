@@ -3,16 +3,19 @@ import sqlite3
 import random
 
 from msg.mods.form import check_file, dummy_msg, resize_img
-from msg.mods.db_crud import post
+from msg.mods.msg_db_crud import post
 from msg.config import app
 
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/msg", methods=["GET", "POST"])
-def msg():
+@app.route("/msg/<int:page>", methods=["GET", "POST"])
+def msg(page=1):
+    page_limit = 30
     if request.method == "GET":
         try:
-            data = post.query.order_by(post.time.desc()).limit(60).all()
+            data = post.query.order_by(post.time.desc()).limit(
+                page_limit).offset((page-1)*page_limit)
             return render_template("msg.html", data=data)
         except:
             return render_template("msg.html")

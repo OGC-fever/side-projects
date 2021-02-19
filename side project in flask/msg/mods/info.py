@@ -1,7 +1,7 @@
 from flask import request, redirect, url_for
 from msg.mods.form import dummy_msg
 import random
-from msg.mods.db_crud import post, reply
+from msg.mods.msg_db_crud import post, reply
 from msg.config import app
 from flask import render_template
 
