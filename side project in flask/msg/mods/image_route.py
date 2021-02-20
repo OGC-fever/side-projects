@@ -1,6 +1,6 @@
 from io import BytesIO
 from flask import redirect, Response
-from msg.mods.msg_db_crud import post
+from msg.mods.msg_db import post
 from msg.config import app
 
 

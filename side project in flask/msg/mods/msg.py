@@ -3,7 +3,7 @@ import sqlite3
 import random
 
 from msg.mods.form import check_file, dummy_msg, resize_img
-from msg.mods.msg_db_crud import post
+from msg.mods.msg_db import post
 from msg.config import app
 
 
@@ -11,7 +11,7 @@ from msg.config import app
 @app.route("/msg", methods=["GET", "POST"])
 @app.route("/msg/<int:page>", methods=["GET", "POST"])
 def msg(page=1):
-    page_limit = 30
+    page_limit = 15
     if request.method == "GET":
         try:
             data = post.query.order_by(post.time.desc()).limit(

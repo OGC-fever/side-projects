@@ -2,5 +2,5 @@
 
 Personal side projects just for fun & practice
 
-## photo board
+## Photo Board
 - bootstrap + flask + sqlite3 + sqlalchemy + jquery
