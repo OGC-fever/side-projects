@@ -7,7 +7,7 @@ def dummy_msg():
     char = list(set(range(0x3105, 0x3129)))
     msg = ''
     for i in range(randint(10, 50)):
-        msg += chr(char[randint(0, len(char)-1)])
+        msg += chr(char[randint(0, len(char) - 1)])
     return msg
 
 
