@@ -14,15 +14,12 @@ $(document).ready(function () {
             dataType: "json",
             data: { "page": page },
             success: function (data) {
-                // alert(data["id"].length);
-                // alert(data["name"]);
-                // alert(data["msg"]);
                 for (i = 0; i < data["id"].length; i++) {
                     $('#ajax-insert').append(`
                         <div class="col px-2 my-2">
                             <div class="card h-100 bg-secondary info">
                                 <div class="cropped">
-                                    <img src="/timg/${id = data["id"][i]}" loading="lazy class="card-img img-fluid">
+                                    <img src="/timg/${id = data["id"][i]}" loading="lazy" class="card-img img-fluid">
                                 </div>
                                 <a href="info/${id = data["id"][i]}">
                                     <div class="card-img-overlay bg-dark px-2 py-2">
@@ -40,13 +37,10 @@ $(document).ready(function () {
                         </div>`
                     );
                 }
-
-
             },
             error: function () {
                 alert("OOPS!");
             }
         })
     }
-
 });
