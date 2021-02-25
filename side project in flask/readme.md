@@ -4,4 +4,4 @@ Personal side projects just for fun & practice
 
 ## Photo Board
 - bootstrap + flask + sqlite3 + sqlalchemy + jquery
-- live demo https://orzogc.ddns.net
+- live demo http://orzogc.ddns.net
