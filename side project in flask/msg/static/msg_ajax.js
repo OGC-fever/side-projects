@@ -14,9 +14,7 @@ $(document).ready(function () {
             dataType: "json",
             data: { "page": page },
             success: function (data) {
-                alert(data["id"]);
-                alert(data["name"]);
-                alert(data["msg"]);
+                alert(data["id"], data["name"], data["msg"]);
             },
             error: function () {
                 alert("OOPS!");
