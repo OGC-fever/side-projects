@@ -9,7 +9,6 @@ from msg.config import app
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/msg", methods=["GET", "POST"])
-# @app.route("/msg/<int:page>", methods=["GET"])
 @app.route("/msg/more", methods=["GET", "POST"])
 def msg(page=1):
     page_limit = 20
