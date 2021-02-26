@@ -5,6 +5,8 @@ from msg.mods.msg import *
 from msg.mods.msg_db import msg_db
 from msg.mods.info import *
 
+from scraper.test import *
+
 msg_db.init_app(app)
 msg_db.create_all()
 
