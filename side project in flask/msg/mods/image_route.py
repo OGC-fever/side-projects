@@ -1,10 +1,10 @@
 from io import BytesIO
 from flask import redirect, Response
 from msg.mods.msg_db import post
-from msg.config import app
+from config import msg_app
 
 
-@app.route("/<type>/<int:id>", methods=["POST", "GET"])
+@msg_app.route("/<type>/<int:id>", methods=["POST", "GET"])
 def image_route(id, type):
     data = post.query.filter_by(id=id).first()
     if type == "image":

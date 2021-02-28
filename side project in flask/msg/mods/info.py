@@ -2,11 +2,11 @@ from flask import request, redirect, url_for
 from msg.mods.form import dummy_msg
 import random
 from msg.mods.msg_db import post, reply
-from msg.config import app
+from config import msg_app
 from flask import render_template
 
 
-@app.route("/info/<int:id>", methods=["GET"])
+@msg_app.route("/info/<int:id>", methods=["GET"])
 def info(id):
     data = post.query.filter_by(id=id).first()
     comment = reply.query.filter_by(
@@ -14,7 +14,7 @@ def info(id):
     return render_template("info.html", data=data, comment=comment, id=id)
 
 
-@app.route("/reply/<int:id>", methods=["POST"])
+@msg_app.route("/reply/<int:id>", methods=["POST"])
 def comment(id):
     name = request.form['name']
     msg = request.form['msg']

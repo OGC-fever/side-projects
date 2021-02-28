@@ -1,9 +1,8 @@
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from flask import app
-from msg.config import app
+from config import msg_app
 
-msg_db = SQLAlchemy(app)
+msg_db = SQLAlchemy(msg_app)
 
 
 class post(msg_db.Model):

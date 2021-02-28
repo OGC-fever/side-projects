@@ -4,7 +4,7 @@ import random
 
 from msg.mods.form import check_file, dummy_msg, resize_img
 from msg.mods.msg_db import post
-from msg.config import app
+from config import msg_app
 
 
 def get_data(page_limit, page):
@@ -13,8 +13,8 @@ def get_data(page_limit, page):
     return data
 
 
-@app.route("/", methods=["GET", "POST"])
-@app.route("/msg", methods=["GET", "POST"])
+@msg_app.route("/", methods=["GET", "POST"])
+@msg_app.route("/msg", methods=["GET", "POST"])
 def msg(page=1):
     if request.method == "GET":  # normal
         try:
@@ -25,6 +25,7 @@ def msg(page=1):
             return render_template("msg.html", data=data)
         else:
             return render_template("msg.html")
+
     if request.method == "POST":  # new post
         name = request.form['name']
         msg = request.form['msg']
@@ -43,7 +44,8 @@ def msg(page=1):
         return redirect(url_for("msg"))
 
 
-@app.route("/msg/more", methods=["GET", "POST"])
+# @msg_app.route("/msg/more", methods=["GET", "POST"])
+@msg_app.route("/more", methods=["GET", "POST"])
 def msg_more():
     if request.method == "POST":  # ajax
         page = int(request.form["page"])

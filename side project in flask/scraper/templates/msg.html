@@ -1,0 +1,46 @@
+{% extends "template.html" %}
+
+{% block head %}
+<script src="{{ url_for('static',filename='msg_ajax.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+
+
+
+{% if not data %}
+<div class="content-center">
+    <p></p>
+    <p class="text-white text-center">No one leave any message yet.</p>
+</div>
+{% else %}
+
+<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 mx-auto" id="ajax-insert">
+    {% for rec in data %}
+    <div class="col px-2 my-2">
+        <div class="card h-100 bg-secondary info">
+            <div class="cropped">
+                <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" loading="lazy"
+                    class="card-img img-fluid">
+            </div>
+            <a href="{{ url_for('info',id=rec.id) }}">
+                <div class="card-img-overlay bg-dark px-2 py-2">
+                    <div class="text-light px-1 pt-1 text-start">
+                        {{ rec.msg.replace("\n","<br>")|safe }}
+                    </div>
+                    <div class="card-footer px-1 py-1 text-end">
+                        <small class="blockquote-footer text-muted">
+                            {{ rec.name }}
+                        </small>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endif %}
+
+{% endblock %}
