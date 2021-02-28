@@ -9,13 +9,13 @@ from msg.mods.info import *
 from msg.mods.msg_db import msg_db
 from msg.mods.msg import *
 
-from scraper.mods.test import *
+from scraper.mods.scraper_api import *
 
 msg_db.init_app(msg_app)
 msg_db.create_all()
 
 app = Flask(__name__)
-app.wsgi_app = DispatcherMiddleware(NotFound(), {
+app.wsgi_app = DispatcherMiddleware(msg_app, {
     # "/": msg_app,
     "/msg": msg_app,
     '/ptt': scraper_app
@@ -24,6 +24,3 @@ app.wsgi_app = DispatcherMiddleware(NotFound(), {
 
 if __name__ == "__main__":
     app.run(debug=True)
-    # print(app.mounts.keys())
-    # run_simple('localhost', 5000, app, use_reloader=True,
-            #    use_debugger=True, use_evalex=True)
