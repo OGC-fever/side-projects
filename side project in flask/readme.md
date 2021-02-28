@@ -4,10 +4,13 @@ Personal side projects just for fun & practice
 - live demo http://orzogc.ddns.net
 
 ## Photo Board
-+ package : flask, sqlite3, sqlalchemy, bootstrap, jquery
+- post and comment photo messages
+- packages : flask, sqlite3, sqlalchemy, PIL
+- others : bootstrap, jquery
 - ajax : scroll down to get more photo
-- store all data in sqlite database
-- ORM : sqlalchemy
+- storing all data in sqlite database
+- resizing photo in PIL
 
 ## PTT Scraper
-+ package : BeautifulSoup
+- scraping data from ptt.cc and show on web
+- packages : BeautifulSoup
