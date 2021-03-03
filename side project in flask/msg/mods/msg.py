@@ -44,7 +44,7 @@ def msg(page=1):
         return redirect(url_for("msg"))
 
 
-# @msg_app.route("/msg/more", methods=["GET", "POST"])
+@msg_app.route("/msg/more", methods=["GET", "POST"])
 @msg_app.route("/more", methods=["GET", "POST"])
 def msg_more():
     if request.method == "POST":  # ajax

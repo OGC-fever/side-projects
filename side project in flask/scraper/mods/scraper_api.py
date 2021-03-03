@@ -35,6 +35,16 @@ def pure_data(data, keyword):
     return pure_data
 
 
+@scraper_app.route("/", methods=["GET", "POST"])
+def query():
+    return render_template("template.html")
+
+
+@scraper_app.route("/", methods=["GET", "POST"])
+def none():
+    return render_template("ptt.html")
+
+
 @scraper_app.route("/<board>/<keyword>/<int:count>", methods=["GET", "POST"])
 def ptt(board, keyword, count):
     start_time = time.time()
@@ -72,5 +82,8 @@ def ptt(board, keyword, count):
             pass
     total_time = f'{round((time.time()-start_time),4)} seconds'
     json["execute time"] = total_time
-    return json
-    return render_template("msg.html")
+    # return json
+    # print(json.keys())
+    # print(json.values())
+    # return json
+    return render_template("ptt.html", data=json)

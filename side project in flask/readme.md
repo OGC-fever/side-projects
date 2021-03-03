@@ -5,10 +5,9 @@ Personal side projects just for fun & practice
 
 ## Photo Board
 - post and comment photo messages
-- packages : flask, sqlite3, sqlalchemy, PIL
-- others : bootstrap, jquery
+- packages : flask, sqlite3, sqlalchemy, PIL, bootstrap, jquery
 - ajax : scroll down to get more photo
-- storing all data in sqlite database
+- storing all data in sqlite database w/ sqlalchemy
 - resizing photo in PIL
 
 ## PTT Scraper
