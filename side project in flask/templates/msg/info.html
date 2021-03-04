@@ -1,27 +1,14 @@
-{% extends "template.html" %}
+{% extends "msg/template.html" %}
 {% block head %}
-<script>
-    $(document).ready(function () {
-        var modal = document.getElementById('replyModal')
-        modal.addEventListener('show.bs.modal', function (event) {
-            var button = event.relatedTarget
-            var name = button.getAttribute('name')
-            var title = modal.querySelector('.modal-title')
-            var msg = modal.querySelector('.modal-body textarea')
-            if (name) {
-                title.textContent = 'Reply to : ' + name
-                msg.value = "@" + name + "\n"
-            }
-        })
-    })
-</script>
+<script src="{{ url_for('static',filename='info_modal.js') }}"></script>
+
 {% endblock %}
 {% block body %}
 
-{% include "button/go-top.html" %}
-{% include "button/go-back.html" %}
-{% include "button/reply.html" %}
-{% include "modal/reply.html" %}
+{% include "msg/button/go-top.html" %}
+{% include "msg/button/go-back.html" %}
+{% include "msg/button/reply.html" %}
+{% include "msg/modal/reply.html" %}
 
 <div class="container">
     <div class="row">

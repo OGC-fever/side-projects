@@ -1,7 +1,7 @@
 from flask import request, redirect, url_for
-from msg.mods.form import dummy_msg
+from .form import dummy_msg
 import random
-from msg.mods.msg_db import post, reply
+from .msg_db import post, reply
 from config import msg_app
 from flask import render_template
 
@@ -11,7 +11,7 @@ def info(id):
     data = post.query.filter_by(id=id).first()
     comment = reply.query.filter_by(
         ref_id=id).order_by(reply.time.desc()).all()
-    return render_template("info.html", data=data, comment=comment, id=id)
+    return render_template("msg/info.html", data=data, comment=comment, id=id)
 
 
 @msg_app.route("/reply/<int:id>", methods=["POST"])

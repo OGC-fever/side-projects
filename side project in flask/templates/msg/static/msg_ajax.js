@@ -19,7 +19,7 @@ $(document).ready(function () {
                         <div class="col px-2 my-2">
                             <div class="card h-100 bg-secondary info">
                                 <div class="cropped">
-                                    <img src="/timg/${id = data["id"][i]}" loading="lazy" class="card-img img-fluid">
+                                    <img src="/msg/timg/${id = data["id"][i]}" loading="lazy" class="card-img img-fluid">
                                 </div>
                                 <a href="info/${id = data["id"][i]}">
                                     <div class="card-img-overlay bg-dark px-2 py-2">

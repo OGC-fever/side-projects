@@ -1,4 +1,4 @@
-{% extends "template.html" %}
+{% extends "msg/template.html" %}
 
 {% block head %}
 <script src="{{ url_for('static',filename='msg_ajax.js') }}"></script>
@@ -6,9 +6,9 @@
 
 {% block body %}
 
-{% include "button/new-post.html" %}
-{% include "button/go-top.html" %}
-{% include "modal/new.html" %}
+{% include "msg/button/new-post.html" %}
+{% include "msg/button/go-top.html" %}
+{% include "msg/modal/new.html" %}
 
 {% if not data %}
 <div class="content-center">
@@ -22,8 +22,7 @@
     <div class="col px-2 my-2">
         <div class="card h-100 bg-secondary info">
             <div class="cropped">
-                <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" loading="lazy"
-                    class="card-img img-fluid">
+                <img src="{{ url_for('image_route',id=rec.id,type='timg') }}" loading="lazy" class="card-img">
             </div>
             <a href="{{ url_for('info',id=rec.id) }}">
                 <div class="card-img-overlay bg-dark px-2 py-2">

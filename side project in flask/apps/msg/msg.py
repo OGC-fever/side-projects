@@ -2,8 +2,8 @@ from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
 
-from msg.mods.form import check_file, dummy_msg, resize_img
-from msg.mods.msg_db import post
+from .form import check_file, dummy_msg, resize_img
+from .msg_db import post
 from config import msg_app
 
 
@@ -21,10 +21,10 @@ def msg(page=1):
             data = get_data(page_limit, page)
         except:
             data = None
-        if data:
-            return render_template("msg.html", data=data)
+        if data != None:
+            return render_template("msg/msg.html", data=data)
         else:
-            return render_template("msg.html")
+            return render_template("msg/msg.html")
 
     if request.method == "POST":  # new post
         name = request.form['name']

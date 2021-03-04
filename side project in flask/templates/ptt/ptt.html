@@ -1,11 +1,13 @@
-{% extends "template.html" %}
+{% extends "ptt/template.html" %}
 
 {% block head %}
 {% endblock %}
 
 {% block body %}
+<br>
 <div class="col-10 mx-auto">
-    <table class="table table-primary table-hover table-striped">
+    {% if data %}
+    <table class="table table-warning table-hover table-striped">
         <thead>
             <tr>
                 <th scope="col">No.</th>
@@ -19,7 +21,7 @@
             <tr>
                 <th scope="row">{{ item }}</th>
                 <td>
-                    <a class="link-dark" href="{{ data[item]['url'] }}">
+                    <a class="link-dark" href="{{ data[item]['url'] }}" target="_blank" rel="noopener noreferrer">
                         {{ data[item]["title"] }}</a>
                 </td>
                 <td>{{ data[item]["author"] }}</td>
@@ -28,6 +30,7 @@
         </tbody>
         {% endfor %}
     </table>
+    {% endif %}
 </div>
 
 {% endblock %}

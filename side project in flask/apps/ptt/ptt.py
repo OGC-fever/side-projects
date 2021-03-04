@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as bs
 import requests
 from datetime import date
-from config import scraper_app
+from config import ptt_app
 import time
 from flask import render_template, request, redirect, url_for
 
@@ -35,19 +35,14 @@ def pure_data(data, keyword):
     return pure_data
 
 
-@scraper_app.route("/", methods=["GET", "POST"])
-def query():
-    return render_template("template.html")
-
-
-@scraper_app.route("/", methods=["GET", "POST"])
+@ptt_app.route("/", methods=["GET", "POST"])
 def none():
-    return render_template("ptt.html")
+    return render_template("ptt/ptt.html")
 
 
-@scraper_app.route("/<board>/<keyword>/<int:count>", methods=["GET", "POST"])
+@ptt_app.route("/<board>/<keyword>/<int:count>", methods=["GET", "POST"])
 def ptt(board, keyword, count):
-    start_time = time.time()
+    # start_time = time.time()
     url = 'https://www.ptt.cc/bbs/' + board
     cookies = {'over18': "1"}
     res = requests.get(url, cookies=cookies)
@@ -80,10 +75,10 @@ def ptt(board, keyword, count):
                      "author": item[3]}
         except TypeError:
             pass
-    total_time = f'{round((time.time()-start_time),4)} seconds'
-    json["execute time"] = total_time
+    # total_time = f'{round((time.time()-start_time),4)} seconds'
+    # json["execute time"] = total_time
     # return json
     # print(json.keys())
     # print(json.values())
     # return json
-    return render_template("ptt.html", data=json)
+    return render_template("ptt/ptt.html", data=json)
