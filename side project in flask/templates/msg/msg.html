@@ -1,7 +1,9 @@
-{% extends "msg/template.html" %}
+{% extends "template.html" %}
 
 {% block head %}
-<script src="{{ url_for('static',filename='msg_ajax.js') }}"></script>
+<script src="{{ url_for('static',filename='msg/msg_ajax.js') }}"></script>
+<title>Photo Board</title>
+
 {% endblock %}
 
 {% block body %}
@@ -17,7 +19,7 @@
 </div>
 {% else %}
 
-<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 mx-auto" id="ajax-insert">
+<div class="col-10 row row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-1 my-2 mx-auto" id="ajax-insert">
     {% for rec in data %}
     <div class="col px-2 my-2">
         <div class="card h-100 bg-secondary info">

@@ -1,0 +1,12 @@
+runtime: python38
+
+instance_class: F1
+
+handlers:
+
+- url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: auto
+
+entrypoint: uwsgi --http-socket :8080 --wsgi-file main.py --callable app --master --processes 1 --threads 2
