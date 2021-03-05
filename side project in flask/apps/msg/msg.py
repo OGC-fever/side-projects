@@ -2,14 +2,21 @@ from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
 
+import sqlalchemy
+
 from .form import check_file, dummy_msg, resize_img
 from .msg_db import post
 from config import msg_app
 
 
 def get_data(page_limit, page):
-    data = post.query.order_by(post.time.desc()).limit(
-        page_limit).offset((page - 1) * page_limit)
+    try:
+        data = post.query.order_by(post.time.desc()).limit(
+            page_limit).offset((page - 1) * page_limit)
+        if data.count() == 0:
+            data = None
+    except:
+        data = None
     return data
 
 
@@ -17,15 +24,8 @@ def get_data(page_limit, page):
 @msg_app.route("/msg", methods=["GET", "POST"])
 def msg(page=1):
     if request.method == "GET":  # normal
-        try:
-            data = get_data(page_limit, page)
-        except:
-            data = None
-        if data != None:
-            return render_template("msg/msg.html", data=data)
-        else:
-            return render_template("msg/msg.html")
-
+        data = get_data(page_limit, page)
+        return render_template("msg/msg.html", data=data)
     if request.method == "POST":  # new post
         name = request.form['name']
         msg = request.form['msg']
