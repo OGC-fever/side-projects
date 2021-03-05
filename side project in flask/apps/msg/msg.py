@@ -2,7 +2,6 @@ from flask import render_template, request, redirect, url_for
 import sqlite3
 import random
 
-import sqlalchemy
 
 from .form import check_file, dummy_msg, resize_img
 from .msg_db import post
