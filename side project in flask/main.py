@@ -19,7 +19,7 @@ about = Flask(__name__)
 
 
 @about.route("/", methods=["GET", "POST"])
-def test():
+def home():
     return render_template("about/about.html")
 
 

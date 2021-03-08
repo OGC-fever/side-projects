@@ -8,6 +8,7 @@
 {% block body %}
 <br>
 <div class="col-10 mx-auto">
+
     {% if data %}
     <table class="table table-warning table-hover table-striped">
         <thead>
@@ -32,6 +33,8 @@
         </tbody>
         {% endfor %}
     </table>
+    {% else %}
+    <div class="text-center text-light">do something</div>
     {% endif %}
 </div>
 
