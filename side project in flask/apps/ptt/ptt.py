@@ -5,21 +5,43 @@ from flask import render_template, request
 import math
 
 
-def get_content(html):
+@ptt_app.route("/list", methods=["GET"])
+def hot_list():
+    url = "https://www.ptt.cc/bbs/index.html"
+    res = requests.get(url)
+    html = bs(res.content, 'lxml')
+    data = get_list(html)
+    json = {}
+    for index, item in enumerate(data):
+        json[str(index+1).zfill(len(str(len(data))))] =\
+            {"name": item[0], "title": item[1]}
+    return json
+
+
+def get_list(html):
     data = []
-    for item in html.find_all("div", class_="r-ent"):
-        try:
-            data.append([item.a.text,
-                         item.a["href"].split("/", 2)[-1],
-                         item.find(class_="date").text,
-                         item.find(class_="author").text])
-        except:
-            pass
+    board_name = html.find_all("div", {"class": "board-name"})
+    board_title = html.find_all("div", {"class": "board-title"})
+    while len(data) < 10:
+        data.append([board_name[len(data)].text, board_title[len(data)].text])
     return data
 
 
-@ptt_app.route("/", methods=["POST"])
+def get_content(html):
+    data = []
+    for item in html.find_all("div", class_="r-ent"):
+        data.append([item.a.text,
+                     item.a["href"].split("/", 2)[-1],
+                     item.find("div", {"class": "date"}).text,
+                     item.find("div", {"class": "nrec"}).text,
+                     item.find("div", {"class": "author"}).text])
+    return data
+
+
+@ptt_app.route("/", methods=["GET", "POST"])
 def ptt_search():
+    if request.method == "GET":
+        return render_template("ptt/ptt.html", json=hot_list())
     board = request.form['board']
     keyword = request.form['keyword']
     author = request.form['author']
@@ -63,7 +85,8 @@ def ptt_search():
         temp += 1
         json[str(temp).zfill(len(str(count)))] =\
             {"title": item[0],
-                "url": f"{url}/{item[1]}",
-                "date": item[2].strip(),
-                "author": item[3]}
+             "url": f"{url}/{item[1]}",
+             "push": item[3],
+             "author": item[4],
+             "date": item[2].strip()}
     return render_template("ptt/ptt.html", data=json)

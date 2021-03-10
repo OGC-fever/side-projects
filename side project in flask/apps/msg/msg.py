@@ -20,7 +20,6 @@ def get_data(page_limit, page):
 
 
 @msg_app.route("/", methods=["GET", "POST"])
-@msg_app.route("/msg", methods=["GET", "POST"])
 def msg(page=1):
     if request.method == "GET":  # normal
         data = get_data(page_limit, page)
@@ -43,7 +42,6 @@ def msg(page=1):
         return redirect(url_for("msg"))
 
 
-@msg_app.route("/msg/more", methods=["GET", "POST"])
 @msg_app.route("/more", methods=["GET", "POST"])
 def msg_more():
     if request.method == "POST":  # ajax
