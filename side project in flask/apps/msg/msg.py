@@ -49,6 +49,8 @@ def msg_more():
     if request.method == "POST":  # ajax
         page = int(request.form["page"])
         data = get_data(page_limit, page)
+    if not data:
+        return data
     record = {"id": [], "name": [], "msg": []}
     for rec in data:
         record['id'].append(rec.id)

@@ -1,8 +1,7 @@
-from re import T
 from bs4 import BeautifulSoup as bs
 import requests
 from config import ptt_app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request
 import math
 
 

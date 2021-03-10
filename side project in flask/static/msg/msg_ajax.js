@@ -1,9 +1,13 @@
 $(document).ready(function () {
     var page = 1;
+    var ajax_error = false;
+
     $(window).scroll(function () {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             page += 1;
-            load_data(page);
+            if (ajax_error == false) {
+                load_data(page);
+            }
         }
     });
 
@@ -39,7 +43,12 @@ $(document).ready(function () {
                 }
             },
             error: function () {
-                alert("OOPS!");
+                var html = `
+                <div class='my-2 text-center text-light'>
+                    End of data.
+                </div>`;
+                document.body.insertAdjacentHTML('beforeend', html);
+                ajax_error = true;
             }
         })
     }
