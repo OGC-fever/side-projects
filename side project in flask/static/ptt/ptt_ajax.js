@@ -1,55 +1,43 @@
-$(document).ready(function () {
-    var page = 1;
-    var ajax_error = false;
+var page = 1;
 
-    $(window).scroll(function () {
-        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-            page += 1;
-            if (ajax_error == false) {
-                load_data(page);
-            }
+ajax_load(page);
+
+function ajax_board(json) {
+    $('#ajax_board').html("");
+    for (value in json) {
+        if (value != "count") {
+            $('#ajax_board').append(`
+            <tr>
+                <td>${value}</td>
+                <td>${json[value]["name"]}</td>
+                <td>${json[value]["title"]}</td>
+            </tr>`
+            );
         }
-    });
-
-    function load_data(page) {
-        $.ajax({
-            url: "/msg/more",
-            type: "POST",
-            dataType: "json",
-            data: { "page": page },
-            success: function (data) {
-                for (i = 0; i < data["id"].length; i++) {
-                    $('#ajax-insert').append(`
-                        <div class="col px-2 my-2">
-                            <div class="card h-100 bg-secondary info">
-                                <div class="cropped">
-                                    <img src="/msg/timg/${id = data["id"][i]}" loading="lazy" class="card-img img-fluid">
-                                </div>
-                                <a href="info/${id = data["id"][i]}">
-                                    <div class="card-img-overlay bg-dark px-2 py-2">
-                                        <div class="text-light px-1 pt-1 text-start">
-                                        ${data["msg"][i].replace("\n", "<br>")}
-                                        </div>
-                                        <div class="card-footer px-1 py-1 text-end">
-                                            <small class="blockquote-footer text-muted">
-                                            ${data["name"][i]}
-                                            </small>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>`
-                    );
-                }
-            },
-            error: function () {
-                var html = `
-                <div class='my-2 text-center text-light'>
-                    End of data.
-                </div>`;
-                document.body.insertAdjacentHTML('beforeend', html);
-                ajax_error = true;
-            }
-        })
     }
-});
+}
+
+function ajax_pagination(json) {
+    $('#ajax_pagination').html("");
+    for (i = 0; i < json["count"] / 10; i++) {
+        $('#ajax_pagination').append(`
+        <li class="page-item">
+            <a class="page-link" href="#" onclick="ajax_load(${i + 1});">${i + 1}</a>
+        </li>`
+        );
+    }
+}
+
+function ajax_load(page) {
+    $('#ajax_list').show();
+    $.ajax({
+        url: "/ptt/list/" + page,
+        type: "GET",
+        dataType: "json",
+        data: { "page": page },
+        success: function (json) {
+            ajax_board(json)
+            ajax_pagination(json)
+        },
+    })
+}

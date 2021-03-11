@@ -5,16 +5,18 @@ from flask import render_template, request
 import math
 
 
-@ptt_app.route("/list", methods=["GET"])
-def hot_list():
+@ptt_app.route("/list/<int:page>", methods=["GET"])
+def hot_list(page):
     url = "https://www.ptt.cc/bbs/index.html"
     res = requests.get(url)
     html = bs(res.content, 'lxml')
-    data = get_list(html)
+    data = get_list(html)[0][(page-1)*10:page*10]
+    count = get_list(html)[1]
     json = {}
     for index, item in enumerate(data):
-        json[str(index+1).zfill(len(str(len(data))))] =\
+        json[str((page-1)*10+index+1).zfill(3)] = \
             {"name": item[0], "title": item[1]}
+    json["count"] = count
     return json
 
 
@@ -22,9 +24,9 @@ def get_list(html):
     data = []
     board_name = html.find_all("div", {"class": "board-name"})
     board_title = html.find_all("div", {"class": "board-title"})
-    while len(data) < 10:
+    while len(data) < len(board_name):
         data.append([board_name[len(data)].text, board_title[len(data)].text])
-    return data
+    return [data, len(data)]
 
 
 def get_content(html):
@@ -41,7 +43,9 @@ def get_content(html):
 @ptt_app.route("/", methods=["GET", "POST"])
 def ptt_search():
     if request.method == "GET":
-        return render_template("ptt/ptt.html", json=hot_list())
+    # return render_template("ptt/ptt.html", json=hot_list(1))
+        return render_template("ptt/ptt.html")
+    return ""
     board = request.form['board']
     keyword = request.form['keyword']
     author = request.form['author']

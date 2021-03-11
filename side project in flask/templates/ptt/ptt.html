@@ -2,14 +2,13 @@
 
 {% block head %}
 <title>PTT Scraper</title>
-
+<script src="{{ url_for('static',filename='ptt/ptt_ajax.js') }}"></script>
 {% endblock %}
 
 {% block body %}
-<br>
-<div class="row col-11 mx-auto">
+<div class="row col-11 my-2 mx-auto">
     <div class="col-3">
-        <form class="my-1 mx-1" method="POST" action="/ptt">
+        <form class="mx-1" method="POST" action="/ptt">
             <input class="form-control my-1" type="text" name="board" placeholder="Board">
             <input class="form-control my-1" type="text" name="keyword" placeholder="Keyword">
             <input class="form-control my-1" type="text" name="author" placeholder="Author">
@@ -17,55 +16,25 @@
             <input class="btn btn-primary" type="submit" name="submit" value="Search">
         </form>
     </div>
-    <div class="col-9 mx-auto">
+    <div class="col-9 my-1 mx-auto">
+        <div id="ajax_list">
+            <table class="table table-warning table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-1">No.</th>
+                        <th class="col-1">Board</th>
+                        <th class="col">Title</th>
+                    </tr>
+                </thead>
+                <tbody id="ajax_board">
+                </tbody>
+            </table>
+            <div class="mt-1">
+                <ul id="ajax_pagination" class="pagination justify-content-center my-1">
+                </ul>
+            </div>
+        </div>
 
-        {% if data %}
-        <table class="table table-warning table-hover table-striped">
-            <thead>
-                <tr>
-                    <th class="col-1">No.</th>
-                    <th class="col-1">Hot</th>
-                    <th class="col-5">Title</th>
-                    <th class="col-1">Author</th>
-                    <th class="col-1">Date</th>
-                </tr>
-            </thead>
-            {% for item in data %}
-            <tbody>
-                <tr>
-                    <td>{{ item }}</td>
-                    <td>{{ data[item]["push"] }}</td>
-                    <td>
-                        <a class="link-dark" href="{{ data[item]['url'] }}" target="_blank" rel="noopener noreferrer">
-                            {{ data[item]["title"] }}</a>
-                    </td>
-                    <td>{{ data[item]["author"] }}</td>
-                    <td>{{ data[item]["date"] }}</td>
-                </tr>
-            </tbody>
-            {% endfor %}
-        </table>
-        {% else %}
-        <!-- <div class="text-center text-light">do something</div> -->
-        <table class="table table-warning table-hover table-striped">
-            <thead>
-                <tr>
-                    <th class="col-1">No.</th>
-                    <th class="col-1">Board</th>
-                    <th class="col-5">Title</th>
-                </tr>
-            </thead>
-            {% for item in json %}
-            <tbody>
-                <tr>
-                    <td>{{ item }}</td>
-                    <td>{{ json[item]["name"] }}</td>
-                    <td>{{ json[item]["title"] }}</td>
-                </tr>
-            </tbody>
-            {% endfor %}
-        </table>
-        {% endif %}
     </div>
 </div>
 {% endblock %}
